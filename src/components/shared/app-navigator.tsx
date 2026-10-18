@@ -77,6 +77,7 @@ export const AppNavigator = function () {
       <Stack screenOptions={{ contentStyle: { backgroundColor: colors.canvas } }}>
         <Stack.Protected guard={isAuthenticated}>
           <Stack.Screen name="(dashboard)" options={{ headerShown: false }} />
+          <Stack.Screen name="oauth/callback" options={{ headerShown: false }} />
         </Stack.Protected>
 
         <Stack.Protected guard={!isAuthenticated && hasOnboarded}>

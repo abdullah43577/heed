@@ -9,9 +9,12 @@ interface NotificationMeta {
 
 export const NOTIFICATION_META = {
   SYSTEM: { icon: "sparkles-outline", color: CATEGORY_COLORS_BY_SCHEME.light.NEEDS_REPLY },
+  ACCOUNT_NEEDS_REAUTH: { icon: "link-outline", color: CATEGORY_COLORS_BY_SCHEME.light.IMPORTANT },
 } as const satisfies Record<NotificationType, NotificationMeta>;
 
-const NOTIFICATION_ROUTES: Partial<Record<string, string>> = {};
+const NOTIFICATION_ROUTES: Partial<Record<string, string>> = {
+  "mail-account": "/(dashboard)/(tabs)/profile/accounts",
+};
 
 export const notificationTarget = function (notification: {
   entityType?: string | null;

@@ -13,6 +13,7 @@ import { useUpdateProfile } from "@/hooks/profile/use-update-profile";
 import { useUpdateSettings } from "@/hooks/profile/use-update-settings";
 import { useGetProfile } from "@/hooks/use-get-profile";
 import { useGetUnreadCount } from "@/hooks/notifications/use-get-unread-count";
+import { useGetMailAccounts } from "@/hooks/mail-accounts/use-get-mail-accounts";
 import { useTheme } from "@/hooks/use-theme";
 import { ThemePreference } from "@/constants/theme";
 import { ProfileFormValues, profileSchema } from "@/schemas/settings/profile";
@@ -29,6 +30,8 @@ export default function Profile() {
   const router = useRouter();
   const { foreground } = useThemeColors();
   const { unreadCount } = useGetUnreadCount();
+  const { mailAccounts } = useGetMailAccounts();
+  const needsReconnect = mailAccounts.some((account) => account.status === "NEEDS_REAUTH");
 
   const { profile, isFetchingProfile, refetch, logout } = useGetProfile();
   const [isEditing, setIsEditing] = useState(false);
@@ -137,6 +140,15 @@ export default function Profile() {
                 <AccountDetailsView />
               </View>
             )}
+          </SettingsCard>
+
+          <SettingsCard title="Mail">
+            <SettingsRow
+              label="Gmail accounts"
+              withDivider
+              value={needsReconnect ? "Reconnect needed" : `${mailAccounts.length} connected`}
+              onPress={() => router.push("/(dashboard)/(tabs)/profile/accounts")}
+            />
           </SettingsCard>
 
           <AccountPreferencesCard

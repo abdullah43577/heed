@@ -13,6 +13,16 @@ export const API_ENDPOINTS = {
     deleteAccount: "/auth/account",
   },
 
+  mailAccounts: {
+    list: "/mail-accounts",
+    connect: "/mail-accounts/connect",
+    delete: (id: string) => `/mail-accounts/${id}`,
+  },
+
+  messages: {
+    list: "/messages",
+  },
+
   notifications: {
     list: "/notifications",
     unreadCount: "/notifications/unread-count",

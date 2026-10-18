@@ -8,5 +8,5 @@ export const getBaseUrl = function () {
     }
     return `${process.env.EXPO_PUBLIC_API_URL}/v1`;
   }
-  return "https://api-heed.reactmode.dev/v1";
+  return "https://heed-server.onrender.com/v1";
 };

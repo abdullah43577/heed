@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
-import * as Notifications from "expo-notifications";
+import type { EventSubscription, Notification } from "expo-notifications";
 import { AppState } from "react-native";
+import { Notifications } from "@/provider/notifications";
 import { useAuthStore } from "@/store/auth";
 import { registerForPushNotificationsAsync } from "@/provider/register-for-push-notification";
 import { notificationTarget } from "@/constants/notifications";
@@ -9,16 +10,14 @@ import { router } from "expo-router";
 export default function useNotifications() {
   const { expoPushToken, setExpoPushToken } = useAuthStore();
   const [expoPushTokenError, setExpoPushTokenError] = useState("");
-  const [notification, setNotification] = useState<
-    Notifications.Notification | undefined
-  >(undefined);
-  const notificationListener = useRef<Notifications.EventSubscription | null>(
-    null,
+  const [notification, setNotification] = useState<Notification | undefined>(
+    undefined,
   );
-  const responseListener = useRef<Notifications.EventSubscription | null>(null);
+  const notificationListener = useRef<EventSubscription | null>(null);
+  const responseListener = useRef<EventSubscription | null>(null);
   const appStateRef = useRef(AppState.currentState);
 
-  Notifications.setNotificationHandler({
+  Notifications?.setNotificationHandler({
     handleNotification: async () => {
       const isAppActive = appStateRef.current === "active";
 
@@ -36,9 +35,10 @@ export default function useNotifications() {
     const subscription = AppState.addEventListener("change", (nextAppState) => {
       appStateRef.current = nextAppState;
 
-      if (nextAppState === "active") {
-        Notifications.getAllScheduledNotificationsAsync().then((notifs) => {
-          if (notifs.length) Notifications.dismissAllNotificationsAsync();
+      const notifications = Notifications;
+      if (nextAppState === "active" && notifications) {
+        notifications.getAllScheduledNotificationsAsync().then((notifs) => {
+          if (notifs.length) notifications.dismissAllNotificationsAsync();
         });
       }
     });
@@ -62,6 +62,8 @@ export default function useNotifications() {
   useEffect(() => {
     // Never prompts here; the ask belongs to the setup flow.
     handleRegisterForPushNotification();
+
+    if (!Notifications) return;
 
     notificationListener.current =
       Notifications.addNotificationReceivedListener((notification) => {

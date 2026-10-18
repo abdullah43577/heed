@@ -1,13 +1,15 @@
 import { Platform } from "react-native";
 import * as Device from "expo-device";
-import * as Notifications from "expo-notifications";
 import Constants from "expo-constants";
+import { Notifications } from "./notifications";
 
 // Defaults to false so the OS dialog is only raised from setup, where the ask is
 // explained; a denial is close to permanent.
 export async function registerForPushNotificationsAsync(
   options: { promptIfNeeded?: boolean } = {},
 ) {
+  if (!Notifications) return undefined;
+
   if (Platform.OS === "android") {
     Notifications.setNotificationChannelAsync("default", {
       name: "default",

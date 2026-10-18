@@ -1,6 +1,6 @@
+import { Notifications } from "@/provider/notifications";
 import { registerForPushNotificationsAsync } from "@/provider/register-for-push-notification";
 import { useAuthStore } from "@/store/auth";
-import * as Notifications from "expo-notifications";
 import { useCallback, useEffect, useState } from "react";
 
 // Reading must never raise the OS dialog, or rendering Home would prompt.
@@ -10,6 +10,11 @@ export const usePushPermission = function () {
   const setExpoPushToken = useAuthStore((state) => state.setExpoPushToken);
 
   const refresh = useCallback(async () => {
+    if (!Notifications) {
+      setIsGranted(false);
+      return;
+    }
+
     try {
       const { status } = await Notifications.getPermissionsAsync();
       setIsGranted(status === "granted");

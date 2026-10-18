@@ -1,4 +1,4 @@
-export type NotificationType = "SYSTEM";
+export type NotificationType = "SYSTEM" | "ACCOUNT_NEEDS_REAUTH";
 
 export interface AppNotification {
   id: string;

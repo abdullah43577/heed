@@ -2,7 +2,9 @@ const fs = require("fs");
 
 const googleServicesFile =
   process.env.GOOGLE_SERVICES_JSON ??
-  (fs.existsSync("./google-services.json") ? "./google-services.json" : undefined);
+  (fs.existsSync("./google-services.json")
+    ? "./google-services.json"
+    : undefined);
 
 module.exports = ({ config }) => ({
   expo: {
@@ -63,6 +65,9 @@ module.exports = ({ config }) => ({
     },
     extra: {
       router: {},
+      eas: {
+        projectId: "7aaec9a4-a125-4eb0-a37e-1b7e183b9410",
+      },
     },
     runtimeVersion: {
       policy: "appVersion",
