@@ -20,7 +20,15 @@ export const API_ENDPOINTS = {
   },
 
   messages: {
-    list: "/messages",
+    handledSince: (since: string) => `/messages?view=handled&since=${encodeURIComponent(since)}`,
+    review: "/messages?view=review",
+    detail: (id: string) => `/messages/${id}`,
+    undo: (id: string) => `/messages/${id}/undo`,
+    dismiss: (id: string) => `/messages/${id}/dismiss`,
+  },
+
+  rules: {
+    create: "/rules",
   },
 
   notifications: {

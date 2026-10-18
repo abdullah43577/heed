@@ -14,3 +14,12 @@ export const CATEGORY_META = {
   EmailCategory,
   { label: string; icon: keyof typeof Ionicons.glyphMap }
 >;
+
+export const HANDLED_CATEGORY_ORDER: EmailCategory[] = [
+  "IMPORTANT",
+  "UNSURE",
+  "ROUTINE",
+  "NEWSLETTER",
+  "PROMOTION",
+  "NEEDS_REPLY",
+];

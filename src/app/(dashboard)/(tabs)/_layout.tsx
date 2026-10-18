@@ -1,3 +1,4 @@
+import { useGetReviewMessages } from "@/hooks/messages/use-get-review-messages";
 import { useThemeColors } from "@/hooks/use-theme-colors";
 import { Ionicons } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
@@ -41,6 +42,8 @@ const makeTabIcon = function (key: keyof typeof TAB_ICONS) {
 export default function TabsLayout() {
   const insets = useSafeAreaInsets();
   const { accent, foregroundSubtle, surface, line } = useThemeColors();
+  const { reviewMessages } = useGetReviewMessages();
+  const waiting = reviewMessages.length;
 
   return (
     <Tabs
@@ -61,7 +64,12 @@ export default function TabsLayout() {
     >
       <Tabs.Screen
         name="review"
-        options={{ title: "Review", tabBarIcon: makeTabIcon("review") }}
+        options={{
+          title: "Review",
+          tabBarIcon: makeTabIcon("review"),
+          ...(waiting > 0 && { tabBarBadge: waiting > 99 ? "99+" : waiting }),
+          tabBarBadgeStyle: { backgroundColor: accent, color: "#FFFFFF", fontSize: 10 },
+        }}
       />
       <Tabs.Screen
         name="handled"

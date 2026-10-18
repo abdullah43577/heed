@@ -3,16 +3,16 @@ import { EmailMessage } from "../../../types/email-message";
 import { APIResponse } from "../../../types/response";
 import { useGetData } from "../use-get-data";
 
-export const useGetMessages = function () {
+export const useGetReviewMessages = function () {
   const { data, isFetching, error, refetch } = useGetData<APIResponse<EmailMessage[]>>({
-    url: API_ENDPOINTS.messages.list,
+    url: API_ENDPOINTS.messages.review,
   });
 
   return {
-    messages: data?.data ?? [],
-    hasLoadedMessages: !!data,
-    isFetchingMessages: isFetching,
-    errorMessages: error,
-    refetchMessages: refetch,
+    reviewMessages: data?.data ?? [],
+    hasLoadedReviewMessages: !!data,
+    isFetchingReviewMessages: isFetching,
+    errorReviewMessages: error,
+    refetchReviewMessages: refetch,
   };
 };

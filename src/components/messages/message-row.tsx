@@ -1,19 +1,27 @@
 import { AppText } from "@/components/shared/app-text";
 import { accountColor } from "@/utils/account-color";
 import { formatRelativeDate } from "@/utils/format-date";
-import { View } from "react-native";
+import { Pressable, View } from "react-native";
 import { EmailMessage } from "../../../types/email-message";
 
 interface Props {
   message: EmailMessage;
+  onPress: () => void;
 }
 
-export const IncomingRow = function ({ message }: Props) {
+const actionNote = function (message: EmailMessage) {
+  if (message.action === "UNDONE") return "Marked unread again";
+  if (message.action === "LEFT_UNREAD" && message.category !== "UNSURE") return "Left unread";
+  return null;
+};
+
+export const MessageRow = function ({ message, onPress }: Props) {
   const color = accountColor(message.mailAccount.email);
   const sender = message.fromName ?? message.fromEmail;
+  const note = actionNote(message);
 
   return (
-    <View className="flex-row items-start gap-3 px-4 py-3.5">
+    <Pressable onPress={onPress} className="flex-row items-start gap-3 px-4 py-3.5 active:bg-surface-muted">
       <View
         className="items-center justify-center rounded-full"
         style={{ width: 38, height: 38, backgroundColor: `${color}1F` }}
@@ -31,14 +39,16 @@ export const IncomingRow = function ({ message }: Props) {
           <AppText type="caption">{formatRelativeDate(message.receivedAt)}</AppText>
         </View>
 
-        <AppText type="subtitle" numberOfLines={1} className="mt-0.5">
-          {message.subject}
+        <AppText type="subtitle" numberOfLines={2} className="mt-0.5">
+          {message.summary ?? message.subject}
         </AppText>
 
-        <AppText type="caption" numberOfLines={1} className="mt-1">
-          {message.mailAccount.email}
-        </AppText>
+        {note && (
+          <AppText type="caption" className="mt-1">
+            {note}
+          </AppText>
+        )}
       </View>
-    </View>
+    </Pressable>
   );
 };
