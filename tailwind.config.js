@@ -1,0 +1,128 @@
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    "./src/app/**/*.{js,jsx,ts,tsx}",
+    "./src/components/**/*.{js,jsx,ts,tsx}",
+  ],
+  presets: [require("nativewind/preset")],
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        canvas: "rgb(var(--canvas) / <alpha-value>)",
+        surface: {
+          DEFAULT: "rgb(var(--surface) / <alpha-value>)",
+          muted: "rgb(var(--surface-muted) / <alpha-value>)",
+        },
+        // Not "hairline": that is a borderWidth utility and would collide on border-hairline.
+        line: {
+          DEFAULT: "rgb(var(--line) / <alpha-value>)",
+          strong: "rgb(var(--line-strong) / <alpha-value>)",
+        },
+        foreground: {
+          DEFAULT: "rgb(var(--foreground) / <alpha-value>)",
+          muted: "rgb(var(--foreground-muted) / <alpha-value>)",
+          subtle: "rgb(var(--foreground-subtle) / <alpha-value>)",
+          inverse: "rgb(var(--foreground-inverse) / <alpha-value>)",
+        },
+        accent: {
+          DEFAULT: "rgb(var(--accent) / <alpha-value>)",
+          muted: "rgb(var(--accent-muted) / <alpha-value>)",
+        },
+        danger: {
+          DEFAULT: "rgb(var(--danger) / <alpha-value>)",
+          muted: "rgb(var(--danger-muted) / <alpha-value>)",
+          solid: "rgb(var(--danger-solid) / <alpha-value>)",
+        },
+
+        primary: {
+          50: "#F7F7F9",
+          100: "#EDEDF1",
+          200: "#D8D8DF",
+          300: "#B7B7C2",
+          400: "#86868F",
+          500: "#17171C",
+          600: "#101014",
+          700: "#0B0B0E",
+          800: "#08080A",
+          900: "#050506",
+          foreground: "#ffffff",
+        },
+        secondary: {
+          50: "#E6F4F0",
+          100: "#C7E8DF",
+          200: "#93D3C2",
+          300: "#5BB89F",
+          400: "#2E9A7F",
+          500: "#0E7A63",
+          600: "#0B6553",
+          700: "#095042",
+          800: "#063B31",
+          900: "#042821",
+          foreground: "#ffffff",
+        },
+        tertiary: {
+          50: "#F9F9FB",
+          100: "#F1F1F4",
+          200: "#E3E3E8",
+          300: "#C8C8D1",
+          400: "#9A9AA5",
+          500: "#6B6B76",
+          600: "#54545E",
+          700: "#3D3D45",
+          800: "#2A2A30",
+          900: "#1B1B1F",
+          foreground: "#ffffff",
+        },
+        error: {
+          50: "#FBEAEA",
+          100: "#F5D3D1",
+          200: "#E9A9A4",
+          300: "#DC7D76",
+          400: "#CB554B",
+          500: "#B93A32",
+          600: "#9A2E27",
+          700: "#7A241F",
+          800: "#591A17",
+          900: "#3D1210",
+          foreground: "#ffffff",
+        },
+        neutral: {
+          50: "#FAFAFB",
+          100: "#F3F3F6",
+          200: "#EAEAEE",
+          300: "#D5D5DE",
+          400: "#B4B4BF",
+          500: "#7D7D8A",
+          600: "#63636E",
+          700: "#47474F",
+          800: "#2B2B31",
+          900: "#17171A",
+        },
+      },
+
+      borderWidth: {
+        hairline: "0.5px",
+      },
+
+      borderRadius: {
+        squircle: "10px",
+      },
+
+      fontFamily: {
+        "bricolage-extralight": ["BricolageGrotesque-ExtraLight"],
+        "bricolage-light": ["BricolageGrotesque-Light"],
+        bricolage: ["BricolageGrotesque-Regular"],
+        "bricolage-medium": ["BricolageGrotesque-Medium"],
+        "bricolage-semibold": ["BricolageGrotesque-SemiBold"],
+        "bricolage-bold": ["BricolageGrotesque-Bold"],
+        "bricolage-extrabold": ["BricolageGrotesque-ExtraBold"],
+        inter: ["Inter-Regular"],
+        "inter-medium": ["Inter-Medium"],
+        "inter-semibold": ["Inter-SemiBold"],
+        "inter-bold": ["Inter-Bold"],
+      },
+    },
+  },
+  plugins: [],
+};

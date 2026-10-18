@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+  Must stay outside @layer base: Tailwind tree-shakes `.dark:root` there because
+  the dark class never appears in scanned content. Mirror changes in theme.ts.
+*/
+:root {
+  --canvas: 250 250 251;
+  --surface: 255 255 255;
+  --surface-muted: 243 243 246;
+  --line: 234 234 238;
+  --line-strong: 213 213 222;
+  --foreground: 23 23 26;
+  --foreground-muted: 125 125 138;
+  --foreground-subtle: 180 180 191;
+  --foreground-inverse: 255 255 255;
+  --accent: 14 122 99;
+  --accent-muted: 230 244 240;
+  --danger: 185 58 50;
+  --danger-muted: 251 234 234;
+  --danger-solid: 185 58 50;
+}
+
+.dark:root {
+  --canvas: 15 15 18;
+  --surface: 23 23 27;
+  --surface-muted: 31 31 36;
+  --line: 42 42 49;
+  --line-strong: 58 58 67;
+  --foreground: 244 244 246;
+  --foreground-muted: 156 156 168;
+  --foreground-subtle: 110 110 122;
+  --foreground-inverse: 255 255 255;
+  --accent: 31 158 128;
+  --accent-muted: 18 48 42;
+  --danger: 224 138 131;
+  --danger-muted: 58 26 24;
+  /* Stays dark in both schemes: a fill carrying white text, unlike --danger. */
+  --danger-solid: 185 58 50;
+}

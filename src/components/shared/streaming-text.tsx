@@ -1,0 +1,84 @@
+import { Ionicons } from "@expo/vector-icons";
+import { useEffect, useRef } from "react";
+import { ActivityIndicator, Animated, Text, View } from "react-native";
+import { AppText } from "./app-text";
+
+interface StreamingTextProps {
+  text: string;
+  isStreaming: boolean;
+  isComplete?: boolean;
+  label?: string;
+  labelIcon?: keyof typeof Ionicons.glyphMap;
+  containerClassName?: string;
+  labelClassName?: string;
+  textClassName?: string;
+  showCursor?: boolean;
+  onStreamComplete?: () => void;
+}
+
+export function StreamingText({
+  text,
+  isStreaming,
+  isComplete = false,
+  label = "Generating...",
+  labelIcon = "sparkles",
+  containerClassName = "mt-3 rounded-lg bg-accent-muted p-3",
+  labelClassName = "text-xs font-inter-medium text-accent",
+  textClassName = "mt-1 text-sm text-foreground",
+  showCursor = true,
+  onStreamComplete,
+}: StreamingTextProps) {
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+  const isFirstRender = useRef(true);
+
+  useEffect(() => {
+    if (text && isFirstRender.current) {
+      isFirstRender.current = false;
+      fadeAnim.setValue(0);
+      Animated.timing(fadeAnim, {
+        toValue: 1,
+        duration: 300,
+        useNativeDriver: true,
+      }).start();
+    }
+  }, [text]);
+
+  useEffect(() => {
+    if (isComplete && onStreamComplete) {
+      onStreamComplete();
+    }
+  }, [isComplete]);
+
+  if (!text && !isStreaming) {
+    return null;
+  }
+
+  return (
+    <View className={containerClassName}>
+      <View className="flex-row items-center gap-1.5">
+        {labelIcon && (
+          <Ionicons
+            name={labelIcon}
+            size={14}
+            color={isStreaming ? "#3B82F6" : "#1D4ED8"}
+          />
+        )}
+        <AppText className={labelClassName}>
+          {isStreaming ? label : isComplete ? "Summary" : label}
+        </AppText>
+        {isStreaming && (
+          <ActivityIndicator size="small" color="#3B82F6" className="ml-1" />
+        )}
+      </View>
+
+      <Animated.View style={{ opacity: fadeAnim }}>
+        <AppText className={textClassName}>
+          {text}
+          {isStreaming && showCursor && (
+            <Text className="text-accent">▊</Text>
+          )}
+        </AppText>
+      </Animated.View>
+    </View>
+  );
+}

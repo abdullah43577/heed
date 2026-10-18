@@ -1,0 +1,64 @@
+name: Build Heed Android APK
+
+# Builds only on master. A push to dev publishes an OTA update instead
+# (.eas/workflows/updates.yml), so the two never fire for the same push.
+#
+# OTA cannot carry a native change — a new native dependency, a config plugin,
+# an app.config.js permission, or a version bump all need a real build. Dispatch
+# this manually from whichever branch needs one; the job guards below pick the
+# profile from the ref.
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+jobs:
+  build-preview:
+    if: github.ref == 'refs/heads/dev'
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🏗 Setup repo
+        uses: actions/checkout@v4
+
+      - name: 🏗 Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: npm
+
+      - name: 🏗 Setup EAS
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: 📦 Install dependencies
+        run: npm install
+
+      - name: 🚀 Build Android (preview profile)
+        run: eas build --platform android --profile preview --non-interactive
+
+  build-prod:
+    if: github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🏗 Setup repo
+        uses: actions/checkout@v4
+
+      - name: 🏗 Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: npm
+
+      - name: 🏗 Setup EAS
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: 📦 Install dependencies
+        run: npm install
+
+      - name: 🚀 Build Android (production profile)
+        run: eas build --platform android --profile production --non-interactive
