@@ -8,9 +8,10 @@ interface Props {
   category: EmailCategory;
   messages: EmailMessage[];
   onPressMessage: (message: EmailMessage) => void;
+  onLongPressMessage?: (message: EmailMessage) => void;
 }
 
-export const MessageGroup = function ({ category, messages, onPressMessage }: Props) {
+export const MessageGroup = function ({ category, messages, onPressMessage, onLongPressMessage }: Props) {
   return (
     <View>
       <CategoryHeader category={category} count={messages.length} />
@@ -19,7 +20,11 @@ export const MessageGroup = function ({ category, messages, onPressMessage }: Pr
         {messages.map((message, index) => (
           <View key={message.id}>
             {index > 0 && <View className="ml-16 h-px bg-line" />}
-            <MessageRow message={message} onPress={() => onPressMessage(message)} />
+            <MessageRow
+              message={message}
+              onPress={() => onPressMessage(message)}
+              {...(onLongPressMessage && { onLongPress: () => onLongPressMessage(message) })}
+            />
           </View>
         ))}
       </View>

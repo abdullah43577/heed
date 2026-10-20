@@ -1,10 +1,12 @@
 import { ReviewCard } from "@/components/review/review-card";
+import { RuleEditorSheet } from "@/components/rules/rule-editor-sheet";
 import { AppText } from "@/components/shared/app-text";
 import { EmptyState } from "@/components/shared/empty-state";
 import { useCreateDraft } from "@/hooks/drafts/use-create-draft";
 import { useDraftActions } from "@/hooks/drafts/use-draft-actions";
 import { useGetReviewMessages } from "@/hooks/messages/use-get-review-messages";
 import { useMessageActions } from "@/hooks/messages/use-message-actions";
+import { useSenderRuleSheet } from "@/hooks/rules/use-sender-rule-sheet";
 import { useThemeColors } from "@/hooks/use-theme-colors";
 import { useRouter } from "expo-router";
 import { ActivityIndicator, RefreshControl, ScrollView, View } from "react-native";
@@ -18,6 +20,7 @@ export default function Review() {
     useGetReviewMessages();
   const { dismissReply, isActing } = useMessageActions();
   const { dismissDraft, isDismissing } = useDraftActions();
+  const ruleSheet = useSenderRuleSheet();
 
   const openDraft = (draftId: string) =>
     router.push({ pathname: "/(dashboard)/(tabs)/review/draft-detail", params: { draftId } });
@@ -78,11 +81,14 @@ export default function Review() {
                 onPress={() => handlePress(message)}
                 onDismiss={() => handleDismiss(message)}
                 onDraft={() => createDraft({ messageId: message.id })}
+                onLongPress={() => ruleSheet.openFor(message)}
               />
             ))}
           </View>
         )}
       </ScrollView>
+
+      {ruleSheet.sheetProps && <RuleEditorSheet {...ruleSheet.sheetProps} />}
     </SafeAreaView>
   );
 }

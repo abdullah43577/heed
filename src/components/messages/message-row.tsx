@@ -7,6 +7,7 @@ import { EmailMessage } from "../../../types/email-message";
 interface Props {
   message: EmailMessage;
   onPress: () => void;
+  onLongPress?: () => void;
 }
 
 const actionNote = function (message: EmailMessage) {
@@ -16,13 +17,13 @@ const actionNote = function (message: EmailMessage) {
   return null;
 };
 
-export const MessageRow = function ({ message, onPress }: Props) {
+export const MessageRow = function ({ message, onPress, onLongPress }: Props) {
   const color = accountColor(message.mailAccount.email);
   const sender = message.fromName ?? message.fromEmail;
   const note = actionNote(message);
 
   return (
-    <Pressable onPress={onPress} className="flex-row items-start gap-3 px-4 py-3.5 active:bg-surface-muted">
+    <Pressable onPress={onPress} onLongPress={onLongPress} delayLongPress={350} className="flex-row items-start gap-3 px-4 py-3.5 active:bg-surface-muted">
       <View
         className="items-center justify-center rounded-full"
         style={{ width: 38, height: 38, backgroundColor: `${color}1F` }}

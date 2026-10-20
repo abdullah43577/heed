@@ -24,8 +24,3 @@ export interface EmailMessage {
   mailAccount: { id: string; email: string };
   draft: DraftSummary | null;
 }
-
-export interface CreateSenderRuleRequest {
-  pattern: string;
-  kind: "ALWAYS_LEAVE";
-}

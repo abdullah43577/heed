@@ -32,6 +32,9 @@ export const API_ENDPOINTS = {
 
   rules: {
     create: "/rules",
+    list: "/rules",
+    forAccount: (mailAccountId: string) => `/rules?mailAccountId=${encodeURIComponent(mailAccountId)}`,
+    delete: (id: string) => `/rules/${id}`,
   },
 
   reports: {

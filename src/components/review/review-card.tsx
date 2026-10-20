@@ -10,6 +10,7 @@ interface Props {
   onPress: () => void;
   onDismiss: () => void;
   onDraft: () => void;
+  onLongPress?: () => void;
   disabled: boolean;
 }
 
@@ -20,13 +21,17 @@ const draftState = function (message: EmailMessage) {
   return null;
 };
 
-export const ReviewCard = function ({ message, onPress, onDismiss, onDraft, disabled }: Props) {
+export const ReviewCard = function ({ message, onPress, onDismiss, onDraft, onLongPress, disabled }: Props) {
   const color = accountColor(message.mailAccount.email);
   const sender = message.fromName ?? message.fromEmail;
   const state = draftState(message);
 
   return (
-    <Pressable onPress={onPress} className="rounded-3xl border-hairline border-line bg-surface p-5 active:opacity-70">
+    <Pressable
+      onPress={onPress}
+      onLongPress={onLongPress}
+      delayLongPress={350}
+      className="rounded-3xl border-hairline border-line bg-surface p-5 active:opacity-70">
       <View className="flex-row items-center gap-3">
         <View
           className="items-center justify-center rounded-full"

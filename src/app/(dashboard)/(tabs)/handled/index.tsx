@@ -1,12 +1,14 @@
 import { BacklogResults } from "@/components/handled/backlog-results";
 import { HandledSummary } from "@/components/handled/handled-summary";
 import { MessageGroup } from "@/components/messages/message-group";
+import { RuleEditorSheet } from "@/components/rules/rule-editor-sheet";
 import { AppText } from "@/components/shared/app-text";
 import { EmptyState } from "@/components/shared/empty-state";
 import { IconButton } from "@/components/shared/icon-button";
 import { HANDLED_CATEGORY_ORDER } from "@/constants/categories";
 import { useGetBacklogRuns } from "@/hooks/backlog/use-get-backlog-runs";
 import { useGetHandledMessages } from "@/hooks/messages/use-get-handled-messages";
+import { useSenderRuleSheet } from "@/hooks/rules/use-sender-rule-sheet";
 import { useThemeColors } from "@/hooks/use-theme-colors";
 import { isWithinLastDays } from "@/utils/format-date";
 import { useRouter } from "expo-router";
@@ -23,6 +25,7 @@ export default function Handled() {
   const { handledMessages, hasLoadedHandledMessages, isFetchingHandledMessages, refetchHandledMessages } =
     useGetHandledMessages();
   const { backlogRuns, refetchBacklogRuns } = useGetBacklogRuns();
+  const ruleSheet = useSenderRuleSheet();
 
   const groups = HANDLED_CATEGORY_ORDER.map((category) => ({
     category,
@@ -105,11 +108,14 @@ export default function Handled() {
                 category={group.category}
                 messages={group.messages}
                 onPressMessage={handlePressMessage}
+                onLongPressMessage={ruleSheet.openFor}
               />
             ))}
           </View>
         )}
       </ScrollView>
+
+      {ruleSheet.sheetProps && <RuleEditorSheet {...ruleSheet.sheetProps} />}
     </SafeAreaView>
   );
 }

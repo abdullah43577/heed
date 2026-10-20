@@ -7,6 +7,7 @@ export interface MailAccount {
   connectedAt: string;
   styleNote: string | null;
   styleLearnedAt: string | null;
+  instruction: string | null;
 }
 
 export interface ConnectMailAccountRequest {
