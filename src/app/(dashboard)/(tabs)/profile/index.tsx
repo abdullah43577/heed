@@ -15,7 +15,9 @@ import { useGetProfile } from "@/hooks/use-get-profile";
 import { useGetUnreadCount } from "@/hooks/notifications/use-get-unread-count";
 import { useGetMailAccounts } from "@/hooks/mail-accounts/use-get-mail-accounts";
 import { useTheme } from "@/hooks/use-theme";
+import { DEFAULT_REPORT_TIME } from "@/constants/reports";
 import { ThemePreference } from "@/constants/theme";
+import { formatTimeOfDay } from "@/utils/format-date";
 import { ProfileFormValues, profileSchema } from "@/schemas/settings/profile";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Constants from "expo-constants";
@@ -148,6 +150,12 @@ export default function Profile() {
               withDivider
               value={needsReconnect ? "Reconnect needed" : `${mailAccounts.length} connected`}
               onPress={() => router.push("/(dashboard)/(tabs)/profile/accounts")}
+            />
+            <SettingsRow
+              label="Daily report"
+              withDivider
+              value={formatTimeOfDay(profile?.settings?.reportTime ?? DEFAULT_REPORT_TIME)}
+              onPress={() => router.push("/(dashboard)/(tabs)/profile/report-settings")}
             />
           </SettingsCard>
 

@@ -2,6 +2,7 @@ import { HandledSummary } from "@/components/handled/handled-summary";
 import { MessageGroup } from "@/components/messages/message-group";
 import { AppText } from "@/components/shared/app-text";
 import { EmptyState } from "@/components/shared/empty-state";
+import { IconButton } from "@/components/shared/icon-button";
 import { HANDLED_CATEGORY_ORDER } from "@/constants/categories";
 import { useGetHandledMessages } from "@/hooks/messages/use-get-handled-messages";
 import { useThemeColors } from "@/hooks/use-theme-colors";
@@ -41,11 +42,18 @@ export default function Handled() {
           />
         }
       >
-        <View className="px-5 pt-2">
-          <AppText type="display">Handled</AppText>
-          <AppText type="subtitle" className="mt-1.5">
-            What Heed read for you today
-          </AppText>
+        <View className="flex-row items-start px-5 pt-2">
+          <View className="flex-1">
+            <AppText type="display">Handled</AppText>
+            <AppText type="subtitle" className="mt-1.5">
+              What Heed read for you today
+            </AppText>
+          </View>
+          <IconButton
+            icon="newspaper-outline"
+            onPress={() => router.push("/(dashboard)/(tabs)/handled/reports")}
+            className="mt-1"
+          />
         </View>
 
         {!hasLoadedHandledMessages ? (

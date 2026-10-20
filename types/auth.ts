@@ -6,6 +6,8 @@ export interface UserSettings {
   userId: string;
   theme: Theme;
   notifications: boolean;
+  reportTime: string;
+  timezone: string;
 }
 
 export interface AuthSession {

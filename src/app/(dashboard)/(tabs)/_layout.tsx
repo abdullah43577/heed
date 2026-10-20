@@ -1,4 +1,5 @@
 import { useGetReviewMessages } from "@/hooks/messages/use-get-review-messages";
+import { useSyncTimezone } from "@/hooks/profile/use-sync-timezone";
 import { useThemeColors } from "@/hooks/use-theme-colors";
 import { Ionicons } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
@@ -44,6 +45,7 @@ export default function TabsLayout() {
   const { accent, foregroundSubtle, surface, line } = useThemeColors();
   const { reviewMessages } = useGetReviewMessages();
   const waiting = reviewMessages.length;
+  useSyncTimezone();
 
   return (
     <Tabs

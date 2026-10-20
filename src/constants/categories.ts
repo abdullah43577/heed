@@ -23,3 +23,12 @@ export const HANDLED_CATEGORY_ORDER: EmailCategory[] = [
   "PROMOTION",
   "NEEDS_REPLY",
 ];
+
+export const REPORT_CATEGORY_ORDER: EmailCategory[] = [
+  "IMPORTANT",
+  "ROUTINE",
+  "NEWSLETTER",
+  "PROMOTION",
+  "UNSURE",
+  "NEEDS_REPLY",
+];

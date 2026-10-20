@@ -31,6 +31,11 @@ export const API_ENDPOINTS = {
     create: "/rules",
   },
 
+  reports: {
+    list: "/reports",
+    detail: (id: string) => `/reports/${id}`,
+  },
+
   notifications: {
     list: "/notifications",
     unreadCount: "/notifications/unread-count",

@@ -4,10 +4,10 @@ import { UserSettings } from "../../../types/auth";
 import { APIResponse } from "../../../types/response";
 
 type UpdateSettingsPayload = Partial<
-  Pick<UserSettings, "theme" | "notifications">
+  Pick<UserSettings, "theme" | "notifications" | "reportTime" | "timezone">
 >;
 
-export const useUpdateSettings = function () {
+export const useUpdateSettings = function (options?: { silent?: boolean }) {
   const { mutate, isPending } = useSubmitData<
     UpdateSettingsPayload,
     APIResponse<UserSettings>
@@ -16,6 +16,7 @@ export const useUpdateSettings = function () {
     method: "post",
     onSuccessMessage: "Preferences updated",
     additionalQueryKeys: [[API_ENDPOINTS.auth.getProfile]],
+    silent: options?.silent ?? false,
   });
 
   return { updateSettings: mutate, isUpdatingSettings: isPending };
