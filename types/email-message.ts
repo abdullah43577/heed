@@ -1,6 +1,7 @@
 import { EmailCategory } from "@/constants/categories";
+import { DraftSummary } from "./draft";
 
-export type EmailAction = "MARKED_READ" | "LEFT_UNREAD" | "AWAITING_REPLY" | "UNDONE" | "PENDING_CONFIRM";
+export type EmailAction = "MARKED_READ" | "LEFT_UNREAD" | "AWAITING_REPLY" | "UNDONE" | "PENDING_CONFIRM" | "REPLIED";
 export type TriageSource = "RULE" | "HEADER" | "AI" | "FALLBACK";
 
 export interface EmailMessage {
@@ -21,6 +22,7 @@ export interface EmailMessage {
   backlogRunId: string | null;
   createdAt: string;
   mailAccount: { id: string; email: string };
+  draft: DraftSummary | null;
 }
 
 export interface CreateSenderRuleRequest {

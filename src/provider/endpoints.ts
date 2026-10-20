@@ -25,6 +25,7 @@ export const API_ENDPOINTS = {
     detail: (id: string) => `/messages/${id}`,
     undo: (id: string) => `/messages/${id}/undo`,
     dismiss: (id: string) => `/messages/${id}/dismiss`,
+    draft: (id: string) => `/messages/${id}/draft`,
   },
 
   rules: {
@@ -34,6 +35,15 @@ export const API_ENDPOINTS = {
   reports: {
     list: "/reports",
     detail: (id: string) => `/reports/${id}`,
+  },
+
+  drafts: {
+    detail: (id: string) => `/drafts/${id}`,
+    update: (id: string) => `/drafts/${id}`,
+    rewrite: (id: string) => `/drafts/${id}/rewrite`,
+    send: (id: string) => `/drafts/${id}/send`,
+    cancel: (id: string) => `/drafts/${id}/cancel`,
+    dismiss: (id: string) => `/drafts/${id}/dismiss`,
   },
 
   backlog: {

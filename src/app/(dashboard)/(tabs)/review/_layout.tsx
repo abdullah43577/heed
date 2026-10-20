@@ -5,6 +5,7 @@ export default function ReviewLayout() {
     <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen name="index" options={{ title: "Review" }} />
       <Stack.Screen name="message-detail" options={{ title: "Email" }} />
+      <Stack.Screen name="draft-detail" options={{ title: "Reply" }} />
     </Stack>
   );
 }

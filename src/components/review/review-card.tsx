@@ -9,12 +9,21 @@ interface Props {
   message: EmailMessage;
   onPress: () => void;
   onDismiss: () => void;
+  onDraft: () => void;
   disabled: boolean;
 }
 
-export const ReviewCard = function ({ message, onPress, onDismiss, disabled }: Props) {
+const draftState = function (message: EmailMessage) {
+  const status = message.draft?.status;
+  if (status === "SCHEDULED" || status === "SENDING") return { label: "Sending…", danger: false };
+  if (status === "FAILED") return { label: "Not sent. Open it to try again", danger: true };
+  return null;
+};
+
+export const ReviewCard = function ({ message, onPress, onDismiss, onDraft, disabled }: Props) {
   const color = accountColor(message.mailAccount.email);
   const sender = message.fromName ?? message.fromEmail;
+  const state = draftState(message);
 
   return (
     <Pressable onPress={onPress} className="rounded-3xl border-hairline border-line bg-surface p-5 active:opacity-70">
@@ -48,13 +57,33 @@ export const ReviewCard = function ({ message, onPress, onDismiss, disabled }: P
         </AppText>
       )}
 
-      <AppButton
-        type="secondary"
-        label="No reply needed"
-        onPress={onDismiss}
-        disabled={disabled}
-        className="mt-4 h-11"
-      />
+      {message.draft && (
+        <View className="mt-4 rounded-2xl bg-surface-muted px-4 py-3">
+          <AppText type="caption" className="mb-1">
+            {"Heed's draft"}
+          </AppText>
+          <AppText type="default" numberOfLines={3}>
+            {message.draft.body}
+          </AppText>
+        </View>
+      )}
+
+      {state && (
+        <AppText type="caption" className={state.danger ? "mt-3 text-danger" : "mt-3"}>
+          {state.label}
+        </AppText>
+      )}
+
+      {!state && (
+        <View className="mt-4 flex-row gap-3">
+          <AppButton type="secondary" label="No reply needed" onPress={onDismiss} disabled={disabled} className="h-11 flex-1" />
+          {message.draft ? (
+            <AppButton type="submit" label="Review" onPress={onPress} disabled={disabled} className="h-11 flex-1" />
+          ) : (
+            <AppButton type="submit" label="Draft a reply" onPress={onDraft} disabled={disabled} className="h-11 flex-1" />
+          )}
+        </View>
+      )}
     </Pressable>
   );
 };

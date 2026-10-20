@@ -11,6 +11,7 @@ export default function ProfileLayout() {
       <Stack.Screen name="report-settings" options={{ title: "Daily report" }} />
       <Stack.Screen name="report-detail" options={{ title: "Report" }} />
       <Stack.Screen name="message-detail" options={{ title: "Email" }} />
+      <Stack.Screen name="draft-detail" options={{ title: "Reply" }} />
     </Stack>
   );
 }

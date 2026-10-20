@@ -11,6 +11,7 @@ interface Props {
 
 const actionNote = function (message: EmailMessage) {
   if (message.action === "UNDONE") return "Marked unread again";
+  if (message.action === "REPLIED") return message.reason ?? "You replied";
   if (message.action === "LEFT_UNREAD" && message.category !== "UNSURE") return "Left unread";
   return null;
 };

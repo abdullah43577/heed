@@ -1,4 +1,4 @@
-export type NotificationType = "SYSTEM" | "ACCOUNT_NEEDS_REAUTH" | "DAILY_REPORT" | "BACKLOG_READY";
+export type NotificationType = "SYSTEM" | "ACCOUNT_NEEDS_REAUTH" | "DAILY_REPORT" | "BACKLOG_READY" | "DRAFTS_READY";
 
 export interface AppNotification {
   id: string;

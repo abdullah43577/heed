@@ -2,7 +2,10 @@ import { MessageAction, MessageActions } from "@/components/message-detail/messa
 import { MessageInsight } from "@/components/message-detail/message-insight";
 import { MessageOverview } from "@/components/message-detail/message-overview";
 import { ScreenHeader } from "@/components/shared/screen-header";
+import { OPEN_DRAFT_STATUSES } from "@/constants/drafts";
+import { useCreateDraft } from "@/hooks/drafts/use-create-draft";
 import { useGetMessage } from "@/hooks/messages/use-get-message";
+import { useSiblingRoute } from "@/hooks/use-sibling-route";
 import { useMessageActions } from "@/hooks/messages/use-message-actions";
 import { useThemeColors } from "@/hooks/use-theme-colors";
 import * as Linking from "expo-linking";
@@ -12,11 +15,15 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function MessageDetail() {
   const router = useRouter();
+  const sibling = useSiblingRoute();
   const { accent } = useThemeColors();
   const { messageId } = useLocalSearchParams<{ messageId: string }>();
 
   const { message, isFetchingMessage } = useGetMessage({ messageId, shouldFetch: !!messageId });
   const { undoMarkRead, dismissReply, createSenderRule, isActing } = useMessageActions();
+
+  const openDraft = (draftId: string) => router.push({ pathname: sibling("draft-detail"), params: { draftId } });
+  const { createDraft, isCreatingDraft } = useCreateDraft({ onCreated: (draft) => openDraft(draft.id) });
 
   if (!message) {
     return (
@@ -44,7 +51,12 @@ export default function MessageDetail() {
     );
   };
 
+  const openDraftId = message.draft && OPEN_DRAFT_STATUSES.includes(message.draft.status) ? message.draft.id : null;
+
   const actions: MessageAction[] = [
+    openDraftId
+      ? { key: "draft", label: "Open Heed's draft", icon: "create-outline", onPress: () => openDraft(openDraftId) }
+      : { key: "draft", label: "Draft a reply", icon: "create-outline", onPress: () => createDraft({ messageId: message.id }) },
     ...(isWaitingOnReply
       ? [{ key: "dismiss", label: "No reply needed", icon: "checkmark-done-outline" as const, onPress: () => dismissReply({ id: message.id }) }]
       : []),
@@ -66,7 +78,7 @@ export default function MessageDetail() {
       >
         <MessageOverview message={message} />
         <MessageInsight message={message} />
-        <MessageActions actions={actions} disabled={isActing} />
+        <MessageActions actions={actions} disabled={isActing || isCreatingDraft} />
       </ScrollView>
     </SafeAreaView>
   );
