@@ -17,6 +17,8 @@ export const API_ENDPOINTS = {
     list: "/mail-accounts",
     connect: "/mail-accounts/connect",
     delete: (id: string) => `/mail-accounts/${id}`,
+    update: (id: string) => `/mail-accounts/${id}`,
+    learnStyle: (id: string) => `/mail-accounts/${id}/learn-style`,
   },
 
   messages: {

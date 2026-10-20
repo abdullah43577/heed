@@ -1,4 +1,5 @@
 import { AccountHeaderCard } from "@/components/mail-accounts/account-header-card";
+import { WritingStyleCard } from "@/components/mail-accounts/writing-style-card";
 import { SettingsCard } from "@/components/profile/settings-card";
 import { SettingsRow } from "@/components/profile/settings-row";
 import { AppButton } from "@/components/shared/app-button";
@@ -7,9 +8,12 @@ import { BACKLOG_ACTIVE_STATUSES, BACKLOG_STATUS_LABEL } from "@/constants/backl
 import { useGetBacklogRuns } from "@/hooks/backlog/use-get-backlog-runs";
 import { useConnectMailAccount } from "@/hooks/mail-accounts/use-connect-mail-account";
 import { useGetMailAccounts } from "@/hooks/mail-accounts/use-get-mail-accounts";
+import { useWritingStyle } from "@/hooks/mail-accounts/use-writing-style";
 import { useThemeColors } from "@/hooks/use-theme-colors";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { ActivityIndicator, ScrollView, View } from "react-native";
+import { useState } from "react";
+import { ActivityIndicator, View } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function AccountDetail() {
@@ -20,6 +24,10 @@ export default function AccountDetail() {
   const { mailAccounts, hasLoadedMailAccounts } = useGetMailAccounts();
   const { backlogRuns } = useGetBacklogRuns({ mailAccountId: accountId, shouldFetch: !!accountId });
   const { connectMailAccount, isConnectingMailAccount } = useConnectMailAccount();
+  const [isEditingStyle, setIsEditingStyle] = useState(false);
+  const { learnStyle, isLearningStyle, saveStyleNote, isSavingStyleNote } = useWritingStyle({
+    onSaved: () => setIsEditingStyle(false),
+  });
 
   const account = mailAccounts.find((candidate) => candidate.id === accountId);
   const latestRun = backlogRuns[0];
@@ -39,10 +47,13 @@ export default function AccountDetail() {
           {!hasLoadedMailAccounts && <ActivityIndicator color={accent} />}
         </View>
       ) : (
-        <ScrollView
+        <KeyboardAwareScrollView
           className="flex-1"
           contentContainerClassName="gap-4 px-5 pb-10 pt-5"
           showsVerticalScrollIndicator={false}
+          enableOnAndroid
+          extraScrollHeight={40}
+          keyboardShouldPersistTaps="handled"
         >
           <AccountHeaderCard account={account} />
 
@@ -63,7 +74,17 @@ export default function AccountDetail() {
               onPress={handleOpenBacklog}
             />
           </SettingsCard>
-        </ScrollView>
+
+          <WritingStyleCard
+            account={account}
+            onLearn={() => learnStyle({ id: account.id })}
+            onSave={(styleNote) => saveStyleNote({ id: account.id, styleNote })}
+            isLearning={isLearningStyle}
+            isSaving={isSavingStyleNote}
+            isEditing={isEditingStyle}
+            onEditingChange={setIsEditingStyle}
+          />
+        </KeyboardAwareScrollView>
       )}
     </SafeAreaView>
   );

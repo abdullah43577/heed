@@ -5,6 +5,8 @@ export interface MailAccount {
   email: string;
   status: MailAccountStatus;
   connectedAt: string;
+  styleNote: string | null;
+  styleLearnedAt: string | null;
 }
 
 export interface ConnectMailAccountRequest {
