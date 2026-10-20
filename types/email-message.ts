@@ -1,6 +1,6 @@
 import { EmailCategory } from "@/constants/categories";
 
-export type EmailAction = "MARKED_READ" | "LEFT_UNREAD" | "AWAITING_REPLY" | "UNDONE";
+export type EmailAction = "MARKED_READ" | "LEFT_UNREAD" | "AWAITING_REPLY" | "UNDONE" | "PENDING_CONFIRM";
 export type TriageSource = "RULE" | "HEADER" | "AI" | "FALLBACK";
 
 export interface EmailMessage {
@@ -18,6 +18,7 @@ export interface EmailMessage {
   summary: string | null;
   reason: string | null;
   triagedAt: string | null;
+  backlogRunId: string | null;
   createdAt: string;
   mailAccount: { id: string; email: string };
 }

@@ -7,6 +7,7 @@ export default function HandledLayout() {
       <Stack.Screen name="message-detail" options={{ title: "Email" }} />
       <Stack.Screen name="reports" options={{ title: "Past reports" }} />
       <Stack.Screen name="report-detail" options={{ title: "Report" }} />
+      <Stack.Screen name="backlog" options={{ title: "Tidy the backlog" }} />
     </Stack>
   );
 }

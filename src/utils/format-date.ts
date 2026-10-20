@@ -1,7 +1,11 @@
-import { format, formatDistanceToNow, isToday, isYesterday, parse, startOfDay } from "date-fns";
+import { format, formatDistanceToNow, isAfter, isToday, isYesterday, parse, startOfDay, subDays } from "date-fns";
 
 export const formatRelativeDate = function (date: string) {
   return formatDistanceToNow(new Date(date), { addSuffix: true });
+};
+
+export const isWithinLastDays = function (date: string, days: number) {
+  return isAfter(new Date(date), subDays(new Date(), days));
 };
 
 export const startOfTodayIso = function () {

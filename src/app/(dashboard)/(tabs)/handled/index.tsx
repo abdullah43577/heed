@@ -1,21 +1,28 @@
+import { BacklogResults } from "@/components/handled/backlog-results";
 import { HandledSummary } from "@/components/handled/handled-summary";
 import { MessageGroup } from "@/components/messages/message-group";
 import { AppText } from "@/components/shared/app-text";
 import { EmptyState } from "@/components/shared/empty-state";
 import { IconButton } from "@/components/shared/icon-button";
 import { HANDLED_CATEGORY_ORDER } from "@/constants/categories";
+import { useGetBacklogRuns } from "@/hooks/backlog/use-get-backlog-runs";
 import { useGetHandledMessages } from "@/hooks/messages/use-get-handled-messages";
 import { useThemeColors } from "@/hooks/use-theme-colors";
+import { isWithinLastDays } from "@/utils/format-date";
 import { useRouter } from "expo-router";
 import { ActivityIndicator, RefreshControl, ScrollView, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { BacklogRun } from "../../../../../types/backlog";
 import { EmailMessage } from "../../../../../types/email-message";
+
+const RECENT_TIDY_DAYS = 7;
 
 export default function Handled() {
   const router = useRouter();
   const { accent } = useThemeColors();
   const { handledMessages, hasLoadedHandledMessages, isFetchingHandledMessages, refetchHandledMessages } =
     useGetHandledMessages();
+  const { backlogRuns, refetchBacklogRuns } = useGetBacklogRuns();
 
   const groups = HANDLED_CATEGORY_ORDER.map((category) => ({
     category,
@@ -24,8 +31,21 @@ export default function Handled() {
 
   const count = (predicate: (message: EmailMessage) => boolean) => handledMessages.filter(predicate).length;
 
+  const recentTidies = backlogRuns.filter(
+    (run) => run.status === "DONE" && !!run.finishedAt && isWithinLastDays(run.finishedAt, RECENT_TIDY_DAYS),
+  );
+
   const handlePressMessage = function (message: EmailMessage) {
     router.push({ pathname: "/(dashboard)/(tabs)/handled/message-detail", params: { messageId: message.id } });
+  };
+
+  const handlePressTidy = function (run: BacklogRun) {
+    router.push({ pathname: "/(dashboard)/(tabs)/handled/backlog", params: { runId: run.id } });
+  };
+
+  const handleRefresh = function () {
+    refetchHandledMessages();
+    refetchBacklogRuns();
   };
 
   return (
@@ -37,7 +57,7 @@ export default function Handled() {
         refreshControl={
           <RefreshControl
             refreshing={isFetchingHandledMessages && hasLoadedHandledMessages}
-            onRefresh={() => refetchHandledMessages()}
+            onRefresh={handleRefresh}
             tintColor={accent}
           />
         }
@@ -60,7 +80,7 @@ export default function Handled() {
           <View className="flex-1 items-center justify-center py-16">
             <ActivityIndicator color={accent} />
           </View>
-        ) : groups.length === 0 ? (
+        ) : groups.length === 0 && recentTidies.length === 0 ? (
           <EmptyState
             illustration="emptyHandled"
             accentColor={accent}
@@ -69,11 +89,15 @@ export default function Handled() {
           />
         ) : (
           <View className="gap-8 px-5 pt-6">
-            <HandledSummary
-              readCount={count((message) => message.action === "MARKED_READ")}
-              leftCount={count((message) => message.category === "UNSURE")}
-              worthALookCount={count((message) => message.category === "IMPORTANT")}
-            />
+            {groups.length > 0 && (
+              <HandledSummary
+                readCount={count((message) => message.action === "MARKED_READ")}
+                leftCount={count((message) => message.category === "UNSURE")}
+                worthALookCount={count((message) => message.category === "IMPORTANT")}
+              />
+            )}
+
+            <BacklogResults runs={recentTidies} onPressRun={handlePressTidy} />
 
             {groups.map((group) => (
               <MessageGroup

@@ -5,6 +5,8 @@ export default function ProfileLayout() {
     <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen name="index" options={{ title: "Profile" }} />
       <Stack.Screen name="accounts" options={{ title: "Gmail accounts" }} />
+      <Stack.Screen name="account-detail" options={{ title: "Gmail account" }} />
+      <Stack.Screen name="backlog" options={{ title: "Tidy the backlog" }} />
       <Stack.Screen name="notifications" options={{ title: "Notifications" }} />
       <Stack.Screen name="report-settings" options={{ title: "Daily report" }} />
       <Stack.Screen name="report-detail" options={{ title: "Report" }} />

@@ -67,6 +67,9 @@ export default function Accounts() {
           <>
             <MailAccountList
               accounts={mailAccounts}
+              onPress={(account) =>
+                router.push({ pathname: "/(dashboard)/(tabs)/profile/account-detail", params: { accountId: account.id } })
+              }
               onReconnect={(account) => connectMailAccount(account.email)}
               onDisconnect={setPendingDisconnect}
               disabled={isBusy}

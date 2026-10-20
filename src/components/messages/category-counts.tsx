@@ -1,24 +1,24 @@
 import { AppText } from "@/components/shared/app-text";
 import { SectionHeader } from "@/components/shared/section-header";
-import { CATEGORY_META, REPORT_CATEGORY_ORDER } from "@/constants/categories";
+import { CATEGORY_META, EmailCategory, REPORT_CATEGORY_ORDER } from "@/constants/categories";
 import { useThemeColors } from "@/hooks/use-theme-colors";
 import { Ionicons } from "@expo/vector-icons";
 import { View } from "react-native";
-import { ReportTotals } from "../../../types/report";
 
 interface Props {
-  totals: ReportTotals;
+  byCategory: Record<EmailCategory, number>;
+  title?: string;
 }
 
-export const ReportCategoryCounts = function ({ totals }: Props) {
+export const CategoryCounts = function ({ byCategory, title = "By category" }: Props) {
   const { categoryTint } = useThemeColors();
-  const rows = REPORT_CATEGORY_ORDER.filter((category) => totals.byCategory[category] > 0);
+  const rows = REPORT_CATEGORY_ORDER.filter((category) => byCategory[category] > 0);
 
   if (rows.length === 0) return null;
 
   return (
     <View>
-      <SectionHeader title="By category" />
+      <SectionHeader title={title} />
 
       <View className="overflow-hidden rounded-2xl border-hairline border-line bg-surface">
         {rows.map((category, index) => {
@@ -38,7 +38,7 @@ export const ReportCategoryCounts = function ({ totals }: Props) {
                 <AppText type="default" className="flex-1">
                   {meta.label}
                 </AppText>
-                <AppText type="label">{totals.byCategory[category]}</AppText>
+                <AppText type="label">{byCategory[category]}</AppText>
               </View>
             </View>
           );

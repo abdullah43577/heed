@@ -1,6 +1,6 @@
 import { MessageGroup } from "@/components/messages/message-group";
 import { ReportAccountCounts } from "@/components/reports/report-account-counts";
-import { ReportCategoryCounts } from "@/components/reports/report-category-counts";
+import { CategoryCounts } from "@/components/messages/category-counts";
 import { ReportTotals } from "@/components/reports/report-totals";
 import { AppText } from "@/components/shared/app-text";
 import { ScreenHeader } from "@/components/shared/screen-header";
@@ -55,7 +55,7 @@ export default function ReportDetail() {
         }
       >
         <ReportTotals report={report} />
-        <ReportCategoryCounts totals={report.totals} />
+        <CategoryCounts byCategory={report.totals.byCategory} />
         {report.totals.byAccount.length > 1 && <ReportAccountCounts accounts={report.totals.byAccount} />}
 
         {groups.map((group) => (

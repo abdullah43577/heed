@@ -29,6 +29,10 @@ export default function MessageDetail() {
     );
   }
 
+  // A backlog email that might need a reply is left unread instead of awaiting one.
+  const isWaitingOnReply =
+    message.action === "AWAITING_REPLY" || (message.category === "NEEDS_REPLY" && message.action === "LEFT_UNREAD");
+
   const handleNeverAutoRead = function () {
     createSenderRule({ pattern: message.fromEmail, kind: "ALWAYS_LEAVE" });
     if (message.action === "MARKED_READ") undoMarkRead({ id: message.id });
@@ -41,7 +45,7 @@ export default function MessageDetail() {
   };
 
   const actions: MessageAction[] = [
-    ...(message.action === "AWAITING_REPLY"
+    ...(isWaitingOnReply
       ? [{ key: "dismiss", label: "No reply needed", icon: "checkmark-done-outline" as const, onPress: () => dismissReply({ id: message.id }) }]
       : []),
     ...(message.action === "MARKED_READ"

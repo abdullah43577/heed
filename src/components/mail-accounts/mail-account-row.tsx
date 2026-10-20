@@ -8,18 +8,19 @@ import { MailAccount } from "../../../types/mail-account";
 
 interface Props {
   account: MailAccount;
+  onPress: () => void;
   onReconnect: () => void;
   onDisconnect: () => void;
   disabled: boolean;
 }
 
-export const MailAccountRow = function ({ account, onReconnect, onDisconnect, disabled }: Props) {
+export const MailAccountRow = function ({ account, onPress, onReconnect, onDisconnect, disabled }: Props) {
   const { foregroundSubtle } = useThemeColors();
   const color = accountColor(account.email);
   const needsReauth = account.status === "NEEDS_REAUTH";
 
   return (
-    <View className="flex-row items-center gap-3 px-4 py-3.5">
+    <Pressable onPress={onPress} className="flex-row items-center gap-3 px-4 py-3.5 active:bg-surface-muted">
       <View
         className="items-center justify-center rounded-full"
         style={{ width: 38, height: 38, backgroundColor: `${color}1F` }}
@@ -59,6 +60,6 @@ export const MailAccountRow = function ({ account, onReconnect, onDisconnect, di
       >
         <Ionicons name="close" size={15} color={foregroundSubtle} />
       </Pressable>
-    </View>
+    </Pressable>
   );
 };

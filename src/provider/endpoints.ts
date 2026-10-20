@@ -36,6 +36,15 @@ export const API_ENDPOINTS = {
     detail: (id: string) => `/reports/${id}`,
   },
 
+  backlog: {
+    start: "/backlog",
+    list: "/backlog",
+    forAccount: (mailAccountId: string) => `/backlog?mailAccountId=${encodeURIComponent(mailAccountId)}`,
+    detail: (id: string) => `/backlog/${id}`,
+    apply: (id: string) => `/backlog/${id}/apply`,
+    cancel: (id: string) => `/backlog/${id}/cancel`,
+  },
+
   notifications: {
     list: "/notifications",
     unreadCount: "/notifications/unread-count",
