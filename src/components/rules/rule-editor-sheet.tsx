@@ -56,7 +56,7 @@ export const RuleEditorSheet = function ({
   };
 
   return (
-    <AppModal isVisible={visible} onClose={onClose} variant="bottom-sheet" showHandle title="Sender rule">
+    <AppModal isVisible={visible} onClose={onClose} variant="bottom-sheet" showHandle scrollable title="Sender rule">
       <View className="gap-5 px-5 pb-6">
         {senderEmail ? (
           <View className="gap-2">

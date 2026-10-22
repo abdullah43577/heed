@@ -1,7 +1,8 @@
 import { clsx } from "clsx";
 import { type ReactNode } from "react";
-import { Pressable, View } from "react-native";
+import { Pressable, ScrollView, useWindowDimensions, View } from "react-native";
 import Modal from "react-native-modal";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useKeyboardHeight } from "@/hooks/use-keyboard-height";
 import { AppText } from "./app-text";
 
@@ -15,8 +16,15 @@ interface AppModalProps {
   children: ReactNode;
   contentClassName?: string;
   showHandle?: boolean;
+  // For a tall sheet with an input: the body scrolls within the space above the keyboard,
+  // so lifting the sheet never pushes its top (and the field being typed in) off screen.
+  // Not for a body that is itself a list (BottomSheetPicker), which would nest scroll views.
+  scrollable?: boolean;
   modalProps?: Record<string, unknown>;
 }
+
+// The sheet handle, title and padding, plus a gap left above the sheet.
+const SHEET_RESERVED_HEIGHT = 170;
 
 const variantConfig = {
   popup: {
@@ -46,11 +54,15 @@ export const AppModal = function ({
   children,
   contentClassName,
   showHandle = false,
+  scrollable = false,
   modalProps: modalOverrides = {},
 }: AppModalProps) {
   const config = variantConfig[variant];
   const isSheet = variant === "bottom-sheet" || variant === "top-sheet";
   const keyboardHeight = useKeyboardHeight();
+  const { height: windowHeight } = useWindowDimensions();
+  const insets = useSafeAreaInsets();
+  const maxBodyHeight = windowHeight - keyboardHeight - insets.top - SHEET_RESERVED_HEIGHT;
 
   const resolvedProps = Object.assign(
     {} as any,
@@ -73,6 +85,8 @@ export const AppModal = function ({
   if (variant !== "top-sheet") {
     resolvedProps.style = [resolvedProps.style, { paddingBottom: keyboardHeight }];
   }
+  // Without it the sheet's swipe-to-close swallows the drag meant for the inner scroll.
+  if (scrollable) resolvedProps.propagateSwipe = true;
 
   return (
     <Modal {...resolvedProps}>
@@ -108,7 +122,17 @@ export const AppModal = function ({
           </View>
         )}
 
-        {children}
+        {scrollable ? (
+          <ScrollView
+            style={{ maxHeight: maxBodyHeight }}
+            keyboardShouldPersistTaps="handled"
+            showsVerticalScrollIndicator={false}
+          >
+            {children}
+          </ScrollView>
+        ) : (
+          children
+        )}
       </View>
     </Modal>
   );
