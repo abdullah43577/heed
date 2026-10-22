@@ -12,17 +12,17 @@ interface Props {
 export const RuleList = function ({ rules, onDelete, disabled }: Props) {
   if (rules.length === 0) {
     return (
-      <AppText type="subtitle" className="px-5 pb-5 pt-3">
+      <AppText type="subtitle" className="p-3.5">
         No rules yet. Add one here, or long-press a sender in Handled or Review.
       </AppText>
     );
   }
 
   return (
-    <View className="pb-1 pt-2">
+    <View>
       {rules.map((rule, index) => (
         <View key={rule.id}>
-          {index > 0 && <View className="ml-16 h-px bg-line" />}
+          {index > 0 && <View className="ml-[62px] h-px bg-line" />}
           <RuleRow rule={rule} onDelete={() => onDelete(rule)} disabled={disabled} />
         </View>
       ))}

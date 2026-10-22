@@ -58,7 +58,7 @@ export default function AccountDetail() {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-canvas">
+    <SafeAreaView edges={["top"]} className="flex-1 bg-canvas">
       <ScreenHeader title="Gmail account" onBack={() => router.back()} />
 
       {!account ? (
@@ -68,7 +68,7 @@ export default function AccountDetail() {
       ) : (
         <KeyboardAwareScrollView
           className="flex-1"
-          contentContainerClassName="gap-4 px-5 pb-10 pt-5"
+          contentContainerClassName="gap-6 px-5 pb-8 pt-4"
           showsVerticalScrollIndicator={false}
           enableOnAndroid
           extraScrollHeight={40}

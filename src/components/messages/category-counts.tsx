@@ -2,7 +2,6 @@ import { AppText } from "@/components/shared/app-text";
 import { SectionHeader } from "@/components/shared/section-header";
 import { CATEGORY_META, EmailCategory, REPORT_CATEGORY_ORDER } from "@/constants/categories";
 import { useThemeColors } from "@/hooks/use-theme-colors";
-import { Ionicons } from "@expo/vector-icons";
 import { View } from "react-native";
 
 interface Props {
@@ -20,23 +19,23 @@ export const CategoryCounts = function ({ byCategory, title = "By category" }: P
     <View>
       <SectionHeader title={title} />
 
-      <View className="overflow-hidden rounded-2xl border-hairline border-line bg-surface">
+      <View className="overflow-hidden rounded-xl border-hairline border-line bg-surface">
         {rows.map((category, index) => {
           const { color, holder } = categoryTint(category);
-          const meta = CATEGORY_META[category];
+          const { label, icon: Icon } = CATEGORY_META[category];
 
           return (
             <View key={category}>
-              {index > 0 && <View className="ml-14 h-px bg-line" />}
-              <View className="flex-row items-center gap-3 px-4 py-3">
+              {index > 0 && <View className="ml-[60px] h-px bg-line" />}
+              <View className="flex-row items-center gap-3 px-3.5 py-3">
                 <View
-                  className="items-center justify-center rounded-squircle"
-                  style={{ width: 26, height: 26, backgroundColor: holder }}
+                  className="items-center justify-center rounded-full"
+                  style={{ width: 32, height: 32, backgroundColor: holder }}
                 >
-                  <Ionicons name={meta.icon} size={14} color={color} />
+                  <Icon size={16} color={color} strokeWidth={1.75} />
                 </View>
-                <AppText type="default" className="flex-1">
-                  {meta.label}
+                <AppText type="body" className="flex-1">
+                  {label}
                 </AppText>
                 <AppText type="label">{byCategory[category]}</AppText>
               </View>

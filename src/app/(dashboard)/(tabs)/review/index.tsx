@@ -1,7 +1,8 @@
 import { ReviewCard } from "@/components/review/review-card";
 import { RuleEditorSheet } from "@/components/rules/rule-editor-sheet";
-import { AppText } from "@/components/shared/app-text";
+import { Badge } from "@/components/shared/badge";
 import { EmptyState } from "@/components/shared/empty-state";
+import { ScreenHeader } from "@/components/shared/screen-header";
 import { useCreateDraft } from "@/hooks/drafts/use-create-draft";
 import { useDraftActions } from "@/hooks/drafts/use-draft-actions";
 import { useGetReviewMessages } from "@/hooks/messages/use-get-review-messages";
@@ -40,10 +41,15 @@ export default function Review() {
   const waitingCount = reviewMessages.length;
 
   return (
-    <SafeAreaView className="flex-1 bg-canvas">
+    <SafeAreaView edges={["top"]} className="flex-1 bg-canvas">
+      <ScreenHeader
+        title="Review"
+        right={waitingCount > 0 && <Badge variant="secondary" label={`${waitingCount} waiting`} className="mr-2" />}
+      />
+
       <ScrollView
         className="flex-1"
-        contentContainerStyle={{ paddingBottom: 40, flexGrow: 1 }}
+        contentContainerStyle={{ paddingBottom: 32, flexGrow: 1 }}
         showsVerticalScrollIndicator={false}
         refreshControl={
           <RefreshControl
@@ -53,13 +59,6 @@ export default function Review() {
           />
         }
       >
-        <View className="px-5 pt-2">
-          <AppText type="display">Review</AppText>
-          <AppText type="subtitle" className="mt-1.5">
-            {waitingCount > 0 ? `${waitingCount} waiting on a reply from you` : "Replies waiting for you"}
-          </AppText>
-        </View>
-
         {!hasLoadedReviewMessages ? (
           <View className="flex-1 items-center justify-center py-16">
             <ActivityIndicator color={accent} />
@@ -67,12 +66,11 @@ export default function Review() {
         ) : waitingCount === 0 ? (
           <EmptyState
             illustration="emptyReview"
-            accentColor={accent}
-            title="Nothing to review"
-            subtitle="When someone is waiting on a reply from you, Heed drafts one and it lands here"
+            title="You're all caught up"
+            subtitle="Nothing needs a reply right now. Heed will let you know when someone is waiting on you."
           />
         ) : (
-          <View className="gap-3 px-5 pt-6">
+          <View className="gap-3 px-5 pt-4">
             {reviewMessages.map((message) => (
               <ReviewCard
                 key={message.id}

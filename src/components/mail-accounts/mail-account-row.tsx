@@ -1,8 +1,9 @@
 import { AppText } from "@/components/shared/app-text";
+import { InitialAvatar } from "@/components/shared/initial-avatar";
 import { useThemeColors } from "@/hooks/use-theme-colors";
 import { accountColor } from "@/utils/account-color";
 import { formatRelativeDate } from "@/utils/format-date";
-import { Ionicons } from "@expo/vector-icons";
+import { X } from "lucide-react-native";
 import { Pressable, View } from "react-native";
 import { MailAccount } from "../../../types/mail-account";
 
@@ -20,18 +21,11 @@ export const MailAccountRow = function ({ account, onPress, onReconnect, onDisco
   const needsReauth = account.status === "NEEDS_REAUTH";
 
   return (
-    <Pressable onPress={onPress} className="flex-row items-center gap-3 px-4 py-3.5 active:bg-surface-muted">
-      <View
-        className="items-center justify-center rounded-full"
-        style={{ width: 38, height: 38, backgroundColor: `${color}1F` }}
-      >
-        <AppText type="label" style={{ color }}>
-          {account.email[0]?.toUpperCase()}
-        </AppText>
-      </View>
+    <Pressable onPress={onPress} className="flex-row items-center gap-3 px-3.5 py-3 active:bg-surface-muted">
+      <InitialAvatar label={account.email} color={color} />
 
       <View className="flex-1">
-        <AppText type="label" numberOfLines={1}>
+        <AppText type="body" numberOfLines={1} className="font-inter-medium">
           {account.email}
         </AppText>
 
@@ -58,7 +52,7 @@ export const MailAccountRow = function ({ account, onPress, onReconnect, onDisco
         hitSlop={10}
         className="h-8 w-8 items-center justify-center rounded-full active:bg-surface-muted"
       >
-        <Ionicons name="close" size={15} color={foregroundSubtle} />
+        <X size={16} color={foregroundSubtle} strokeWidth={1.75} />
       </Pressable>
     </Pressable>
   );

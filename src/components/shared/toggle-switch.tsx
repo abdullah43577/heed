@@ -28,7 +28,7 @@ export const ToggleSwitch = function ({
     >
       <View
         className={clsx(
-          "h-5 w-5 rounded-full bg-surface shadow",
+          "h-5 w-5 rounded-full bg-white",
           value ? "self-end" : "self-start",
         )}
       />

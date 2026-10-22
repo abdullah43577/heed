@@ -2,7 +2,7 @@ import { AppButton } from "@/components/shared/app-button";
 import { AppModal } from "@/components/shared/app-modal";
 import { AppText } from "@/components/shared/app-text";
 import { useThemeColors } from "@/hooks/use-theme-colors";
-import { Ionicons } from "@expo/vector-icons";
+import { CircleX, Eye, EyeOff } from "lucide-react-native";
 import { useState } from "react";
 import { Pressable, TextInput, View } from "react-native";
 
@@ -38,7 +38,7 @@ export const DeleteAccountDialog = function ({
   return (
     <AppModal isVisible={visible} onClose={handleClose} variant="popup">
       <View className="w-full">
-        <AppText type="title" className="text-[19px]">
+        <AppText type="title">
           Delete your account
         </AppText>
 
@@ -50,12 +50,7 @@ export const DeleteAccountDialog = function ({
         <View className="mt-4 gap-2">
           {LOSSES.map((loss) => (
             <View key={loss} className="flex-row items-start gap-2">
-              <Ionicons
-                name="close-circle-outline"
-                size={15}
-                color={danger}
-                style={{ marginTop: 2 }}
-              />
+              <CircleX size={15} color={danger} strokeWidth={1.75} style={{ marginTop: 2 }} />
               <AppText type="caption" className="flex-1">
                 {loss}
               </AppText>
@@ -63,7 +58,7 @@ export const DeleteAccountDialog = function ({
           ))}
         </View>
 
-        <View className="mt-5 flex-row items-center gap-2 rounded-2xl border-hairline border-line bg-surface-muted px-4 py-3">
+        <View className="mt-5 h-12 flex-row items-center gap-2 rounded-lg border-hairline border-line bg-canvas px-4">
           <TextInput
             className="flex-1 font-inter text-[15px] text-foreground"
             placeholder="Confirm your password"
@@ -80,11 +75,11 @@ export const DeleteAccountDialog = function ({
             onPress={() => setIsPasswordVisible((value) => !value)}
             hitSlop={8}
           >
-            <Ionicons
-              name={isPasswordVisible ? "eye-off-outline" : "eye-outline"}
-              size={18}
-              color={foregroundSubtle}
-            />
+            {isPasswordVisible ? (
+              <EyeOff size={18} color={foregroundSubtle} strokeWidth={1.75} />
+            ) : (
+              <Eye size={18} color={foregroundSubtle} strokeWidth={1.75} />
+            )}
           </Pressable>
         </View>
 

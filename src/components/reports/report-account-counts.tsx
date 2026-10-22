@@ -15,13 +15,13 @@ export const ReportAccountCounts = function ({ accounts }: Props) {
     <View>
       <SectionHeader title="By account" />
 
-      <View className="overflow-hidden rounded-2xl border-hairline border-line bg-surface">
+      <View className="overflow-hidden rounded-xl border-hairline border-line bg-surface">
         {accounts.map((account, index) => {
           const color = accountColor(account.email);
 
           return (
             <View key={account.mailAccountId}>
-              {index > 0 && <View className="ml-14 h-px bg-line" />}
+              {index > 0 && <View className="ml-[58px] h-px bg-line" />}
               <View className="flex-row items-center gap-3 px-4 py-3">
                 <View
                   className="items-center justify-center rounded-full"

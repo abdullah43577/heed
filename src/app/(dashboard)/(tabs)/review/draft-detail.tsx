@@ -50,7 +50,7 @@ export default function DraftDetail() {
 
   if (!draft) {
     return (
-      <SafeAreaView className="flex-1 bg-canvas">
+      <SafeAreaView edges={["top"]} className="flex-1 bg-canvas">
         <ScreenHeader title="Reply" onBack={() => router.back()} />
         <View className="flex-1 items-center justify-center">
           {isFetchingDraft && <ActivityIndicator color={accent} />}
@@ -78,12 +78,12 @@ export default function DraftDetail() {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-canvas" edges={["top", "left", "right"]}>
+    <SafeAreaView edges={["top"]} className="flex-1 bg-canvas">
       <ScreenHeader title="Reply" onBack={() => router.back()} />
 
       <KeyboardAwareScrollView
         className="flex-1"
-        contentContainerClassName="gap-6 px-5 pb-10 pt-5"
+        contentContainerClassName="gap-6 px-5 pb-8 pt-4"
         showsVerticalScrollIndicator={false}
         enableOnAndroid
         extraScrollHeight={40}

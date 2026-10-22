@@ -28,7 +28,7 @@ export const InstructionCard = function ({ account, onSave, isSaving }: Props) {
 
   return (
     <SettingsCard title="Instructions for Heed">
-      <View className="px-5 pb-5 pt-3">
+      <View className="p-3.5">
         <AppText type="subtitle" className="mb-3">
           Tell Heed about this inbox in your own words. It uses this when sorting mail and drafting replies.
         </AppText>

@@ -24,12 +24,12 @@ export default function Reports() {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-canvas">
+    <SafeAreaView edges={["top"]} className="flex-1 bg-canvas">
       <ScreenHeader title="Past reports" onBack={() => router.back()} />
 
       <ScrollView
         className="flex-1"
-        contentContainerStyle={{ paddingHorizontal: 20, paddingTop: 20, paddingBottom: 40, flexGrow: 1 }}
+        contentContainerStyle={{ paddingHorizontal: 20, paddingTop: 16, paddingBottom: 32, flexGrow: 1 }}
         showsVerticalScrollIndicator={false}
         refreshControl={
           <RefreshControl
@@ -46,7 +46,6 @@ export default function Reports() {
         ) : reports.length === 0 ? (
           <EmptyState
             illustration="emptyHandled"
-            accentColor={accent}
             title="No reports yet"
             subtitle={`Your first daily report arrives at ${reportTime}. You can change the time in Profile.`}
           />

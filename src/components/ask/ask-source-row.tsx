@@ -2,7 +2,7 @@ import { AppText } from "@/components/shared/app-text";
 import { useThemeColors } from "@/hooks/use-theme-colors";
 import { accountColor } from "@/utils/account-color";
 import { formatRelativeDate } from "@/utils/format-date";
-import { Ionicons } from "@expo/vector-icons";
+import { ExternalLink } from "lucide-react-native";
 import { Pressable, View } from "react-native";
 import { AskCitation } from "../../../types/ask";
 
@@ -17,10 +17,10 @@ export const AskSourceRow = function ({ citation, showAccount, onPress }: Props)
   const sender = citation.fromName ?? citation.fromEmail;
 
   return (
-    <Pressable onPress={onPress} className="flex-row items-start gap-3 px-4 py-3 active:bg-surface-muted">
+    <Pressable onPress={onPress} className="flex-row items-start gap-3 px-3.5 py-3 active:bg-surface-muted">
       <View
         className="items-center justify-center rounded-squircle"
-        style={{ width: 28, height: 28, backgroundColor: accentMuted }}
+        style={{ width: 26, height: 26, backgroundColor: accentMuted }}
       >
         <AppText type="caption" className="font-inter-semibold" style={{ color: accent }}>
           {citation.n}
@@ -29,7 +29,7 @@ export const AskSourceRow = function ({ citation, showAccount, onPress }: Props)
 
       <View className="flex-1">
         <View className="flex-row items-center gap-2">
-          <AppText type="label" numberOfLines={1} className="flex-1">
+          <AppText type="body" numberOfLines={1} className="flex-1 font-inter-medium">
             {sender}
           </AppText>
           <AppText type="caption">{formatRelativeDate(citation.receivedAt)}</AppText>
@@ -51,7 +51,7 @@ export const AskSourceRow = function ({ citation, showAccount, onPress }: Props)
       </View>
 
       {!citation.emailMessageId && (
-        <Ionicons name="open-outline" size={15} color={foregroundSubtle} style={{ marginTop: 3 }} />
+        <ExternalLink size={15} color={foregroundSubtle} strokeWidth={1.75} style={{ marginTop: 3 }} />
       )}
     </Pressable>
   );

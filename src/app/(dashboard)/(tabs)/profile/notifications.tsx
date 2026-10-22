@@ -12,6 +12,7 @@ import { useThemeColors } from "@/hooks/use-theme-colors";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import { ActivityIndicator, Pressable, RefreshControl, ScrollView, View } from "react-native";
+import { BellOff } from "lucide-react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { AppNotification } from "../../../../../types/notification";
 
@@ -57,7 +58,7 @@ export default function Notifications() {
   const isFirstLoad = isFetchingNotifications && notifications.length === 0;
 
   return (
-    <SafeAreaView className="flex-1 bg-canvas">
+    <SafeAreaView edges={["top"]} className="flex-1 bg-canvas">
       <ScreenHeader
         title="Notifications"
         onBack={() => router.back()}
@@ -100,7 +101,7 @@ export default function Notifications() {
 
       <ScrollView
         className="mt-4 flex-1"
-        contentContainerStyle={{ paddingHorizontal: 20, paddingBottom: 110, flexGrow: 1 }}
+        contentContainerStyle={{ paddingHorizontal: 20, paddingBottom: 32, flexGrow: 1 }}
         showsVerticalScrollIndicator={false}
         refreshControl={
           <RefreshControl
@@ -116,9 +117,8 @@ export default function Notifications() {
           </View>
         ) : notifications.length === 0 ? (
           <EmptyState
-            icon="notifications-off-outline"
+            icon={BellOff}
             illustration="emptyNotifications"
-            accentColor={accent}
             title={filter === "unread" ? "Nothing unread" : "No notifications yet"}
             subtitle={
               filter === "unread"

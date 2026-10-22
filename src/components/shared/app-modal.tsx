@@ -1,10 +1,12 @@
 import { clsx } from "clsx";
 import { type ReactNode } from "react";
-import { Pressable, ScrollView, useWindowDimensions, View } from "react-native";
+import { ScrollView, useWindowDimensions, View } from "react-native";
 import Modal from "react-native-modal";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useKeyboardHeight } from "@/hooks/use-keyboard-height";
 import { AppText } from "./app-text";
+import { IconButton } from "./icon-button";
+import { X } from "lucide-react-native";
 
 type ModalVariant = "popup" | "bottom-sheet" | "top-sheet";
 
@@ -95,7 +97,7 @@ export const AppModal = function ({
           "bg-surface",
           isSheet
             ? "w-full px-5 pb-8 pt-4"
-            : "w-full rounded-2xl px-5 pb-6 pt-5",
+            : "w-full rounded-xl px-5 pb-5 pt-5",
           variant === "bottom-sheet" && "rounded-t-2xl",
           variant === "top-sheet" && "rounded-b-2xl",
           contentClassName,
@@ -110,15 +112,7 @@ export const AppModal = function ({
         {title != null && (
           <View className="mb-4 flex-row items-center justify-between">
             <AppText type="title">{title}</AppText>
-            <Pressable
-              onPress={onClose}
-              className="rounded-full p-1 active:opacity-60"
-              hitSlop={8}
-            >
-              <AppText type="subtitle" className="text-foreground-muted">
-                ✕
-              </AppText>
-            </Pressable>
+            <IconButton icon={X} size={18} onPress={onClose} accessibilityLabel="Close" className="-mr-2" />
           </View>
         )}
 

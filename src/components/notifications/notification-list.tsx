@@ -14,10 +14,10 @@ export const NotificationList = function ({
   onDeleteNotification,
 }: Props) {
   return (
-    <View className="overflow-hidden rounded-2xl border-hairline border-line bg-surface">
+    <View className="overflow-hidden rounded-xl border-hairline border-line bg-surface">
       {notifications.map((notification, index) => (
         <View key={notification.id}>
-          {index > 0 && <View className="ml-16 h-px bg-line" />}
+          {index > 0 && <View className="ml-[62px] h-px bg-line" />}
           <NotificationRow
             notification={notification}
             onPress={() => onPressNotification(notification)}

@@ -28,17 +28,16 @@ export const AppText = function ({
   ...rest
 }: AppTextProps) {
   const styleGuide = {
-    default: "text-base leading-[22px] text-foreground font-inter",
+    default: "text-[14px] leading-[21px] text-foreground font-inter",
     display:
-      "text-[28px] leading-[34px] tracking-tight text-foreground font-bricolage-bold",
+      "text-[22px] leading-[28px] tracking-tight text-foreground font-inter-semibold",
     title:
-      "text-2xl leading-[30px] tracking-tight text-foreground font-bricolage-bold",
-    subtitle: "text-[14px] leading-[20px] text-foreground-muted font-inter",
-    body: "text-base leading-[22px] text-foreground font-inter",
-    label:
-      "text-[13px] leading-[18px] tracking-[0.2px] text-foreground font-inter-semibold",
+      "text-[17px] leading-[22px] tracking-tight text-foreground font-inter-semibold",
+    subtitle: "text-[13px] leading-[19px] text-foreground-muted font-inter",
+    body: "text-[14px] leading-[21px] text-foreground font-inter",
+    label: "text-[14px] leading-[20px] text-foreground font-inter-semibold",
     caption: "text-xs leading-[16px] text-foreground-subtle font-inter",
-    link: "text-sm text-accent font-inter-semibold",
+    link: "text-[13px] leading-[18px] text-accent font-inter-semibold",
     code: clsx(
       "text-xs",
       Platform.select({ android: "font-inter-bold" }) ?? "font-inter-medium",

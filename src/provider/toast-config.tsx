@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   icon: { marginRight: 8 },
-  text: { fontSize: 14, fontWeight: "500", flexShrink: 1 },
+  text: { fontSize: 14, fontFamily: "Inter-Medium", flexShrink: 1 },
 });
 
 const variants = {

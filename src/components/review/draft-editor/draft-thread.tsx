@@ -35,11 +35,11 @@ export const DraftThread = function ({ subject, thread }: Props) {
 
   return (
     <View>
-      <AppText type="title" className="mb-3">
+      <AppText type="label" className="mb-2">
         {subject}
       </AppText>
 
-      <View className="overflow-hidden rounded-2xl border-hairline border-line bg-surface">
+      <View className="overflow-hidden rounded-xl border-hairline border-line bg-surface">
         {earlier.length > 0 && !showEarlier && (
           <Pressable onPress={() => setShowEarlier(true)} className="border-b-hairline border-line px-4 py-3 active:bg-surface-muted">
             <AppText type="link">

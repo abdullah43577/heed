@@ -22,7 +22,7 @@ export const BacklogSummaryCard = function ({ summary, truncated, onApply, isApp
   ].filter(Boolean);
 
   return (
-    <View className="rounded-3xl border-hairline border-line bg-surface p-5">
+    <View className="rounded-xl border-hairline border-line bg-surface p-4">
       <AppText type="display">{formatCount(summary.toMarkRead)}</AppText>
       <AppText type="subtitle" className="mt-0.5">
         {summary.toMarkRead === 1 ? "email ready to mark as read" : "emails ready to mark as read"}

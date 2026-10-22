@@ -2,7 +2,9 @@ import { AppText } from "@/components/shared/app-text";
 import { NOTIFICATION_META } from "@/constants/notifications";
 import { useThemeColors } from "@/hooks/use-theme-colors";
 import { formatRelativeDate } from "@/utils/format-date";
-import { Ionicons } from "@expo/vector-icons";
+import { X } from "lucide-react-native";
+import { IconTile } from "@/components/shared/icon-tile";
+import { TINT_ALPHA } from "@/constants/theme";
 import { Pressable, View } from "react-native";
 import {
   AppNotification,
@@ -20,7 +22,7 @@ export const NotificationRow = function ({
   onPress,
   onDelete,
 }: Props) {
-  const { foregroundSubtle } = useThemeColors();
+  const { foregroundSubtle, scheme } = useThemeColors();
 
   const meta =
     NOTIFICATION_META[notification.type as NotificationType] ??
@@ -29,14 +31,9 @@ export const NotificationRow = function ({
   return (
     <Pressable
       onPress={onPress}
-      className="flex-row items-start gap-3 px-4 py-3.5 active:bg-surface-muted"
+      className="flex-row items-start gap-3 px-3.5 py-3 active:bg-surface-muted"
     >
-      <View
-        className="items-center justify-center rounded-squircle"
-        style={{ width: 38, height: 38, backgroundColor: `${meta.color}1F` }}
-      >
-        <Ionicons name={meta.icon} size={18} color={meta.color} />
-      </View>
+      <IconTile icon={meta.icon} color={meta.color} background={`${meta.color}${TINT_ALPHA[scheme].holder}`} />
 
       <View className="flex-1">
         <View className="flex-row items-center gap-2">
@@ -70,7 +67,7 @@ export const NotificationRow = function ({
         hitSlop={10}
         className="h-8 w-8 items-center justify-center rounded-full active:bg-surface-muted"
       >
-        <Ionicons name="close" size={15} color={foregroundSubtle} />
+        <X size={16} color={foregroundSubtle} strokeWidth={1.75} />
       </Pressable>
     </Pressable>
   );

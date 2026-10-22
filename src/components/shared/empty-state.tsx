@@ -1,47 +1,41 @@
 import { Illustration } from "@/components/illustrations/illustration";
-import type { PeepName } from "@/components/illustrations/peeps.generated";
-import { Ionicons } from "@expo/vector-icons";
+import type { IllustrationName } from "@/components/illustrations/illustration";
+import { useThemeColors } from "@/hooks/use-theme-colors";
+import type { LucideIcon } from "lucide-react-native";
 import { View } from "react-native";
 import { AppButton } from "./app-button";
 import { AppText } from "./app-text";
 
 interface Props {
-  icon?: keyof typeof Ionicons.glyphMap;
-  illustration?: PeepName;
+  icon?: LucideIcon;
+  illustration?: IllustrationName;
   title: string;
   subtitle: string;
   buttonText?: string;
   onButtonPress?: () => void;
-  accentColor: string;
 }
 
-export const EmptyState = function ({
-  icon,
-  illustration,
-  title,
-  subtitle,
-  buttonText,
-  onButtonPress,
-  accentColor,
-}: Props) {
+export const EmptyState = function ({ icon: Icon, illustration, title, subtitle, buttonText, onButtonPress }: Props) {
+  const { accent, accentMuted } = useThemeColors();
+
   return (
-    <View className="flex-1 items-center justify-center px-10 py-16">
+    <View className="flex-1 items-center justify-center px-9 py-16">
       {illustration ? (
         <View className="mb-5">
-          <Illustration name={illustration} color={accentColor} size={168} />
+          <Illustration name={illustration} />
         </View>
       ) : (
-        icon && (
+        Icon && (
           <View
             className="mb-4 items-center justify-center rounded-full"
-            style={{ width: 64, height: 64, backgroundColor: `${accentColor}14` }}
+            style={{ width: 56, height: 56, backgroundColor: accentMuted }}
           >
-            <Ionicons name={icon} size={26} color={accentColor} />
+            <Icon size={24} color={accent} strokeWidth={1.75} />
           </View>
         )
       )}
 
-      <AppText type="title" className="text-center text-[19px] leading-[24px]">
+      <AppText type="label" className="text-center text-[16px] leading-[22px]">
         {title}
       </AppText>
       <AppText type="subtitle" className="mt-1.5 text-center">
@@ -49,12 +43,7 @@ export const EmptyState = function ({
       </AppText>
 
       {buttonText && onButtonPress && (
-        <AppButton
-          type="submit"
-          label={buttonText}
-          onPress={onButtonPress}
-          className="mt-6 h-12 self-center px-6"
-        />
+        <AppButton type="submit" label={buttonText} onPress={onButtonPress} className="mt-6 h-11 self-center px-5" />
       )}
     </View>
   );

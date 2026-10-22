@@ -1,7 +1,8 @@
 import { AppText } from "@/components/shared/app-text";
 import { RULE_KIND_META } from "@/constants/rules";
 import { useThemeColors } from "@/hooks/use-theme-colors";
-import { Ionicons } from "@expo/vector-icons";
+import { IconTile } from "@/components/shared/icon-tile";
+import { X } from "lucide-react-native";
 import { Pressable, View } from "react-native";
 import { SenderRule } from "../../../types/sender-rule";
 
@@ -17,16 +18,11 @@ export const RuleRow = function ({ rule, onDelete, disabled }: Props) {
   const { color, holder } = categoryTint(meta.tint);
 
   return (
-    <View className="flex-row items-center gap-3 px-4 py-3.5">
-      <View
-        className="items-center justify-center rounded-squircle"
-        style={{ width: 38, height: 38, backgroundColor: holder }}
-      >
-        <Ionicons name={meta.icon} size={18} color={color} />
-      </View>
+    <View className="flex-row items-center gap-3 px-3.5 py-3">
+      <IconTile icon={meta.icon} color={color} background={holder} />
 
       <View className="flex-1">
-        <AppText type="label" numberOfLines={1}>
+        <AppText type="body" numberOfLines={1} className="font-inter-medium">
           {rule.pattern}
         </AppText>
         <AppText type="caption" numberOfLines={1} className="mt-0.5">
@@ -41,7 +37,7 @@ export const RuleRow = function ({ rule, onDelete, disabled }: Props) {
         hitSlop={10}
         className="h-8 w-8 items-center justify-center rounded-full active:bg-surface-muted"
       >
-        <Ionicons name="close" size={15} color={foregroundSubtle} />
+        <X size={16} color={foregroundSubtle} strokeWidth={1.75} />
       </Pressable>
     </View>
   );

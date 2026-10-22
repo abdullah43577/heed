@@ -1,7 +1,6 @@
 import { Illustration } from "@/components/illustrations/illustration";
 import { AppText } from "@/components/shared/app-text";
 import { ASK_SUGGESTIONS } from "@/constants/ask";
-import { useThemeColors } from "@/hooks/use-theme-colors";
 import { Pressable, View } from "react-native";
 
 interface Props {
@@ -9,12 +8,10 @@ interface Props {
 }
 
 export const AskIntro = function ({ onPickSuggestion }: Props) {
-  const { accent } = useThemeColors();
-
   return (
     <View className="flex-1 items-center justify-center px-5 py-10">
-      <Illustration name="emptyAsk" color={accent} size={140} />
-      <AppText type="title" className="mt-5 text-center">
+      <Illustration name="emptyAsk" />
+      <AppText type="label" className="mt-5 text-center text-[16px] leading-[22px]">
         Ask your inbox
       </AppText>
       <AppText type="subtitle" className="mt-1.5 text-center">
@@ -27,7 +24,7 @@ export const AskIntro = function ({ onPickSuggestion }: Props) {
           <Pressable
             key={suggestion}
             onPress={() => onPickSuggestion(suggestion)}
-            className="rounded-2xl border-hairline border-line bg-surface px-4 py-3 active:opacity-70"
+            className="rounded-lg border-hairline border-line bg-surface px-3.5 py-3 active:bg-surface-muted"
           >
             <AppText type="body">{suggestion}</AppText>
           </Pressable>

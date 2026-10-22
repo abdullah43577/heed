@@ -1,8 +1,8 @@
 import { AppText } from "@/components/shared/app-text";
 import { RULE_KIND_META } from "@/constants/rules";
 import { useThemeColors } from "@/hooks/use-theme-colors";
-import { Ionicons } from "@expo/vector-icons";
 import { clsx } from "clsx";
+import { Circle, CircleDot } from "lucide-react-native";
 import { Pressable, View } from "react-native";
 import { SenderRuleKind } from "../../../types/sender-rule";
 
@@ -20,8 +20,8 @@ export const RuleKindOption = function ({ kind, selected, onPress }: Props) {
     <Pressable
       onPress={onPress}
       className={clsx(
-        "flex-row items-center gap-3 rounded-2xl border-hairline px-4 py-3 active:bg-surface-muted",
-        selected ? "border-accent bg-surface" : "border-line bg-surface",
+        "flex-row items-center gap-3 rounded-lg border-hairline px-3.5 py-3 active:bg-surface-muted",
+        selected ? "border-accent bg-accent-muted" : "border-line bg-surface",
       )}
     >
       <View className="flex-1">
@@ -30,11 +30,11 @@ export const RuleKindOption = function ({ kind, selected, onPress }: Props) {
           {meta.description}
         </AppText>
       </View>
-      <Ionicons
-        name={selected ? "radio-button-on" : "radio-button-off"}
-        size={20}
-        color={selected ? accent : foregroundSubtle}
-      />
+      {selected ? (
+        <CircleDot size={20} color={accent} strokeWidth={2} />
+      ) : (
+        <Circle size={20} color={foregroundSubtle} strokeWidth={1.75} />
+      )}
     </Pressable>
   );
 };

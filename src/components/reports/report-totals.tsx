@@ -19,7 +19,7 @@ export const ReportTotals = function ({ report }: Props) {
   const period = `${format(new Date(report.periodStart), "EEE p")} to ${format(new Date(report.periodEnd), "EEE p")}`;
 
   return (
-    <View className="rounded-3xl border-hairline border-line bg-surface p-5">
+    <View className="rounded-xl border-hairline border-line bg-surface p-4">
       <AppText type="display">{read}</AppText>
       <AppText type="subtitle" className="mt-0.5">
         {read === 1 ? "email read for you" : "emails read for you"}

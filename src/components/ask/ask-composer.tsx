@@ -1,7 +1,7 @@
 import { ASK_QUESTION_MAX } from "@/constants/ask";
 import { useThemeColors } from "@/hooks/use-theme-colors";
-import { Ionicons } from "@expo/vector-icons";
 import { clsx } from "clsx";
+import { ArrowUp } from "lucide-react-native";
 import { Pressable, TextInput, View } from "react-native";
 
 interface Props {
@@ -25,7 +25,7 @@ export const AskComposer = function ({ value, onChange, onSubmit, disabled }: Pr
         placeholder="Ask about your mail"
         placeholderTextColor={foregroundSubtle}
         textAlignVertical="center"
-        className="max-h-[120px] min-h-[42px] flex-1 rounded-2xl border-hairline border-line bg-canvas px-4 py-2.5 font-inter text-base leading-[22px] text-foreground"
+        className="max-h-[120px] min-h-[42px] flex-1 rounded-lg border-hairline border-line bg-canvas px-3.5 py-2.5 font-inter text-[15px] leading-[21px] text-foreground"
       />
       <Pressable
         onPress={onSubmit}
@@ -37,7 +37,7 @@ export const AskComposer = function ({ value, onChange, onSubmit, disabled }: Pr
           !canSubmit && "opacity-40",
         )}
       >
-        <Ionicons name="arrow-up" size={20} color={foregroundInverse} />
+        <ArrowUp size={20} color={foregroundInverse} strokeWidth={2} />
       </Pressable>
     </View>
   );

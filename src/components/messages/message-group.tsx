@@ -16,10 +16,10 @@ export const MessageGroup = function ({ category, messages, onPressMessage, onLo
     <View>
       <CategoryHeader category={category} count={messages.length} />
 
-      <View className="overflow-hidden rounded-2xl border-hairline border-line bg-surface">
+      <View className="overflow-hidden rounded-xl border-hairline border-line bg-surface">
         {messages.map((message, index) => (
           <View key={message.id}>
-            {index > 0 && <View className="ml-16 h-px bg-line" />}
+            {index > 0 && <View className="ml-[62px] h-px bg-line" />}
             <MessageRow
               message={message}
               onPress={() => onPressMessage(message)}

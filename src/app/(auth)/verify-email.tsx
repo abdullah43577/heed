@@ -57,7 +57,7 @@ export default function VerifyEmail() {
       extraScrollHeight={20}
     >
       <View className="flex-1 justify-center px-6 py-10">
-        <AppText type="title">Verify your email</AppText>
+        <AppText type="display">Verify your email</AppText>
         <AppText type="subtitle" className="mt-1 text-foreground-muted">
           Enter the 6-digit code sent to{" "}
           <AppText className="font-inter-semibold text-foreground">

@@ -1,12 +1,13 @@
-import { useThemeColors } from "@/hooks/use-theme-colors";
 import { AppText } from "@/components/shared/app-text";
+import { useThemeColors } from "@/hooks/use-theme-colors";
 import { clsx } from "clsx";
-import { ChevronRight } from "lucide-react-native";
+import { ChevronRight, type LucideIcon } from "lucide-react-native";
 import { ReactNode } from "react";
 import { Pressable, View } from "react-native";
 
 interface Props {
   label: string;
+  icon?: LucideIcon;
   value?: string;
   right?: ReactNode;
   onPress?: () => void;
@@ -16,41 +17,43 @@ interface Props {
 
 export const SettingsRow = function ({
   label,
+  icon: Icon,
   value,
   right,
   onPress,
   destructive = false,
   withDivider = false,
 }: Props) {
-  const { foregroundSubtle } = useThemeColors();
+  const { foreground, foregroundSubtle, danger } = useThemeColors();
 
   const content = (
     <>
+      {Icon && (
+        <View className="h-8 w-8 items-center justify-center rounded-lg bg-surface-muted">
+          <Icon size={18} color={destructive ? danger : foreground} strokeWidth={1.75} />
+        </View>
+      )}
+
       <AppText
-        type="default"
-        className={clsx(
-          "flex-1",
-          destructive
-            ? "text-center font-inter-semibold text-danger"
-            : "text-foreground-muted",
-        )}
+        type="body"
+        className={clsx("flex-1 font-inter-medium", destructive && "text-danger", destructive && !Icon && "text-center")}
       >
         {label}
       </AppText>
 
       {right ??
         (value !== undefined && (
-          <AppText type="default" className="font-inter-medium">
+          <AppText type="subtitle" numberOfLines={1}>
             {value}
           </AppText>
         ))}
 
-      {onPress && !destructive && <ChevronRight size={16} color={foregroundSubtle} />}
+      {onPress && !destructive && <ChevronRight size={18} color={foregroundSubtle} strokeWidth={1.75} />}
     </>
   );
 
   const className = clsx(
-    "flex-row items-center gap-3 px-5 py-4",
+    "min-h-[52px] flex-row items-center gap-3 px-3.5 py-2.5",
     withDivider && "border-t-hairline border-line",
     onPress && "active:bg-surface-muted",
   );

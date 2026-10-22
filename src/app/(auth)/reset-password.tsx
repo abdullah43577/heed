@@ -38,7 +38,7 @@ export default function ResetPassword() {
       extraScrollHeight={20}
     >
       <View className="flex-1 justify-center px-6 py-10">
-        <AppText type="title">Reset password</AppText>
+        <AppText type="display">Reset password</AppText>
         <AppText type="subtitle" className="mt-1 text-foreground-muted">
           Enter the code we sent you and choose a new password
         </AppText>

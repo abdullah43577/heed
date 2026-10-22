@@ -2,9 +2,9 @@ import { useGetReviewMessages } from "@/hooks/messages/use-get-review-messages";
 import { useSyncTimezone } from "@/hooks/profile/use-sync-timezone";
 import { TAB_BAR_HEIGHT } from "@/constants/theme";
 import { useThemeColors } from "@/hooks/use-theme-colors";
-import { Ionicons } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
-import { StyleSheet, type ColorValue } from "react-native";
+import { CheckCheck, Inbox, Sparkles, User, type LucideIcon } from "lucide-react-native";
+import { type ColorValue } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 type TabBarIconProps = {
@@ -14,27 +14,16 @@ type TabBarIconProps = {
 };
 
 const TAB_ICONS = {
-  review: { active: "create", inactive: "create-outline" },
-  handled: { active: "checkmark-done-circle", inactive: "checkmark-done-circle-outline" },
-  ask: { active: "sparkles", inactive: "sparkles-outline" },
-  profile: { active: "person", inactive: "person-outline" },
-} as const satisfies Record<
-  string,
-  {
-    active: keyof typeof Ionicons.glyphMap;
-    inactive: keyof typeof Ionicons.glyphMap;
-  }
->;
+  review: Inbox,
+  handled: CheckCheck,
+  ask: Sparkles,
+  profile: User,
+} as const satisfies Record<string, LucideIcon>;
 
 const makeTabIcon = function (key: keyof typeof TAB_ICONS) {
   const TabBarIcon = function ({ color, size, focused }: TabBarIconProps) {
-    return (
-      <Ionicons
-        name={focused ? TAB_ICONS[key].active : TAB_ICONS[key].inactive}
-        size={size}
-        color={color}
-      />
-    );
+    const Icon = TAB_ICONS[key];
+    return <Icon size={size - 2} color={color as string} strokeWidth={focused ? 2 : 1.75} />;
   };
 
   TabBarIcon.displayName = `TabBarIcon(${key})`;
@@ -57,7 +46,7 @@ export default function TabsLayout() {
         tabBarStyle: {
           backgroundColor: surface,
           borderTopColor: line,
-          borderTopWidth: StyleSheet.hairlineWidth,
+          borderTopWidth: 1,
           height: TAB_BAR_HEIGHT + insets.bottom,
           paddingBottom: insets.bottom + 8,
           paddingTop: 8,

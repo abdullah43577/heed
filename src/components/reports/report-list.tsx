@@ -9,10 +9,10 @@ interface Props {
 
 export const ReportList = function ({ reports, onPressReport }: Props) {
   return (
-    <View className="overflow-hidden rounded-2xl border-hairline border-line bg-surface">
+    <View className="overflow-hidden rounded-xl border-hairline border-line bg-surface">
       {reports.map((report, index) => (
         <View key={report.id}>
-          {index > 0 && <View className="ml-16 h-px bg-line" />}
+          {index > 0 && <View className="ml-[62px] h-px bg-line" />}
           <ReportRow report={report} onPress={() => onPressReport(report)} />
         </View>
       ))}

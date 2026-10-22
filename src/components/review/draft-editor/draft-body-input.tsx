@@ -27,7 +27,7 @@ export const DraftBodyInput = function ({ value, onChange, editable }: Props) {
 
   return (
     <View>
-      <View className="rounded-2xl border-hairline border-line bg-surface">
+      <View className="rounded-xl border-hairline border-line bg-surface">
         <TextInput
           ref={inputRef}
           multiline
@@ -38,7 +38,7 @@ export const DraftBodyInput = function ({ value, onChange, editable }: Props) {
           placeholder="Write your reply"
           placeholderTextColor={foregroundSubtle}
           textAlignVertical="top"
-          className="min-h-[200px] px-4 py-3.5 font-inter text-base leading-[22px] text-foreground"
+          className="min-h-[200px] px-3.5 py-3 font-inter text-[15px] leading-[22px] text-foreground"
         >
           {splitPlaceholders(value).map((segment, index) =>
             segment.isPlaceholder ? (

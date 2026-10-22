@@ -7,31 +7,31 @@
   the dark class never appears in scanned content. Mirror changes in theme.ts.
 */
 :root {
-  --canvas: 250 250 251;
+  --canvas: 255 255 255;
   --surface: 255 255 255;
-  --surface-muted: 243 243 246;
-  --line: 234 234 238;
-  --line-strong: 213 213 222;
-  --foreground: 23 23 26;
-  --foreground-muted: 125 125 138;
-  --foreground-subtle: 180 180 191;
+  --surface-muted: 247 248 250;
+  --line: 236 237 240;
+  --line-strong: 217 220 225;
+  --foreground: 11 13 18;
+  --foreground-muted: 75 85 99;
+  --foreground-subtle: 107 114 128;
   --foreground-inverse: 255 255 255;
   --accent: 14 122 99;
-  --accent-muted: 230 244 240;
+  --accent-muted: 231 244 239;
   --danger: 185 58 50;
   --danger-muted: 251 234 234;
   --danger-solid: 185 58 50;
 }
 
 .dark:root {
-  --canvas: 15 15 18;
-  --surface: 23 23 27;
-  --surface-muted: 31 31 36;
-  --line: 42 42 49;
-  --line-strong: 58 58 67;
-  --foreground: 244 244 246;
-  --foreground-muted: 156 156 168;
-  --foreground-subtle: 110 110 122;
+  --canvas: 14 15 18;
+  --surface: 21 23 27;
+  --surface-muted: 27 30 35;
+  --line: 38 42 49;
+  --line-strong: 52 57 67;
+  --foreground: 242 243 245;
+  --foreground-muted: 169 175 186;
+  --foreground-subtle: 138 144 156;
   --foreground-inverse: 255 255 255;
   --accent: 31 158 128;
   --accent-muted: 18 48 42;

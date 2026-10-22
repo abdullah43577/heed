@@ -1,18 +1,18 @@
 import { CATEGORY_COLORS_BY_SCHEME } from "@/constants/theme";
-import { Ionicons } from "@expo/vector-icons";
+import { FileText, Inbox, Link, PenLine, Sparkles, type LucideIcon } from "lucide-react-native";
 import { NotificationType } from "../../types/notification";
 
 interface NotificationMeta {
-  icon: keyof typeof Ionicons.glyphMap;
+  icon: LucideIcon;
   color: string;
 }
 
 export const NOTIFICATION_META = {
-  SYSTEM: { icon: "sparkles-outline", color: CATEGORY_COLORS_BY_SCHEME.light.NEEDS_REPLY },
-  ACCOUNT_NEEDS_REAUTH: { icon: "link-outline", color: CATEGORY_COLORS_BY_SCHEME.light.IMPORTANT },
-  DAILY_REPORT: { icon: "newspaper-outline", color: CATEGORY_COLORS_BY_SCHEME.light.NEEDS_REPLY },
-  BACKLOG_READY: { icon: "file-tray-full-outline", color: CATEGORY_COLORS_BY_SCHEME.light.NEEDS_REPLY },
-  DRAFTS_READY: { icon: "create-outline", color: CATEGORY_COLORS_BY_SCHEME.light.NEEDS_REPLY },
+  SYSTEM: { icon: Sparkles, color: CATEGORY_COLORS_BY_SCHEME.light.NEEDS_REPLY },
+  ACCOUNT_NEEDS_REAUTH: { icon: Link, color: CATEGORY_COLORS_BY_SCHEME.light.IMPORTANT },
+  DAILY_REPORT: { icon: FileText, color: CATEGORY_COLORS_BY_SCHEME.light.NEEDS_REPLY },
+  BACKLOG_READY: { icon: Inbox, color: CATEGORY_COLORS_BY_SCHEME.light.NEEDS_REPLY },
+  DRAFTS_READY: { icon: PenLine, color: CATEGORY_COLORS_BY_SCHEME.light.NEEDS_REPLY },
 } as const satisfies Record<NotificationType, NotificationMeta>;
 
 const NOTIFICATION_ROUTES: Partial<Record<string, { pathname: string; param: string }>> = {

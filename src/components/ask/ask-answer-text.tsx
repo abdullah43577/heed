@@ -9,14 +9,17 @@ interface Props {
 }
 
 export const AskAnswerText = function ({ text, isStreaming = false }: Props) {
-  const { accent } = useThemeColors();
+  const { accent, accentMuted } = useThemeColors();
 
   return (
     <AppText type="body" selectable>
       {splitCitationMarkers(text).map((segment, index) =>
         segment.isMarker ? (
-          <Text key={index} className="font-inter-semibold text-xs" style={{ color: accent }}>
-            {` ${segment.text}`}
+          <Text key={index}>
+            {" "}
+            <Text className="font-inter-bold text-[11px]" style={{ color: accent, backgroundColor: accentMuted }}>
+              {` ${segment.text} `}
+            </Text>
           </Text>
         ) : (
           <Text key={index}>{segment.text}</Text>

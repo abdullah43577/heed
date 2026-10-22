@@ -35,12 +35,12 @@ export default function Accounts() {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-canvas">
+    <SafeAreaView edges={["top"]} className="flex-1 bg-canvas">
       <ScreenHeader title="Gmail accounts" onBack={() => router.back()} />
 
       <ScrollView
         className="flex-1"
-        contentContainerStyle={{ paddingHorizontal: 20, paddingTop: 20, paddingBottom: 40, flexGrow: 1 }}
+        contentContainerStyle={{ paddingHorizontal: 20, paddingTop: 16, paddingBottom: 32, flexGrow: 1 }}
         showsVerticalScrollIndicator={false}
         refreshControl={
           <RefreshControl
@@ -57,7 +57,6 @@ export default function Accounts() {
         ) : mailAccounts.length === 0 ? (
           <EmptyState
             illustration="emptyAccounts"
-            accentColor={accent}
             title="Connect your Gmail"
             subtitle="Heed reads the mail that doesn't need you and drafts replies for the mail that does. Nothing is ever sent without you."
             buttonText="Connect a Gmail account"

@@ -4,10 +4,10 @@ import { AskIntro } from "@/components/ask/ask-intro";
 import { AskProgress } from "@/components/ask/ask-progress";
 import { AskQuestion } from "@/components/ask/ask-question";
 import { AskUnanswered } from "@/components/ask/ask-unanswered";
-import { AppText } from "@/components/shared/app-text";
 import { BottomSheetPicker } from "@/components/shared/bottom-sheet-picker";
 import { ConfirmDialog } from "@/components/shared/confirm-dialog";
 import { IconButton } from "@/components/shared/icon-button";
+import { ScreenHeader } from "@/components/shared/screen-header";
 import { TAB_BAR_HEIGHT } from "@/constants/theme";
 import { useAskActions } from "@/hooks/ask/use-ask-actions";
 import { useAskAnswer } from "@/hooks/ask/use-ask-answer";
@@ -19,6 +19,7 @@ import { formatRelativeDate } from "@/utils/format-date";
 import { gmailMessageUrl } from "@/utils/gmail-url";
 import * as Linking from "expo-linking";
 import { useRouter } from "expo-router";
+import { Clock, Plus, Trash2 } from "lucide-react-native";
 import { useRef, useState } from "react";
 import { ActivityIndicator, ScrollView, View } from "react-native";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
@@ -85,30 +86,42 @@ export default function Ask() {
 
   return (
     <SafeAreaView edges={["top"]} className="flex-1 bg-canvas">
-      <View className="flex-row items-start px-5 pt-2">
-        <View className="flex-1">
-          <AppText type="display">Ask</AppText>
-          <AppText type="subtitle" className="mt-1.5">
-            Questions about your mail
-          </AppText>
-        </View>
-        <View className="mt-1 flex-row">
-          {conversationId && (
-            <IconButton icon="trash-outline" onPress={() => setIsConfirmingDelete(true)} disabled={isBusy} />
-          )}
-          {askConversations.length > 0 && (
-            <IconButton icon="time-outline" onPress={() => setIsHistoryOpen(true)} disabled={isBusy} />
-          )}
-          {conversationId && (
-            <IconButton icon="add" size={24} onPress={() => setConversationId(null)} disabled={isBusy} />
-          )}
-        </View>
-      </View>
+      <ScreenHeader
+        title="Ask"
+        right={
+          <>
+            {conversationId && (
+              <IconButton
+                icon={Trash2}
+                accessibilityLabel="Delete this conversation"
+                onPress={() => setIsConfirmingDelete(true)}
+                disabled={isBusy}
+              />
+            )}
+            {askConversations.length > 0 && (
+              <IconButton
+                icon={Clock}
+                accessibilityLabel="Earlier questions"
+                onPress={() => setIsHistoryOpen(true)}
+                disabled={isBusy}
+              />
+            )}
+            {conversationId && (
+              <IconButton
+                icon={Plus}
+                accessibilityLabel="New question"
+                onPress={() => setConversationId(null)}
+                disabled={isBusy}
+              />
+            )}
+          </>
+        }
+      />
 
       <ScrollView
         ref={scrollRef}
         className="flex-1"
-        contentContainerClassName="flex-grow gap-6 px-5 pb-6 pt-6"
+        contentContainerClassName="flex-grow gap-6 px-5 pb-6 pt-5"
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
         onContentSizeChange={() => scrollRef.current?.scrollToEnd({ animated: true })}

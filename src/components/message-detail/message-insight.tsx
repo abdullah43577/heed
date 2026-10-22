@@ -1,5 +1,6 @@
 import { AppText } from "@/components/shared/app-text";
-import { SectionHeader } from "@/components/shared/section-header";
+import { Eyebrow } from "@/components/shared/eyebrow";
+import { Sparkles } from "lucide-react-native";
 import { View } from "react-native";
 import { EmailMessage, TriageSource } from "../../../types/email-message";
 
@@ -18,19 +19,17 @@ export const MessageInsight = function ({ message }: Props) {
   if (!message.summary && !message.reason) return null;
 
   return (
-    <View>
-      <SectionHeader title="Heed's read" />
+    <View className="gap-2.5 rounded-xl border-hairline border-line bg-surface p-3.5">
+      <Eyebrow icon={Sparkles} label="Heed's read" />
 
-      <View className="rounded-2xl border-hairline border-line bg-surface p-4">
-        {message.summary && <AppText type="body">{message.summary}</AppText>}
+      {message.summary && <AppText type="body">{message.summary}</AppText>}
 
-        {message.reason && (
-          <AppText type="caption" className={message.summary ? "mt-3" : ""}>
-            {message.decidedBy ? `${SOURCE_LABEL[message.decidedBy]} · ` : ""}
-            {message.reason}
-          </AppText>
-        )}
-      </View>
+      {message.reason && (
+        <AppText type="subtitle" className={message.summary ? "border-t-hairline border-line pt-2.5" : ""}>
+          {message.decidedBy ? `${SOURCE_LABEL[message.decidedBy]} · ` : ""}
+          {message.reason}
+        </AppText>
+      )}
     </View>
   );
 };

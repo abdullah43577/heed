@@ -1,5 +1,5 @@
 import { clsx } from "clsx";
-import { Platform, Pressable, View } from "react-native";
+import { Pressable, View } from "react-native";
 import { AppText } from "./app-text";
 
 interface SegmentedControlProps<T extends string> {
@@ -9,19 +9,6 @@ interface SegmentedControlProps<T extends string> {
   disabled?: boolean;
 }
 
-const activeShadow = Platform.select({
-  ios: {
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 2,
-  },
-  android: {
-    elevation: 2,
-  },
-  default: {},
-});
-
 export const SegmentedControl = function <T extends string>({
   options,
   value,
@@ -29,7 +16,7 @@ export const SegmentedControl = function <T extends string>({
   disabled,
 }: SegmentedControlProps<T>) {
   return (
-    <View className="flex-row rounded-lg bg-surface-muted p-1">
+    <View className="flex-row rounded-lg bg-surface-muted p-0.5">
       {options.map((option) => {
         const isActive = option.value === value;
         return (
@@ -37,10 +24,9 @@ export const SegmentedControl = function <T extends string>({
             key={option.value}
             disabled={disabled}
             onPress={() => onChange(option.value)}
-            style={isActive ? activeShadow : undefined}
             className={clsx(
-              "flex-1 items-center rounded-md py-2",
-              isActive && "bg-surface",
+              "flex-1 items-center rounded-md border py-2",
+              isActive ? "border-line bg-surface" : "border-transparent",
               disabled && "opacity-50",
             )}
           >
@@ -48,8 +34,8 @@ export const SegmentedControl = function <T extends string>({
               type="default"
               className={
                 isActive
-                  ? "font-inter-medium text-foreground"
-                  : "text-foreground-subtle"
+                  ? "text-[13px] font-inter-semibold text-foreground"
+                  : "text-[13px] font-inter-medium text-foreground-subtle"
               }
             >
               {option.label}

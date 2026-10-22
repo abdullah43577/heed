@@ -11,7 +11,7 @@ import { AppText } from "./app-text";
 export interface AppButtonProps extends PressableProps {
   className?: string;
   onPress?: () => void;
-  type?: "default" | "submit" | "secondary" | "delete";
+  type?: "default" | "submit" | "secondary" | "ghost" | "delete";
   isLoading?: boolean;
   disabled?: boolean;
   label?: string;
@@ -23,13 +23,15 @@ const hapticMap: Partial<
   default: () => Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium),
   submit: () => Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light),
   secondary: () => Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light),
+  ghost: () => Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light),
   delete: () => Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy),
 };
 
 const typeStyles: Record<NonNullable<AppButtonProps["type"]>, string> = {
   default: "bg-foreground",
   submit: "bg-accent",
-  secondary: "bg-surface-muted",
+  secondary: "border border-line bg-surface",
+  ghost: "bg-transparent",
   delete: "bg-danger-solid",
 };
 
@@ -39,6 +41,7 @@ const textStyles: Record<NonNullable<AppButtonProps["type"]>, string> = {
   default: "text-canvas",
   submit: "text-white",
   secondary: "text-foreground",
+  ghost: "font-inter-medium text-foreground-muted",
   delete: "text-white",
 };
 
@@ -59,7 +62,7 @@ export const AppButton = function ({
   // A white spinner is invisible on the secondary fill, and wrong on the
   // inverted default button once the scheme flips.
   const spinnerColor =
-    type === "default" ? canvas : type === "secondary" ? foreground : "#ffffff";
+    type === "default" ? canvas : type === "secondary" || type === "ghost" ? foreground : "#ffffff";
 
   const handlePress = () => {
     if (isDisabled) return;
@@ -72,7 +75,7 @@ export const AppButton = function ({
       {...rest}
       disabled={isDisabled}
       className={clsx(
-        "h-[52px] flex-row items-center justify-center gap-2 rounded-2xl px-4 active:opacity-75",
+        "h-12 flex-row items-center justify-center gap-2 rounded-lg px-4 active:opacity-75",
         typeStyles[type],
         isDisabled && "opacity-60",
         className,

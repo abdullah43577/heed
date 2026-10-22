@@ -13,7 +13,7 @@ export const BacklogDoneCard = function ({ run, onTidyAgain }: Props) {
   const markedRead = run.markedRead ?? 0;
 
   return (
-    <View className="rounded-3xl border-hairline border-line bg-surface p-5">
+    <View className="rounded-xl border-hairline border-line bg-surface p-4">
       <AppText type="display">{markedRead.toLocaleString()}</AppText>
       <AppText type="subtitle" className="mt-0.5">
         {markedRead === 1 ? "email marked as read in Gmail" : "emails marked as read in Gmail"}

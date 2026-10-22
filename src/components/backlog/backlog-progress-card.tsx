@@ -20,7 +20,7 @@ export const BacklogProgressCard = function ({ run, toMarkRead = 0 }: Props) {
   const progress = run.status === "SORTING" && run.total > 0 ? Math.min(1, run.sorted / run.total) : null;
 
   return (
-    <View className="rounded-3xl border-hairline border-line bg-surface p-5">
+    <View className="rounded-xl border-hairline border-line bg-surface p-4">
       <AppText type="title">{headline}</AppText>
 
       <View className="mt-4 h-1.5 overflow-hidden rounded-full bg-surface-muted">

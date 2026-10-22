@@ -24,7 +24,7 @@ export default function ReportDetail() {
 
   if (!report) {
     return (
-      <SafeAreaView className="flex-1 bg-canvas">
+      <SafeAreaView edges={["top"]} className="flex-1 bg-canvas">
         <ScreenHeader title="Report" onBack={() => router.back()} />
         <View className="flex-1 items-center justify-center">
           {isFetchingReport && <ActivityIndicator color={accent} />}
@@ -43,12 +43,12 @@ export default function ReportDetail() {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-canvas">
+    <SafeAreaView edges={["top"]} className="flex-1 bg-canvas">
       <ScreenHeader title={formatReportDate(report.reportDate)} onBack={() => router.back()} />
 
       <ScrollView
         className="flex-1"
-        contentContainerClassName="gap-8 px-5 pb-10 pt-5"
+        contentContainerClassName="gap-6 px-5 pb-8 pt-4"
         showsVerticalScrollIndicator={false}
         refreshControl={
           <RefreshControl refreshing={isFetchingReport} onRefresh={() => refetchReport()} tintColor={accent} />

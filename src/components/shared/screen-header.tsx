@@ -1,43 +1,31 @@
-import { useThemeColors } from "@/hooks/use-theme-colors";
-import { Ionicons } from "@expo/vector-icons";
+import { ChevronLeft } from "lucide-react-native";
 import { ReactNode } from "react";
-import { Pressable, View } from "react-native";
+import { View } from "react-native";
 import { AppText } from "./app-text";
+import { IconButton } from "./icon-button";
 
 interface Props {
   title: string;
   onBack?: () => void;
-  backIcon?: keyof typeof Ionicons.glyphMap;
   right?: ReactNode;
 }
 
-export const ScreenHeader = function ({
-  title,
-  onBack,
-  backIcon = "arrow-back",
-  right,
-}: Props) {
-  const { foreground } = useThemeColors();
-
+export const ScreenHeader = function ({ title, onBack, right }: Props) {
   return (
-    <View className="flex-row items-center gap-2 border-b-hairline border-line bg-surface px-4 py-2.5">
-      <View className="w-16 flex-row items-center">
-        {onBack && (
-          <Pressable
-            onPress={onBack}
-            hitSlop={8}
-            className="h-9 w-9 items-center justify-center rounded-full active:bg-surface-muted"
-          >
-            <Ionicons name={backIcon} size={22} color={foreground} />
-          </Pressable>
-        )}
-      </View>
+    <View
+      className={
+        onBack
+          ? "h-14 flex-row items-center gap-1 border-b-hairline border-line bg-canvas pl-2 pr-3"
+          : "h-14 flex-row items-center gap-1 border-b-hairline border-line bg-canvas pl-5 pr-3"
+      }
+    >
+      {onBack && <IconButton icon={ChevronLeft} size={22} onPress={onBack} accessibilityLabel="Back" />}
 
-      <AppText type="label" className="flex-1 text-center text-[16px]">
+      <AppText type="title" numberOfLines={1} className="flex-1">
         {title}
       </AppText>
 
-      <View className="w-16 flex-row items-center justify-end">{right}</View>
+      {right && <View className="flex-row items-center">{right}</View>}
     </View>
   );
 };

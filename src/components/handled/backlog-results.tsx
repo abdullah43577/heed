@@ -2,7 +2,7 @@ import { AppText } from "@/components/shared/app-text";
 import { SectionHeader } from "@/components/shared/section-header";
 import { useThemeColors } from "@/hooks/use-theme-colors";
 import { formatRelativeDate } from "@/utils/format-date";
-import { Ionicons } from "@expo/vector-icons";
+import { ChevronRight, Inbox } from "lucide-react-native";
 import { Pressable, View } from "react-native";
 import { BacklogRun } from "../../../types/backlog";
 
@@ -21,32 +21,29 @@ export const BacklogResults = function ({ runs, onPressRun }: Props) {
     <View>
       <SectionHeader title="Backlog tidied" />
 
-      <View className="overflow-hidden rounded-2xl border-hairline border-line bg-surface">
+      <View className="overflow-hidden rounded-xl border-hairline border-line bg-surface">
         {runs.map((run, index) => (
           <View key={run.id}>
-            {index > 0 && <View className="ml-16 h-px bg-line" />}
+            {index > 0 && <View className="ml-[62px] h-px bg-line" />}
             <Pressable
               onPress={() => onPressRun(run)}
-              className="flex-row items-center gap-3 px-4 py-3.5 active:bg-surface-muted"
+              className="flex-row items-center gap-3 px-3.5 py-3 active:bg-surface-muted"
             >
-              <View
-                className="items-center justify-center rounded-squircle"
-                style={{ width: 38, height: 38, backgroundColor: holder }}
-              >
-                <Ionicons name="file-tray-full-outline" size={18} color={color} />
+              <View className="items-center justify-center rounded-full" style={{ width: 36, height: 36, backgroundColor: holder }}>
+                <Inbox size={18} color={color} strokeWidth={1.75} />
               </View>
 
               <View className="flex-1">
-                <AppText type="label" numberOfLines={1}>
+                <AppText type="body" numberOfLines={1} className="font-inter-medium">
                   {(run.markedRead ?? 0).toLocaleString()} read for you
                 </AppText>
-                <AppText type="subtitle" numberOfLines={1} className="mt-0.5">
+                <AppText type="subtitle" numberOfLines={1}>
                   {run.mailAccount.email}
                   {run.finishedAt ? ` · ${formatRelativeDate(run.finishedAt)}` : ""}
                 </AppText>
               </View>
 
-              <Ionicons name="chevron-forward" size={16} color={foregroundSubtle} />
+              <ChevronRight size={18} color={foregroundSubtle} strokeWidth={1.75} />
             </Pressable>
           </View>
         ))}

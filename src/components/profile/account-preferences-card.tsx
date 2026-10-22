@@ -1,5 +1,6 @@
 import { useGetProfile } from "@/hooks/use-get-profile";
 import { ThemePreference } from "@/constants/theme";
+import { Bell, BellRing } from "lucide-react-native";
 import { View } from "react-native";
 import { AppText } from "../shared/app-text";
 import { Badge } from "../shared/badge";
@@ -29,8 +30,8 @@ export const AccountPreferencesCard = function ({
 
   return (
     <SettingsCard title="Preferences">
-      <View className="px-5 pb-4 pt-4">
-        <AppText type="default" className="mb-2.5 text-foreground-muted">
+      <View className="border-t-hairline border-line p-3.5">
+        <AppText type="body" className="mb-2.5 font-inter-medium">
           Appearance
         </AppText>
         <SegmentedControl
@@ -46,6 +47,7 @@ export const AccountPreferencesCard = function ({
 
       <SettingsRow
         label="Push notifications"
+        icon={BellRing}
         withDivider
         right={
           <ToggleSwitch
@@ -58,6 +60,7 @@ export const AccountPreferencesCard = function ({
 
       <SettingsRow
         label="Notifications"
+        icon={Bell}
         withDivider
         onPress={onOpenNotifications}
         right={

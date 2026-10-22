@@ -1,5 +1,5 @@
 import { useThemeColors } from "@/hooks/use-theme-colors";
-import { Ionicons } from "@expo/vector-icons";
+import { Check, CircleX } from "lucide-react-native";
 import { useMemo, useState } from "react";
 import { FlatList, Pressable, TextInput, View } from "react-native";
 import { AppModal } from "./app-modal";
@@ -37,7 +37,7 @@ export const BottomSheetPicker = function ({
   accentColor,
 }: BottomSheetPickerProps) {
   const [query, setQuery] = useState("");
-  const { accent, foregroundSubtle } = useThemeColors();
+  const { accent, accentMuted, foregroundSubtle } = useThemeColors();
 
   const tint = accentColor ?? accent;
 
@@ -58,17 +58,17 @@ export const BottomSheetPicker = function ({
       contentClassName="max-h-[75%]"
     >
       {showSearch && (
-        <View className="mb-3 flex-row items-center rounded-xl bg-surface-muted px-4 py-3">
+        <View className="mb-3 h-11 flex-row items-center rounded-lg border border-line bg-canvas px-3">
           <TextInput
             value={query}
             onChangeText={setQuery}
             placeholder={searchPlaceholder}
             placeholderTextColor={foregroundSubtle}
-            className="flex-1 font-inter text-base text-foreground"
+            className="flex-1 font-inter text-[15px] text-foreground"
           />
           {query.length > 0 && (
             <Pressable onPress={() => setQuery("")} hitSlop={8}>
-              <Ionicons name="close-circle" size={18} color={foregroundSubtle} />
+              <CircleX size={18} color={foregroundSubtle} strokeWidth={1.75} />
             </Pressable>
           )}
         </View>
@@ -90,9 +90,9 @@ export const BottomSheetPicker = function ({
 
             return (
               <Pressable
-                className="flex-row items-center justify-between rounded-xl px-4 py-3 active:opacity-70"
+                className="flex-row items-center justify-between rounded-lg px-3 py-3 active:bg-surface-muted"
                 style={
-                  isSelected ? { backgroundColor: `${tint}1F` } : undefined
+                  isSelected ? { backgroundColor: accentMuted } : undefined
                 }
                 onPress={() => {
                   onSelect(item.value);
@@ -119,7 +119,7 @@ export const BottomSheetPicker = function ({
                     className="h-5 w-5 items-center justify-center rounded-full"
                     style={{ backgroundColor: tint }}
                   >
-                    <Ionicons name="checkmark" size={13} color="#FFFFFF" />
+                    <Check size={13} color="#FFFFFF" strokeWidth={2.5} />
                   </View>
                 )}
               </Pressable>

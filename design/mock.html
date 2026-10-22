@@ -1,0 +1,564 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Heed new look mock</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --canvas: #FFFFFF;
+  --surface: #FFFFFF;
+  --muted-bg: #F7F8FA;
+  --line: #ECEDF0;
+  --fg: #0B0D12;
+  --fg-muted: #4B5563;
+  --fg-subtle: #6B7280;
+  --accent: #0E7A63;
+  --accent-muted: #E7F4EF;
+  --on-accent: #FFFFFF;
+  --amber: #B45309;
+  --amber-tint: #FDF1E3;
+  --slate: #475569;
+  --slate-tint: #F1F3F6;
+  --indigo: #4F46E5;
+  --indigo-tint: #EEF2FF;
+  --rose: #BE123C;
+  --rose-tint: #FFF1F3;
+}
+.dark {
+  --canvas: #0E0F12;
+  --surface: #15171B;
+  --muted-bg: #1B1E23;
+  --line: #262A31;
+  --fg: #F2F3F5;
+  --fg-muted: #A9AFBA;
+  --fg-subtle: #8A909C;
+  --accent: #1F9E80;
+  --accent-muted: #12302A;
+  --amber: #F0A34A;
+  --amber-tint: #3A2A14;
+  --slate: #A3AEBF;
+  --slate-tint: #1F242C;
+  --indigo: #8F8CF7;
+  --indigo-tint: #23224A;
+  --rose: #F47A93;
+  --rose-tint: #3A1A22;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: #EEF0F3;
+  font-family: Inter, system-ui, sans-serif;
+  color: #0B0D12;
+  -webkit-font-smoothing: antialiased;
+}
+.page { max-width: 1760px; margin: 0 auto; padding: 40px 24px 80px; }
+.page-head { max-width: 760px; margin-bottom: 32px; }
+.page-head h1 { margin: 0; font-size: 22px; font-weight: 600; letter-spacing: -0.01em; }
+.page-head p { margin: 8px 0 0; font-size: 14px; line-height: 21px; color: #4B5563; }
+.board { display: flex; flex-wrap: wrap; gap: 40px 32px; }
+.frame-label { font-size: 12px; font-weight: 600; color: #4B5563; margin: 0 0 10px 4px; }
+
+.phone {
+  width: 390px;
+  height: 844px;
+  border-radius: 36px;
+  border: 1px solid #D9DCE1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: var(--canvas);
+  color: var(--fg);
+}
+.dark.phone { border-color: #2A2E35; }
+
+svg.i { width: 20px; height: 20px; flex-shrink: 0; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+svg.i.sm { width: 14px; height: 14px; stroke-width: 2; }
+svg.i.md { width: 18px; height: 18px; }
+
+.topbar {
+  margin-top: 12px;
+  height: 56px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 12px 0 20px;
+  border-bottom: 1px solid var(--line);
+}
+.topbar h2 { margin: 0; flex: 1; font-size: 17px; font-weight: 600; letter-spacing: -0.01em; }
+.topbar.sub { padding-left: 8px; }
+.iconbtn {
+  width: 40px; height: 40px; border-radius: 999px; border: 0; background: transparent;
+  color: var(--fg); display: flex; align-items: center; justify-content: center;
+}
+.pill { font-size: 12px; font-weight: 500; padding: 4px 10px; border-radius: 999px; white-space: nowrap; }
+.pill.accent { color: var(--accent); background: var(--accent-muted); }
+.pill.amber { color: var(--amber); background: var(--amber-tint); }
+
+.content { flex: 1; overflow: hidden; padding: 16px 20px; display: flex; flex-direction: column; gap: 12px; }
+.content.roomy { gap: 24px; }
+
+.card { border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 14px; display: flex; flex-direction: column; gap: 10px; }
+.row-top { display: flex; align-items: center; gap: 10px; }
+.avatar { width: 36px; height: 36px; border-radius: 999px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; flex-shrink: 0; }
+.av-indigo { background: var(--indigo-tint); color: var(--indigo); }
+.av-amber { background: var(--amber-tint); color: var(--amber); }
+.av-accent { background: var(--accent-muted); color: var(--accent); }
+.av-rose { background: var(--rose-tint); color: var(--rose); }
+.av-slate { background: var(--slate-tint); color: var(--slate); }
+.grow { flex: 1; min-width: 0; }
+.line1 { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.name { font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.name.medium { font-weight: 500; }
+.time { font-size: 12px; color: var(--fg-subtle); flex-shrink: 0; }
+.meta { font-size: 13px; line-height: 18px; color: var(--fg-muted); margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.body { margin: 0; font-size: 13px; line-height: 19px; color: var(--fg-muted); }
+
+.draft { background: var(--muted-bg); border-radius: 8px; padding: 10px 12px; }
+.eyebrow { display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em; }
+.draft p { margin: 6px 0 0; font-size: 13px; line-height: 19px; color: var(--fg); }
+.ph { background: var(--amber-tint); color: var(--amber); border-radius: 4px; padding: 0 3px; }
+
+.actions { display: flex; justify-content: flex-end; align-items: center; gap: 8px; }
+.btn { height: 36px; padding: 0 14px; border: 0; border-radius: 8px; font: 600 13px Inter, sans-serif; display: inline-flex; align-items: center; gap: 6px; }
+.btn.primary { background: var(--accent); color: var(--on-accent); }
+.btn.ghost { background: transparent; color: var(--fg-muted); font-weight: 500; }
+.btn.link { background: transparent; color: var(--accent); padding: 0 6px; }
+.btn.block { width: 100%; height: 44px; justify-content: center; font-size: 14px; }
+
+.stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.stat { border: 1px solid var(--line); border-radius: 12px; padding: 12px; display: flex; flex-direction: column; align-items: center; text-align: center; }
+.stat-icon { width: 36px; height: 36px; border-radius: 999px; display: flex; align-items: center; justify-content: center; margin-bottom: 8px; }
+.stat b { font-size: 16px; font-weight: 600; }
+.stat span { font-size: 12px; color: var(--fg-subtle); margin-top: 2px; }
+
+.section-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+.section-head h3 { margin: 0; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 6px; }
+.dot { width: 8px; height: 8px; border-radius: 999px; }
+.count { font-size: 12px; color: var(--fg-subtle); }
+
+.list { border: 1px solid var(--line); border-radius: 12px; background: var(--surface); overflow: hidden; }
+.item { display: flex; align-items: center; gap: 12px; padding: 12px 14px; }
+.item + .item { border-top: 1px solid var(--line); }
+.chev { color: var(--fg-subtle); }
+.act-label { flex: 1; font-size: 14px; font-weight: 500; }
+.act-icon { width: 32px; height: 32px; border-radius: 8px; background: var(--muted-bg); color: var(--fg); display: flex; align-items: center; justify-content: center; }
+
+.subject { margin: 0; font-size: 18px; line-height: 24px; font-weight: 600; letter-spacing: -0.01em; }
+.insight p { margin: 0; font-size: 14px; line-height: 21px; }
+.insight .why { font-size: 13px; line-height: 19px; color: var(--fg-muted); padding-top: 10px; border-top: 1px solid var(--line); }
+
+.q { align-self: flex-end; max-width: 85%; background: var(--accent-muted); border-radius: 12px 12px 4px 12px; padding: 10px 14px; font-size: 14px; line-height: 20px; }
+.answer { font-size: 14px; line-height: 22px; margin: 0; }
+.cite { display: inline-flex; align-items: center; justify-content: center; min-width: 16px; height: 16px; padding: 0 4px; margin-left: 2px; border-radius: 4px; background: var(--accent-muted); color: var(--accent); font-size: 10px; font-weight: 700; vertical-align: 2px; }
+.small-label { font-size: 12px; font-weight: 500; color: var(--fg-subtle); margin-bottom: 8px; }
+.num { width: 26px; height: 26px; border-radius: 7px; background: var(--accent-muted); color: var(--accent); font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.status { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--fg-muted); }
+.spinner { width: 14px; height: 14px; border-radius: 999px; border: 2px solid var(--accent-muted); border-top-color: var(--accent); }
+
+.composer { flex-shrink: 0; display: flex; align-items: flex-end; gap: 8px; padding: 10px 16px; border-top: 1px solid var(--line); background: var(--surface); }
+.composer .field { flex: 1; min-height: 42px; border: 1px solid var(--line); border-radius: 10px; padding: 11px 14px; font-size: 14px; color: var(--fg-subtle); background: var(--canvas); }
+.send { width: 42px; height: 42px; border-radius: 999px; border: 0; background: var(--accent); color: var(--on-accent); display: flex; align-items: center; justify-content: center; }
+
+.empty { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 0 36px 40px; }
+.empty h3 { margin: 20px 0 0; font-size: 16px; font-weight: 600; }
+.empty p { margin: 6px 0 0; font-size: 13px; line-height: 19px; color: var(--fg-muted); }
+.empty .strip { margin-top: 28px; width: 100%; border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; display: flex; align-items: center; gap: 12px; text-align: left; }
+
+.tabbar { height: 84px; flex-shrink: 0; border-top: 1px solid var(--line); background: var(--surface); display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); padding-top: 9px; }
+.tab { display: flex; flex-direction: column; align-items: center; gap: 4px; color: var(--fg-subtle); font-size: 11px; font-weight: 500; position: relative; }
+.tab.on { color: var(--accent); }
+.tab svg.i { width: 22px; height: 22px; }
+.badge { position: absolute; top: -4px; left: calc(50% + 6px); min-width: 16px; height: 16px; padding: 0 4px; border-radius: 999px; background: var(--accent); color: var(--on-accent); font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position: absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-inbox" viewBox="0 0 24 24"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></symbol>
+    <symbol id="i-checks" viewBox="0 0 24 24"><path d="M18 6 7 17l-5-5"/><path d="m22 10-7.5 7.5L13 16"/></symbol>
+    <symbol id="i-sparkles" viewBox="0 0 24 24"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></symbol>
+    <symbol id="i-pen" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.376 3.622a1 1 0 0 1 3.002 3.004L7.368 18.635a2 2 0 0 1-.855.506l-2.872.838a.5.5 0 0 1-.62-.62l.838-2.872a2 2 0 0 1 .506-.854z"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/></symbol>
+    <symbol id="i-left" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol>
+    <symbol id="i-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+    <symbol id="i-up" viewBox="0 0 24 24"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M12 5v14"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></symbol>
+    <symbol id="i-ban" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m4.9 4.9 14.2 14.2"/></symbol>
+    <symbol id="i-external" viewBox="0 0 24 24"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h3"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M10.268 21a2 2 0 0 0 3.464 0"/><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></symbol>
+  </defs>
+</svg>
+
+<div class="page">
+  <div class="page-head">
+    <h1>Heed: new look</h1>
+    <p>Inter only, a white canvas, 1px borders, 8–12px radii, a compact top bar, one line-icon set (Lucide, 1.75 stroke) and Heed's own line-art illustration on empty moments. Heed green, the category colours and dark mode stay. Nothing in the app has changed yet.</p>
+  </div>
+
+  <div class="board">
+
+    <!-- Review, light -->
+    <section>
+      <p class="frame-label">Review · light</p>
+      <div class="phone">
+        <div class="topbar">
+          <h2>Review</h2>
+          <span class="pill accent">3 waiting</span>
+        </div>
+        <div class="content">
+          <article class="card">
+            <div class="row-top">
+              <div class="avatar av-indigo">S</div>
+              <div class="grow">
+                <div class="line1"><span class="name">Sam Okafor</span><span class="time">12m</span></div>
+                <div class="meta">Dinner on Friday?</div>
+              </div>
+            </div>
+            <p class="body">Asks if you're free for dinner on Friday and whether 7pm works.</p>
+            <div class="draft">
+              <div class="eyebrow"><svg class="i sm"><use href="#i-pen"/></svg>Heed's draft</div>
+              <p>Hi Sam, Friday sounds great. I'm free from <span class="ph">[your time on Friday]</span>, does that work for you?</p>
+            </div>
+            <div class="actions">
+              <button class="btn ghost">No reply needed</button>
+              <button class="btn primary">Review</button>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="row-top">
+              <div class="avatar av-amber">D</div>
+              <div class="grow">
+                <div class="line1"><span class="name">Dave Mensah</span><span class="time">2h</span></div>
+                <div class="meta">Re: Deposit for Flat 3</div>
+              </div>
+            </div>
+            <div class="draft">
+              <div class="eyebrow"><svg class="i sm"><use href="#i-pen"/></svg>Heed's draft</div>
+              <p>Hi Dave, thanks for confirming. I'll keep an eye out for it over the next few days.</p>
+            </div>
+            <div class="actions">
+              <button class="btn ghost">No reply needed</button>
+              <button class="btn primary">Review</button>
+            </div>
+          </article>
+
+          <article class="card" style="flex-direction: row; align-items: center">
+            <div class="avatar av-accent">L</div>
+            <div class="grow">
+              <div class="name">Lena Park</div>
+              <div class="meta">Sending in 4s…</div>
+            </div>
+            <button class="btn link">Undo</button>
+          </article>
+        </div>
+        <nav class="tabbar">
+          <div class="tab on"><span class="badge">3</span><svg class="i"><use href="#i-inbox"/></svg>Review</div>
+          <div class="tab"><svg class="i"><use href="#i-checks"/></svg>Handled</div>
+          <div class="tab"><svg class="i"><use href="#i-sparkles"/></svg>Ask</div>
+          <div class="tab"><svg class="i"><use href="#i-user"/></svg>Profile</div>
+        </nav>
+      </div>
+    </section>
+
+    <!-- Handled, light -->
+    <section>
+      <p class="frame-label">Handled · light</p>
+      <div class="phone">
+        <div class="topbar">
+          <h2>Handled</h2>
+          <button class="iconbtn" aria-label="Past reports"><svg class="i"><use href="#i-file"/></svg></button>
+        </div>
+        <div class="content roomy">
+          <div class="stats">
+            <div class="stat"><div class="stat-icon av-accent"><svg class="i md"><use href="#i-checks"/></svg></div><b>46</b><span>Read for you</span></div>
+            <div class="stat"><div class="stat-icon av-amber"><svg class="i md"><use href="#i-alert"/></svg></div><b>2</b><span>Worth a look</span></div>
+            <div class="stat"><div class="stat-icon av-slate"><svg class="i md"><use href="#i-inbox"/></svg></div><b>3</b><span>Left for you</span></div>
+          </div>
+
+          <div>
+            <div class="section-head"><h3><span class="dot" style="background: var(--amber)"></span>Worth a look</h3><span class="count">2</span></div>
+            <div class="list">
+              <div class="item">
+                <div class="avatar av-slate">G</div>
+                <div class="grow">
+                  <div class="line1"><span class="name medium">Google</span><span class="time">9:41</span></div>
+                  <div class="meta">New sign-in from Chrome on Windows</div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="avatar av-amber">B</div>
+                <div class="grow">
+                  <div class="line1"><span class="name medium">British Gas</span><span class="time">8:02</span></div>
+                  <div class="meta">Your October bill is £64.20, due 3 Nov</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="section-head"><h3><span class="dot" style="background: var(--slate)"></span>Updates</h3><span class="count">31</span></div>
+            <div class="list">
+              <div class="item">
+                <div class="avatar av-indigo">U</div>
+                <div class="grow">
+                  <div class="line1"><span class="name medium">Uber</span><span class="time">Yesterday</span></div>
+                  <div class="meta">Receipt for your Tuesday trip, £12.40</div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="avatar av-accent">A</div>
+                <div class="grow">
+                  <div class="line1"><span class="name medium">Amazon</span><span class="time">Yesterday</span></div>
+                  <div class="meta">Your parcel was delivered</div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="avatar av-rose">G</div>
+                <div class="grow">
+                  <div class="line1"><span class="name medium">GitHub</span><span class="time">Mon</span></div>
+                  <div class="meta">Dependabot opened 2 pull requests</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="section-head"><h3><span class="dot" style="background: var(--indigo)"></span>Newsletters</h3><span class="count">13</span></div>
+            <div class="list">
+              <div class="item">
+                <div class="avatar av-slate">T</div>
+                <div class="grow">
+                  <div class="line1"><span class="name medium">The Browser</span><span class="time">7:00</span></div>
+                  <div class="meta">Five essays worth your morning</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <nav class="tabbar">
+          <div class="tab"><span class="badge">3</span><svg class="i"><use href="#i-inbox"/></svg>Review</div>
+          <div class="tab on"><svg class="i"><use href="#i-checks"/></svg>Handled</div>
+          <div class="tab"><svg class="i"><use href="#i-sparkles"/></svg>Ask</div>
+          <div class="tab"><svg class="i"><use href="#i-user"/></svg>Profile</div>
+        </nav>
+      </div>
+    </section>
+
+    <!-- Email detail, light -->
+    <section>
+      <p class="frame-label">Email detail · light</p>
+      <div class="phone">
+        <div class="topbar sub">
+          <button class="iconbtn" aria-label="Back"><svg class="i"><use href="#i-left"/></svg></button>
+          <h2>Email</h2>
+        </div>
+        <div class="content roomy">
+          <div style="display: flex; flex-direction: column; gap: 12px">
+            <span class="pill amber" style="align-self: flex-start">Worth a look</span>
+            <h3 class="subject">Security alert: new sign-in to your account</h3>
+            <div class="row-top">
+              <div class="avatar av-slate">G</div>
+              <div class="grow">
+                <div class="line1"><span class="name">Google</span><span class="time">9:41</span></div>
+                <div class="meta">no-reply@accounts.google.com · to abdul@gmail.com</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card insight">
+            <div class="eyebrow"><svg class="i sm"><use href="#i-sparkles"/></svg>Heed's read</div>
+            <p>A new sign-in from Chrome on Windows in London. If it was you, there's nothing to do.</p>
+            <p class="why">Marked read: a security notice that expects no reply.</p>
+          </div>
+
+          <div>
+            <p class="small-label">Actions</p>
+            <div class="list">
+              <div class="item"><div class="act-icon"><svg class="i md"><use href="#i-pen"/></svg></div><span class="act-label">Draft a reply</span><svg class="i md chev"><use href="#i-right"/></svg></div>
+              <div class="item"><div class="act-icon"><svg class="i md"><use href="#i-mail"/></svg></div><span class="act-label">Mark unread in Gmail</span><svg class="i md chev"><use href="#i-right"/></svg></div>
+              <div class="item"><div class="act-icon"><svg class="i md"><use href="#i-ban"/></svg></div><span class="act-label">Never auto-read this sender</span><svg class="i md chev"><use href="#i-right"/></svg></div>
+              <div class="item"><div class="act-icon"><svg class="i md"><use href="#i-external"/></svg></div><span class="act-label">Open in Gmail</span><svg class="i md chev"><use href="#i-right"/></svg></div>
+            </div>
+          </div>
+        </div>
+        <nav class="tabbar">
+          <div class="tab"><span class="badge">3</span><svg class="i"><use href="#i-inbox"/></svg>Review</div>
+          <div class="tab on"><svg class="i"><use href="#i-checks"/></svg>Handled</div>
+          <div class="tab"><svg class="i"><use href="#i-sparkles"/></svg>Ask</div>
+          <div class="tab"><svg class="i"><use href="#i-user"/></svg>Profile</div>
+        </nav>
+      </div>
+    </section>
+
+    <!-- Ask, light -->
+    <section>
+      <p class="frame-label">Ask · light</p>
+      <div class="phone">
+        <div class="topbar">
+          <h2>Ask</h2>
+          <button class="iconbtn" aria-label="Earlier questions"><svg class="i"><use href="#i-clock"/></svg></button>
+          <button class="iconbtn" aria-label="New question"><svg class="i"><use href="#i-plus"/></svg></button>
+        </div>
+        <div class="content roomy">
+          <div class="q">How much did I spend on Uber this month?</div>
+          <div>
+            <p class="answer">You spent £20.50 on two trips:</p>
+            <p class="answer">– £12.40 on Tuesday evening<span class="cite">1</span><br>– £8.10 on Friday morning<span class="cite">2</span></p>
+            <div style="margin-top: 16px">
+              <p class="small-label">From your mail</p>
+              <div class="list">
+                <div class="item">
+                  <div class="num">1</div>
+                  <div class="grow">
+                    <div class="line1"><span class="name medium">Uber Receipts</span><span class="time">5d</span></div>
+                    <div class="meta">Your Tuesday evening trip with Uber</div>
+                  </div>
+                </div>
+                <div class="item">
+                  <div class="num">2</div>
+                  <div class="grow">
+                    <div class="line1"><span class="name medium">Uber Receipts</span><span class="time">9d</span></div>
+                    <div class="meta">Your Friday morning trip with Uber</div>
+                  </div>
+                  <svg class="i sm chev"><use href="#i-external"/></svg>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="q">And did the landlord reply about the deposit?</div>
+          <div class="status"><span class="spinner"></span>Reading 6 emails…</div>
+        </div>
+        <div class="composer">
+          <div class="field">Ask about your mail</div>
+          <button class="send" aria-label="Ask"><svg class="i"><use href="#i-up"/></svg></button>
+        </div>
+        <nav class="tabbar">
+          <div class="tab"><span class="badge">3</span><svg class="i"><use href="#i-inbox"/></svg>Review</div>
+          <div class="tab"><svg class="i"><use href="#i-checks"/></svg>Handled</div>
+          <div class="tab on"><svg class="i"><use href="#i-sparkles"/></svg>Ask</div>
+          <div class="tab"><svg class="i"><use href="#i-user"/></svg>Profile</div>
+        </nav>
+      </div>
+    </section>
+
+    <!-- Review, dark -->
+    <section>
+      <p class="frame-label">Review · dark</p>
+      <div class="phone dark">
+        <div class="topbar">
+          <h2>Review</h2>
+          <span class="pill accent">3 waiting</span>
+        </div>
+        <div class="content">
+          <article class="card">
+            <div class="row-top">
+              <div class="avatar av-indigo">S</div>
+              <div class="grow">
+                <div class="line1"><span class="name">Sam Okafor</span><span class="time">12m</span></div>
+                <div class="meta">Dinner on Friday?</div>
+              </div>
+            </div>
+            <p class="body">Asks if you're free for dinner on Friday and whether 7pm works.</p>
+            <div class="draft">
+              <div class="eyebrow"><svg class="i sm"><use href="#i-pen"/></svg>Heed's draft</div>
+              <p>Hi Sam, Friday sounds great. I'm free from <span class="ph">[your time on Friday]</span>, does that work for you?</p>
+            </div>
+            <div class="actions">
+              <button class="btn ghost">No reply needed</button>
+              <button class="btn primary">Review</button>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="row-top">
+              <div class="avatar av-amber">D</div>
+              <div class="grow">
+                <div class="line1"><span class="name">Dave Mensah</span><span class="time">2h</span></div>
+                <div class="meta">Re: Deposit for Flat 3</div>
+              </div>
+            </div>
+            <div class="draft">
+              <div class="eyebrow"><svg class="i sm"><use href="#i-pen"/></svg>Heed's draft</div>
+              <p>Hi Dave, thanks for confirming. I'll keep an eye out for it over the next few days.</p>
+            </div>
+            <div class="actions">
+              <button class="btn ghost">No reply needed</button>
+              <button class="btn primary">Review</button>
+            </div>
+          </article>
+
+          <article class="card" style="flex-direction: row; align-items: center">
+            <div class="avatar av-accent">L</div>
+            <div class="grow">
+              <div class="name">Lena Park</div>
+              <div class="meta">Sending in 4s…</div>
+            </div>
+            <button class="btn link">Undo</button>
+          </article>
+        </div>
+        <nav class="tabbar">
+          <div class="tab on"><span class="badge">3</span><svg class="i"><use href="#i-inbox"/></svg>Review</div>
+          <div class="tab"><svg class="i"><use href="#i-checks"/></svg>Handled</div>
+          <div class="tab"><svg class="i"><use href="#i-sparkles"/></svg>Ask</div>
+          <div class="tab"><svg class="i"><use href="#i-user"/></svg>Profile</div>
+        </nav>
+      </div>
+    </section>
+
+    <!-- Empty state with Heed's own illustration -->
+    <section>
+      <p class="frame-label">Empty state · Heed's own illustration</p>
+      <div class="phone">
+        <div class="topbar">
+          <h2>Review</h2>
+        </div>
+        <div class="empty">
+          <svg width="176" height="132" viewBox="0 0 160 120" fill="none" role="img" aria-label="An open envelope with a check mark">
+            <circle cx="80" cy="64" r="52" fill="var(--accent-muted)"/>
+            <path d="M40 58 80 32l40 26" stroke="var(--fg)" stroke-width="1.75" stroke-linejoin="round"/>
+            <rect x="52" y="38" width="56" height="46" rx="5" fill="var(--surface)" stroke="var(--fg)" stroke-width="1.75"/>
+            <path d="M62 52h30M62 60h20" stroke="var(--fg-subtle)" stroke-width="1.75" stroke-linecap="round"/>
+            <path d="M40 58v38a5 5 0 0 0 5 5h70a5 5 0 0 0 5-5V58L80 84 40 58Z" fill="var(--surface)" stroke="var(--fg)" stroke-width="1.75" stroke-linejoin="round"/>
+            <path d="M42 99 70 78M118 99 90 78" stroke="var(--fg)" stroke-width="1.75" stroke-linecap="round"/>
+            <circle cx="113" cy="40" r="12" fill="var(--accent)"/>
+            <path d="m107.5 40.5 4 4 7.5-8" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M32 30v10M27 35h10" stroke="var(--accent)" stroke-width="1.75" stroke-linecap="round"/>
+            <path d="M132 78v8M128 82h8" stroke="var(--accent)" stroke-width="1.75" stroke-linecap="round"/>
+            <circle cx="126" cy="22" r="2" fill="var(--accent)"/>
+          </svg>
+          <h3>You're all caught up</h3>
+          <p>Nothing needs a reply right now. Heed will let you know when someone is waiting on you.</p>
+          <div class="strip">
+            <div class="stat-icon av-accent" style="margin: 0"><svg class="i md"><use href="#i-checks"/></svg></div>
+            <div class="grow">
+              <div class="name">46 emails read for you today</div>
+              <div class="meta">2 worth a look · 3 left for you</div>
+            </div>
+            <svg class="i md chev"><use href="#i-right"/></svg>
+          </div>
+        </div>
+        <nav class="tabbar">
+          <div class="tab on"><svg class="i"><use href="#i-inbox"/></svg>Review</div>
+          <div class="tab"><svg class="i"><use href="#i-checks"/></svg>Handled</div>
+          <div class="tab"><svg class="i"><use href="#i-sparkles"/></svg>Ask</div>
+          <div class="tab"><svg class="i"><use href="#i-user"/></svg>Profile</div>
+        </nav>
+      </div>
+    </section>
+
+  </div>
+</div>
+</body>
+</html>

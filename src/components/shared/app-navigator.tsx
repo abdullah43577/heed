@@ -1,19 +1,10 @@
 import { Stack } from "expo-router";
 import {
-  BricolageGrotesque_200ExtraLight,
-  BricolageGrotesque_300Light,
-  BricolageGrotesque_400Regular,
-  BricolageGrotesque_500Medium,
-  BricolageGrotesque_600SemiBold,
-  BricolageGrotesque_700Bold,
-  BricolageGrotesque_800ExtraBold,
-  useFonts,
-} from "@expo-google-fonts/bricolage-grotesque";
-import {
   Inter_400Regular,
   Inter_500Medium,
   Inter_600SemiBold,
   Inter_700Bold,
+  useFonts,
 } from "@expo-google-fonts/inter";
 import { useEffect } from "react";
 import * as SplashScreen from "expo-splash-screen";
@@ -28,13 +19,6 @@ import { useSyncDeviceToken } from "@/hooks/notifications/use-sync-device-token"
 
 export const AppNavigator = function () {
   const [loaded] = useFonts({
-    "BricolageGrotesque-ExtraLight": BricolageGrotesque_200ExtraLight,
-    "BricolageGrotesque-Light": BricolageGrotesque_300Light,
-    "BricolageGrotesque-Regular": BricolageGrotesque_400Regular,
-    "BricolageGrotesque-Medium": BricolageGrotesque_500Medium,
-    "BricolageGrotesque-SemiBold": BricolageGrotesque_600SemiBold,
-    "BricolageGrotesque-Bold": BricolageGrotesque_700Bold,
-    "BricolageGrotesque-ExtraBold": BricolageGrotesque_800ExtraBold,
     "Inter-Regular": Inter_400Regular,
     "Inter-Medium": Inter_500Medium,
     "Inter-SemiBold": Inter_600SemiBold,

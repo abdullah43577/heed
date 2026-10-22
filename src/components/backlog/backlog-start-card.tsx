@@ -16,7 +16,7 @@ interface Props {
 
 export const BacklogStartCard = function ({ windowDays, onWindowChange, onStart, isStarting, disabled = false, note }: Props) {
   return (
-    <View className="rounded-3xl border-hairline border-line bg-surface p-5">
+    <View className="rounded-xl border-hairline border-line bg-surface p-4">
       <AppText type="title">Tidy my backlog</AppText>
       <AppText type="subtitle" className="mt-1.5">
         Heed sorts the unread mail in your inbox, then shows you what it would mark as read. Nothing changes in

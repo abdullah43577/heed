@@ -23,7 +23,7 @@ export const DraftStatusNote = function ({ draft, accountNeedsReconnect }: Props
   if (!note) return null;
 
   return (
-    <View className="rounded-2xl border-hairline border-line bg-surface-muted px-4 py-3">
+    <View className="rounded-xl border-hairline border-line bg-surface-muted px-4 py-3">
       <AppText type="subtitle">{note}</AppText>
     </View>
   );

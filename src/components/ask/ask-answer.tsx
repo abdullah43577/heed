@@ -19,13 +19,13 @@ export const AskAnswer = function ({ message, onPressCitation }: Props) {
 
       {citations.length > 0 && (
         <View className="mt-4">
-          <AppText type="caption" className="mb-2">
+          <AppText type="caption" className="mb-2 font-inter-medium">
             From your mail
           </AppText>
-          <View className="overflow-hidden rounded-2xl border-hairline border-line bg-surface">
+          <View className="overflow-hidden rounded-xl border-hairline border-line bg-surface">
             {citations.map((citation, index) => (
               <View key={`${citation.mailAccountId}:${citation.gmailMessageId}`}>
-                {index > 0 && <View className="ml-14 h-px bg-line" />}
+                {index > 0 && <View className="h-px bg-line" />}
                 <AskSourceRow
                   citation={citation}
                   showAccount={showAccount}

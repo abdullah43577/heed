@@ -1,6 +1,6 @@
 import { useThemeColors } from "@/hooks/use-theme-colors";
 import { clsx } from "clsx";
-import { Eye, EyeSlash } from "iconsax-react-nativejs";
+import { Eye, EyeOff } from "lucide-react-native";
 import { useState } from "react";
 import {
   Controller,
@@ -73,9 +73,9 @@ export const FormInput = function <TFieldValues extends FieldValues>({
                   onPress={() => setShowPassword((prev) => !prev)}
                 >
                   {showPassword ? (
-                    <EyeSlash size={18} color={foregroundMuted} variant="Linear" />
+                    <EyeOff size={18} color={foregroundMuted} strokeWidth={1.75} />
                   ) : (
-                    <Eye size={18} color={foregroundMuted} variant="Linear" />
+                    <Eye size={18} color={foregroundMuted} strokeWidth={1.75} />
                   )}
                 </Pressable>
               </View>

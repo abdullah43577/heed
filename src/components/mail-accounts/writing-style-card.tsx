@@ -47,7 +47,7 @@ export const WritingStyleCard = function ({
       title="Writing style"
       {...(account.styleNote && !isEditing && { actionLabel: "Edit", onPressAction: handleStartEditing })}
     >
-      <View className="px-5 pb-5 pt-3">
+      <View className="p-3.5">
         {isEditing ? (
           <>
             <TextArea

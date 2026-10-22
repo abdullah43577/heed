@@ -29,7 +29,7 @@ export default function ReportSettings() {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-canvas">
+    <SafeAreaView edges={["top"]} className="flex-1 bg-canvas">
       <ScreenHeader title="Daily report" onBack={() => router.back()} />
 
       {!profile ? (
@@ -39,7 +39,7 @@ export default function ReportSettings() {
       ) : (
         <ScrollView
           className="flex-1"
-          contentContainerClassName="px-5 pb-10 pt-5"
+          contentContainerClassName="px-5 pb-8 pt-4"
           showsVerticalScrollIndicator={false}
         >
           <AppText type="subtitle">

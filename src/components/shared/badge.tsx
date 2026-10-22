@@ -41,7 +41,7 @@ export const Badge = function ({
   );
 
   const content = (
-    <AppText type="caption" className={clsx("font-inter-semibold", text)}>
+    <AppText type="caption" className={clsx("font-inter-medium", text)}>
       {label}
     </AppText>
   );

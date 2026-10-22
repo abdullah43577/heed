@@ -7,6 +7,7 @@ import { SettingsCard } from "@/components/profile/settings-card";
 import { SettingsRow } from "@/components/profile/settings-row";
 import { AppText } from "@/components/shared/app-text";
 import { ConfirmDialog } from "@/components/shared/confirm-dialog";
+import { ScreenHeader } from "@/components/shared/screen-header";
 import { DeleteAccountDialog } from "@/components/profile/delete-account-dialog";
 import { useDeleteAccount } from "@/hooks/profile/use-delete-account";
 import { useUpdateProfile } from "@/hooks/profile/use-update-profile";
@@ -22,6 +23,7 @@ import { ProfileFormValues, profileSchema } from "@/schemas/settings/profile";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Constants from "expo-constants";
 import { useRouter } from "expo-router";
+import { FileText, LogOut, Mail, Trash2 } from "lucide-react-native";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { ActivityIndicator, RefreshControl, View } from "react-native";
@@ -104,10 +106,12 @@ export default function Profile() {
   }
 
   return (
-    <SafeAreaView className="flex-1 bg-canvas">
+    <SafeAreaView edges={["top"]} className="flex-1 bg-canvas">
+      <ScreenHeader title="Profile" />
+
       <KeyboardAwareScrollView
         className="flex-1"
-        contentContainerClassName="pb-10"
+        contentContainerClassName="gap-6 px-5 pb-8 pt-4"
         showsVerticalScrollIndicator={false}
         enableOnAndroid
         extraScrollHeight={20}
@@ -121,14 +125,13 @@ export default function Profile() {
       >
         <ProfileHeader />
 
-        <View className="gap-4 px-5 pt-4">
           <SettingsCard
             title="Account details"
             actionLabel={isEditing ? "Cancel" : "Edit"}
             onPressAction={() => setIsEditing((prev) => !prev)}
           >
             {isEditing ? (
-              <View className="px-5 pb-5 pt-4">
+              <View className="border-t-hairline border-line p-3.5">
                 <AccountDetailsEdit
                   control={control}
                   errors={errors}
@@ -138,21 +141,21 @@ export default function Profile() {
                 />
               </View>
             ) : (
-              <View className="mt-4">
-                <AccountDetailsView />
-              </View>
+              <AccountDetailsView />
             )}
           </SettingsCard>
 
           <SettingsCard title="Mail">
             <SettingsRow
               label="Gmail accounts"
+              icon={Mail}
               withDivider
               value={needsReconnect ? "Reconnect needed" : `${mailAccounts.length} connected`}
               onPress={() => router.push("/(dashboard)/(tabs)/profile/accounts")}
             />
             <SettingsRow
               label="Daily report"
+              icon={FileText}
               withDivider
               value={formatTimeOfDay(profile?.settings?.reportTime ?? DEFAULT_REPORT_TIME)}
               onPress={() => router.push("/(dashboard)/(tabs)/profile/report-settings")}
@@ -168,26 +171,20 @@ export default function Profile() {
             onOpenNotifications={() => router.push("/(dashboard)/(tabs)/profile/notifications")}
           />
 
-          <View className="overflow-hidden rounded-3xl border-hairline border-line bg-surface">
-            <SettingsRow
-              label="Log out"
-              destructive
-              onPress={() => setLogoutDialogVisible(true)}
-            />
-          </View>
-
-          <View className="overflow-hidden rounded-3xl border-hairline border-line bg-surface">
+          <SettingsCard>
+            <SettingsRow label="Log out" icon={LogOut} withDivider onPress={() => setLogoutDialogVisible(true)} />
             <SettingsRow
               label="Delete account"
+              icon={Trash2}
               destructive
+              withDivider
               onPress={() => setDeleteDialogVisible(true)}
             />
-          </View>
+          </SettingsCard>
 
-          <AppText type="caption" className="mt-1 text-center text-foreground-subtle">
+          <AppText type="caption" className="text-center">
             Heed v{Constants.expoConfig?.version ?? "1.0.0"}
           </AppText>
-        </View>
       </KeyboardAwareScrollView>
 
       <DeleteAccountDialog

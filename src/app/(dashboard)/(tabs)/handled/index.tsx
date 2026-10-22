@@ -2,9 +2,9 @@ import { BacklogResults } from "@/components/handled/backlog-results";
 import { HandledSummary } from "@/components/handled/handled-summary";
 import { MessageGroup } from "@/components/messages/message-group";
 import { RuleEditorSheet } from "@/components/rules/rule-editor-sheet";
-import { AppText } from "@/components/shared/app-text";
 import { EmptyState } from "@/components/shared/empty-state";
 import { IconButton } from "@/components/shared/icon-button";
+import { ScreenHeader } from "@/components/shared/screen-header";
 import { HANDLED_CATEGORY_ORDER } from "@/constants/categories";
 import { useGetBacklogRuns } from "@/hooks/backlog/use-get-backlog-runs";
 import { useGetHandledMessages } from "@/hooks/messages/use-get-handled-messages";
@@ -12,6 +12,7 @@ import { useSenderRuleSheet } from "@/hooks/rules/use-sender-rule-sheet";
 import { useThemeColors } from "@/hooks/use-theme-colors";
 import { isWithinLastDays } from "@/utils/format-date";
 import { useRouter } from "expo-router";
+import { FileText } from "lucide-react-native";
 import { ActivityIndicator, RefreshControl, ScrollView, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { BacklogRun } from "../../../../../types/backlog";
@@ -52,10 +53,21 @@ export default function Handled() {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-canvas">
+    <SafeAreaView edges={["top"]} className="flex-1 bg-canvas">
+      <ScreenHeader
+        title="Handled"
+        right={
+          <IconButton
+            icon={FileText}
+            accessibilityLabel="Past reports"
+            onPress={() => router.push("/(dashboard)/(tabs)/handled/reports")}
+          />
+        }
+      />
+
       <ScrollView
         className="flex-1"
-        contentContainerStyle={{ paddingBottom: 40, flexGrow: 1 }}
+        contentContainerStyle={{ paddingBottom: 32, flexGrow: 1 }}
         showsVerticalScrollIndicator={false}
         refreshControl={
           <RefreshControl
@@ -65,20 +77,6 @@ export default function Handled() {
           />
         }
       >
-        <View className="flex-row items-start px-5 pt-2">
-          <View className="flex-1">
-            <AppText type="display">Handled</AppText>
-            <AppText type="subtitle" className="mt-1.5">
-              What Heed read for you today
-            </AppText>
-          </View>
-          <IconButton
-            icon="newspaper-outline"
-            onPress={() => router.push("/(dashboard)/(tabs)/handled/reports")}
-            className="mt-1"
-          />
-        </View>
-
         {!hasLoadedHandledMessages ? (
           <View className="flex-1 items-center justify-center py-16">
             <ActivityIndicator color={accent} />
@@ -86,12 +84,11 @@ export default function Handled() {
         ) : groups.length === 0 && recentTidies.length === 0 ? (
           <EmptyState
             illustration="emptyHandled"
-            accentColor={accent}
             title="Nothing handled yet today"
             subtitle="Mail Heed reads for you shows up here, with a one-line preview of each"
           />
         ) : (
-          <View className="gap-8 px-5 pt-6">
+          <View className="gap-6 px-5 pt-4">
             {groups.length > 0 && (
               <HandledSummary
                 readCount={count((message) => message.action === "MARKED_READ")}

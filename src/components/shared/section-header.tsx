@@ -17,9 +17,9 @@ export const SectionHeader = function ({
 }: Props) {
   return (
     <View
-      className={clsx("mb-3 flex-row items-center justify-between", className)}
+      className={clsx("mb-2 flex-row items-center justify-between", className)}
     >
-      <AppText type="label" className="text-[15px] leading-[20px]">
+      <AppText type="label">
         {title}
       </AppText>
 

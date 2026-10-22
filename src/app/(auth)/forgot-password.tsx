@@ -36,7 +36,7 @@ export default function ForgotPassword() {
       extraScrollHeight={20}
     >
       <View className="flex-1 justify-center px-6 py-10">
-        <AppText type="title">Forgot password?</AppText>
+        <AppText type="display">Forgot password?</AppText>
         <AppText type="subtitle" className="mt-1 text-foreground-muted">
           Enter your email and we'll send you a code to reset your password
         </AppText>

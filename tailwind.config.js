@@ -102,21 +102,14 @@ module.exports = {
       },
 
       borderWidth: {
-        hairline: "0.5px",
+        hairline: "1px",
       },
 
       borderRadius: {
-        squircle: "10px",
+        squircle: "8px",
       },
 
       fontFamily: {
-        "bricolage-extralight": ["BricolageGrotesque-ExtraLight"],
-        "bricolage-light": ["BricolageGrotesque-Light"],
-        bricolage: ["BricolageGrotesque-Regular"],
-        "bricolage-medium": ["BricolageGrotesque-Medium"],
-        "bricolage-semibold": ["BricolageGrotesque-SemiBold"],
-        "bricolage-bold": ["BricolageGrotesque-Bold"],
-        "bricolage-extrabold": ["BricolageGrotesque-ExtraBold"],
         inter: ["Inter-Regular"],
         "inter-medium": ["Inter-Medium"],
         "inter-semibold": ["Inter-SemiBold"],
