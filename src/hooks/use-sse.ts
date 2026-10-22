@@ -7,6 +7,7 @@ interface SSEOptions {
   onChunk?: (chunk: string, full: string) => void;
   onComplete?: (data: any) => void;
   onError?: (error: string, code?: string) => void;
+  onEvent?: (data: any) => void;
 }
 
 // A refusal before the stream opens arrives as an error event whose message is the raw JSON body.
@@ -29,7 +30,7 @@ export const useSSE = function () {
     url: string,
     options: SSEOptions = {},
   ) {
-    const { onChunk, onComplete, onError } = options;
+    const { onChunk, onComplete, onError, onEvent } = options;
 
     try {
       setIsLoading(true);
@@ -78,7 +79,10 @@ export const useSSE = function () {
           if (data.chunk) {
             fullResponse += data.chunk;
             if (onChunk) onChunk(data.chunk, fullResponse);
+            return;
           }
+
+          if (onEvent) onEvent(data);
         } catch (err) {
           console.error("Failed to parse SSE message:", err);
         }

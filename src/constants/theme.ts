@@ -61,3 +61,6 @@ export const TINT_ALPHA = {
   light: { surface: "12", holder: "26" },
   dark: { surface: "26", holder: "3D" },
 } as const;
+
+// The tab bar is this tall above the bottom inset; a screen lifting a bar over the keyboard subtracts it.
+export const TAB_BAR_HEIGHT = 60;

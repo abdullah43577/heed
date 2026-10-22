@@ -60,6 +60,14 @@ export const API_ENDPOINTS = {
     cancel: (id: string) => `/backlog/${id}/cancel`,
   },
 
+  ask: {
+    conversations: "/ask/conversations",
+    conversation: (id: string) => `/ask/conversations/${id}`,
+    questions: (id: string) => `/ask/conversations/${id}/questions`,
+    // Relative to the base url: useSSE joins it on, since EventSource does not go through axios.
+    answer: (id: string) => `ask/conversations/${id}/answer`,
+  },
+
   notifications: {
     list: "/notifications",
     unreadCount: "/notifications/unread-count",

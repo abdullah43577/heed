@@ -1,5 +1,6 @@
 import { useGetReviewMessages } from "@/hooks/messages/use-get-review-messages";
 import { useSyncTimezone } from "@/hooks/profile/use-sync-timezone";
+import { TAB_BAR_HEIGHT } from "@/constants/theme";
 import { useThemeColors } from "@/hooks/use-theme-colors";
 import { Ionicons } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
@@ -57,7 +58,7 @@ export default function TabsLayout() {
           backgroundColor: surface,
           borderTopColor: line,
           borderTopWidth: StyleSheet.hairlineWidth,
-          height: 60 + insets.bottom,
+          height: TAB_BAR_HEIGHT + insets.bottom,
           paddingBottom: insets.bottom + 8,
           paddingTop: 8,
         },

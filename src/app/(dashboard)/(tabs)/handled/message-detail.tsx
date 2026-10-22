@@ -8,6 +8,7 @@ import { useGetMessage } from "@/hooks/messages/use-get-message";
 import { useSiblingRoute } from "@/hooks/use-sibling-route";
 import { useMessageActions } from "@/hooks/messages/use-message-actions";
 import { useThemeColors } from "@/hooks/use-theme-colors";
+import { gmailMessageUrl } from "@/utils/gmail-url";
 import * as Linking from "expo-linking";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { ActivityIndicator, ScrollView, View } from "react-native";
@@ -46,9 +47,7 @@ export default function MessageDetail() {
   };
 
   const handleOpenInGmail = function () {
-    Linking.openURL(
-      `https://mail.google.com/mail/u/${encodeURIComponent(message.mailAccount.email)}/#all/${message.gmailMessageId}`,
-    );
+    Linking.openURL(gmailMessageUrl(message.mailAccount.email, message.gmailMessageId));
   };
 
   const openDraftId = message.draft && OPEN_DRAFT_STATUSES.includes(message.draft.status) ? message.draft.id : null;
