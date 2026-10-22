@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Heed email mock</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --canvas: #FFFFFF;
+  --surface: #FFFFFF;
+  --muted-bg: #F7F8FA;
+  --line: #ECEDF0;
+  --fg: #0B0D12;
+  --fg-muted: #4B5563;
+  --fg-subtle: #6B7280;
+  --accent: #0E7A63;
+  --accent-muted: #E7F4EF;
+  --amber: #B45309;
+  --amber-tint: #FDF1E3;
+}
+.dark {
+  --canvas: #0E0F12;
+  --surface: #15171B;
+  --muted-bg: #1B1E23;
+  --line: #262A31;
+  --fg: #F2F3F5;
+  --fg-muted: #A9AFBA;
+  --fg-subtle: #8A909C;
+  --accent: #1F9E80;
+  --accent-muted: #12302A;
+  --amber: #F0A34A;
+  --amber-tint: #3A2A14;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; background: #EEF0F3; font-family: Inter, system-ui, sans-serif; color: #0B0D12; -webkit-font-smoothing: antialiased; }
+.page { max-width: 1440px; margin: 0 auto; padding: 40px 24px 80px; }
+.page-head { max-width: 780px; margin-bottom: 32px; }
+.page-head h1 { margin: 0; font-size: 22px; font-weight: 600; letter-spacing: -0.01em; }
+.page-head p { margin: 8px 0 0; font-size: 14px; line-height: 21px; color: #4B5563; }
+.board { display: flex; flex-wrap: wrap; gap: 40px 32px; align-items: flex-start; }
+.frame-label { font-size: 12px; font-weight: 600; color: #4B5563; margin: 0 0 10px 4px; }
+
+.inbox-line { width: 640px; display: flex; align-items: center; gap: 10px; background: #FFFFFF; border: 1px solid #D9DCE1; border-bottom: 0; border-radius: 12px 12px 0 0; padding: 10px 16px; font-size: 13px; }
+.inbox-line .from { font-weight: 600; }
+.inbox-line .subject { color: #4B5563; flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.inbox-line .when { color: #6B7280; font-size: 12px; }
+
+.email { width: 640px; background: #F4F5F7; border: 1px solid #D9DCE1; border-radius: 0 0 12px 12px; padding: 40px 40px 28px; }
+.brand { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 16px; font-weight: 600; letter-spacing: -0.01em; color: #0B0D12; margin-bottom: 24px; }
+.mark { width: 28px; height: 28px; border-radius: 8px; background: #0E7A63; display: flex; align-items: center; justify-content: center; }
+.card { background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 12px; padding: 32px; }
+.eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #0E7A63; }
+.eyebrow.warn { color: #B45309; }
+.card h2 { margin: 10px 0 12px; font-size: 21px; line-height: 28px; font-weight: 600; letter-spacing: -0.01em; color: #0B0D12; }
+.card p { margin: 0 0 12px; font-size: 14px; line-height: 22px; color: #4B5563; }
+.card p.note { font-size: 12px; line-height: 18px; color: #6B7280; margin: 20px 0 0; padding-top: 16px; border-top: 1px solid #ECEDF0; }
+.code { display: flex; justify-content: center; gap: 8px; margin: 24px 0 8px; }
+.code span { width: 44px; height: 52px; border: 1px solid #E5E7EB; border-radius: 8px; background: #F7F8FA; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 700; color: #0B0D12; font-variant-numeric: tabular-nums; }
+.code-hint { text-align: center; font-size: 12px; color: #6B7280; margin: 0; }
+.steps { margin: 20px 0 4px; border: 1px solid #ECEDF0; border-radius: 10px; }
+.step { display: flex; gap: 12px; align-items: flex-start; padding: 12px 14px; }
+.step + .step { border-top: 1px solid #ECEDF0; }
+.step-n { width: 24px; height: 24px; border-radius: 999px; background: #E7F4EF; color: #0E7A63; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.step b { display: block; font-size: 14px; font-weight: 600; color: #0B0D12; }
+.step span { display: block; font-size: 13px; color: #4B5563; margin-top: 2px; line-height: 19px; }
+.alert { display: flex; gap: 10px; align-items: flex-start; background: #FDF1E3; border-radius: 10px; padding: 12px 14px; margin: 16px 0 0; font-size: 13px; line-height: 19px; color: #0B0D12; }
+.alert svg { flex-shrink: 0; margin-top: 1px; }
+.foot { text-align: center; font-size: 12px; line-height: 19px; color: #6B7280; margin-top: 20px; }
+.foot a { color: #4B5563; }
+
+.phone { width: 390px; height: 844px; border-radius: 36px; border: 1px solid #D9DCE1; overflow: hidden; background: var(--canvas); color: var(--fg); display: flex; flex-direction: column; }
+.dark.phone { border-color: #2A2E35; }
+.browser-bar { margin-top: 12px; height: 44px; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid var(--line); font-size: 12px; color: var(--fg-subtle); }
+.browser-bar span { background: var(--muted-bg); border-radius: 8px; padding: 6px 12px; }
+.return { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 0 36px 80px; }
+.return h3 { margin: 20px 0 6px; font-size: 18px; font-weight: 600; letter-spacing: -0.01em; }
+.return p { margin: 0; font-size: 13px; line-height: 19px; color: var(--fg-muted); }
+.btn { margin-top: 24px; height: 44px; padding: 0 20px; border-radius: 8px; border: 0; background: var(--accent); color: #FFFFFF; font: 600 14px Inter, sans-serif; display: inline-flex; align-items: center; justify-content: center; text-decoration: none; }
+.small-link { margin-top: 14px; font-size: 12px; color: var(--fg-subtle); }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="page-head">
+    <h1>Heed: emails in the new look</h1>
+    <p>The four emails the server sends and the page Gmail returns to after connecting, in the same language as the app (design/mock.html): Inter, Heed green used sparingly, a white card with a 1px border, no dark header bar. Subjects and wording stay as they are, apart from the welcome email, which gains a short "what happens next" list, and the password-changed email, whose warning becomes an amber callout. Nothing in heed-server has changed yet.</p>
+  </div>
+
+  <div class="board">
+
+    <!-- Verify email -->
+    <section>
+      <p class="frame-label">Verify your Heed account · verify-email.ts</p>
+      <div class="inbox-line"><span class="from">Heed</span><span class="subject">Verify your Heed account</span><span class="when">9:41</span></div>
+      <div class="email">
+        <div class="brand"><span class="mark"><svg width="18" height="18" viewBox="0 0 1024 1024" fill="none" stroke="#FFFFFF" stroke-width="80" stroke-linecap="round" stroke-linejoin="round"><rect x="212" y="292" width="600" height="440" rx="76"/><polyline points="304,479 448,605 716,419"/></svg></span>Heed</div>
+        <div class="card">
+          <div class="eyebrow">Verification</div>
+          <h2>Verify your email</h2>
+          <p>Hi Abdul, welcome to Heed. Enter the code below in the app to verify your email.</p>
+          <div class="code"><span>4</span><span>8</span><span>2</span><span>0</span><span>1</span><span>7</span></div>
+          <p class="code-hint">This code expires in 10 minutes.</p>
+          <p class="note">If you didn't create a Heed account, you can safely ignore this email.</p>
+        </div>
+        <div class="foot">Heed reads the mail that doesn't need you.<br>© 2026 Heed · <a href="#">Privacy</a> · <a href="#">Terms</a></div>
+      </div>
+    </section>
+
+    <!-- Welcome -->
+    <section>
+      <p class="frame-label">Welcome to Heed · welcome.ts</p>
+      <div class="inbox-line"><span class="from">Heed</span><span class="subject">Welcome to Heed</span><span class="when">9:43</span></div>
+      <div class="email">
+        <div class="brand"><span class="mark"><svg width="18" height="18" viewBox="0 0 1024 1024" fill="none" stroke="#FFFFFF" stroke-width="80" stroke-linecap="round" stroke-linejoin="round"><rect x="212" y="292" width="600" height="440" rx="76"/><polyline points="304,479 448,605 716,419"/></svg></span>Heed</div>
+        <div class="card">
+          <div class="eyebrow">Welcome</div>
+          <h2>Welcome to Heed, Abdul</h2>
+          <p>Connect your Gmail and Heed will start reading the mail that doesn't need you, so you only see what does.</p>
+          <div class="steps">
+            <div class="step"><span class="step-n">1</span><div><b>Connect a Gmail account</b><span>Profile, then Gmail accounts. Up to five.</span></div></div>
+            <div class="step"><span class="step-n">2</span><div><b>Heed reads new mail</b><span>Updates and receipts are marked read for you. Anything unclear is left alone.</span></div></div>
+            <div class="step"><span class="step-n">3</span><div><b>You only reply</b><span>When someone is waiting on you, a draft is ready. Nothing is sent until you tap Send.</span></div></div>
+          </div>
+        </div>
+        <div class="foot">Heed reads the mail that doesn't need you.<br>© 2026 Heed · <a href="#">Privacy</a> · <a href="#">Terms</a></div>
+      </div>
+    </section>
+
+    <!-- Reset password -->
+    <section>
+      <p class="frame-label">Reset your Heed password · forgot-password.ts</p>
+      <div class="inbox-line"><span class="from">Heed</span><span class="subject">Reset your Heed password</span><span class="when">Yesterday</span></div>
+      <div class="email">
+        <div class="brand"><span class="mark"><svg width="18" height="18" viewBox="0 0 1024 1024" fill="none" stroke="#FFFFFF" stroke-width="80" stroke-linecap="round" stroke-linejoin="round"><rect x="212" y="292" width="600" height="440" rx="76"/><polyline points="304,479 448,605 716,419"/></svg></span>Heed</div>
+        <div class="card">
+          <div class="eyebrow">Password reset</div>
+          <h2>Reset your password</h2>
+          <p>Hi Abdul, use the code below to reset your Heed password.</p>
+          <div class="code"><span>7</span><span>3</span><span>0</span><span>5</span><span>9</span><span>2</span></div>
+          <p class="code-hint">This code expires in 10 minutes.</p>
+          <p class="note">If you didn't request this, you can safely ignore this email. Your password stays the same.</p>
+        </div>
+        <div class="foot">Heed reads the mail that doesn't need you.<br>© 2026 Heed · <a href="#">Privacy</a> · <a href="#">Terms</a></div>
+      </div>
+    </section>
+
+    <!-- Password changed -->
+    <section>
+      <p class="frame-label">Your Heed password was changed · password-changed.ts</p>
+      <div class="inbox-line"><span class="from">Heed</span><span class="subject">Your Heed password was changed</span><span class="when">Yesterday</span></div>
+      <div class="email">
+        <div class="brand"><span class="mark"><svg width="18" height="18" viewBox="0 0 1024 1024" fill="none" stroke="#FFFFFF" stroke-width="80" stroke-linecap="round" stroke-linejoin="round"><rect x="212" y="292" width="600" height="440" rx="76"/><polyline points="304,479 448,605 716,419"/></svg></span>Heed</div>
+        <div class="card">
+          <div class="eyebrow">Security</div>
+          <h2>Your password was changed</h2>
+          <p>Hi Abdul, the password on your Heed account was just changed. If this was you, there is nothing else to do.</p>
+          <div class="alert">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#B45309" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
+            <div><b>If this wasn't you</b>, reset your password from the sign-in screen straight away and check that your email account is secure.</div>
+          </div>
+          <p class="note">This is a security notification and cannot be turned off.</p>
+        </div>
+        <div class="foot">Heed reads the mail that doesn't need you.<br>© 2026 Heed · <a href="#">Privacy</a> · <a href="#">Terms</a></div>
+      </div>
+    </section>
+
+    <!-- OAuth return: connected, light -->
+    <section>
+      <p class="frame-label">Gmail connected · oauth-return.ts · light</p>
+      <div class="phone">
+        <div class="browser-bar"><span>heed-server.onrender.com</span></div>
+        <div class="return">
+          <svg width="176" height="132" viewBox="0 0 160 120" fill="none" aria-hidden="true">
+            <circle cx="80" cy="62" r="50" fill="var(--accent-muted)"/>
+            <rect x="40" y="40" width="80" height="54" rx="6" fill="var(--surface)" stroke="var(--fg)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="m43 44 37 26 37-26" stroke="var(--fg)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="116" cy="40" r="12" fill="var(--accent)"/>
+            <path d="m110.5 40.5 4 4 7.5-8" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M32 31v10M27 36h10" stroke="var(--accent)" stroke-width="1.75" stroke-linecap="round"/>
+          </svg>
+          <h3>Gmail connected</h3>
+          <p>Taking you back to Heed. Your inbox will be watched from now on.</p>
+          <a class="btn" href="#">Return to Heed</a>
+          <div class="small-link">If nothing happens, tap the button.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- OAuth return: not connected, dark -->
+    <section>
+      <p class="frame-label">Gmail not connected · oauth-return.ts · dark</p>
+      <div class="phone dark">
+        <div class="browser-bar"><span>heed-server.onrender.com</span></div>
+        <div class="return">
+          <svg width="176" height="132" viewBox="0 0 160 120" fill="none" aria-hidden="true">
+            <circle cx="80" cy="62" r="50" fill="var(--amber-tint)"/>
+            <rect x="40" y="40" width="80" height="54" rx="6" fill="var(--surface)" stroke="var(--fg)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="m43 44 37 26 37-26" stroke="var(--fg)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="116" cy="40" r="12" fill="var(--amber)"/>
+            <path d="M116 34v7" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"/>
+            <circle cx="116" cy="45.6" r="1.4" fill="#FFFFFF"/>
+          </svg>
+          <h3>Gmail not connected</h3>
+          <p>Nothing was changed. Go back to Heed to see what happened and try again.</p>
+          <a class="btn" href="#">Return to Heed</a>
+          <div class="small-link">If nothing happens, tap the button.</div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>
+</body>
+</html>

@@ -11,7 +11,7 @@ const BRAND_DARK = "#5CC9AE";
 const mark = (stroke) => `
   <g fill="none" stroke="${stroke}" stroke-width="72" stroke-linecap="round" stroke-linejoin="round">
     <rect x="212" y="292" width="600" height="440" rx="76"/>
-    <polyline points="304,424 448,550 716,364"/>
+    <polyline points="304,479 448,605 716,419"/>
   </g>`;
 
 const svg = (body, bg) => `<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">${bg ? `<rect width="1024" height="1024" fill="${bg}"/>` : ""}${body}</svg>`;
