@@ -42,7 +42,11 @@ export default function Handled() {
   const count = (predicate: (message: EmailMessage) => boolean) => handledMessages.filter(predicate).length;
 
   const recentTidies = backlogRuns.filter(
-    (run) => run.status === "DONE" && !!run.finishedAt && isWithinLastDays(run.finishedAt, RECENT_TIDY_DAYS),
+    (run) =>
+      run.status === "DONE" &&
+      (run.markedRead ?? 0) > 0 &&
+      !!run.finishedAt &&
+      isWithinLastDays(run.finishedAt, RECENT_TIDY_DAYS),
   );
 
   const handlePressMessage = function (message: EmailMessage) {
