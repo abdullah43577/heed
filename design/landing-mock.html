@@ -1,0 +1,623 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Heed landing mock</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --canvas: #FFFFFF;
+  --surface: #FFFFFF;
+  --muted-bg: #F7F8FA;
+  --line: #ECEDF0;
+  --line-strong: #DDE0E5;
+  --fg: #0B0D12;
+  --fg-muted: #4B5563;
+  --fg-subtle: #6B7280;
+  --accent: #0E7A63;
+  --accent-muted: #E7F4EF;
+  --on-accent: #FFFFFF;
+  --amber: #B45309;
+  --amber-tint: #FDF1E3;
+  --slate: #475569;
+  --indigo: #4F46E5;
+  --rose: #BE123C;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --canvas: #0E0F12; --surface: #15171B; --muted-bg: #1B1E23; --line: #262A31; --line-strong: #323742;
+    --fg: #F2F3F5; --fg-muted: #A9AFBA; --fg-subtle: #8A909C;
+    --accent: #1F9E80; --accent-muted: #12302A; --amber: #F0A34A; --amber-tint: #3A2A14;
+    --slate: #A3AEBF; --indigo: #8F8CF7; --rose: #F47A93;
+  }
+}
+:root[data-theme="dark"] {
+  --canvas: #0E0F12; --surface: #15171B; --muted-bg: #1B1E23; --line: #262A31; --line-strong: #323742;
+  --fg: #F2F3F5; --fg-muted: #A9AFBA; --fg-subtle: #8A909C;
+  --accent: #1F9E80; --accent-muted: #12302A; --amber: #F0A34A; --amber-tint: #3A2A14;
+  --slate: #A3AEBF; --indigo: #8F8CF7; --rose: #F47A93;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--canvas); color: var(--fg); font-family: Inter, system-ui, sans-serif; -webkit-font-smoothing: antialiased; font-size: 15px; line-height: 1.6; }
+a { color: inherit; text-decoration: none; }
+.wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+.hairline { border-top: 1px solid var(--line); }
+
+/* review bar: only in the mock */
+.review-bar { position: fixed; right: 16px; bottom: 16px; z-index: 50; display: flex; gap: 4px; background: var(--surface); border: 1px solid var(--line-strong); border-radius: 999px; padding: 4px; font-size: 12px; }
+.review-bar button { border: 0; background: transparent; color: var(--fg-muted); font: 500 12px Inter, sans-serif; padding: 6px 12px; border-radius: 999px; cursor: pointer; }
+.review-bar button.on { background: var(--fg); color: var(--canvas); }
+
+/* nav */
+.nav { position: sticky; top: 0; z-index: 20; background: var(--canvas); border-bottom: 1px solid var(--line); }
+.nav .wrap { height: 64px; display: flex; align-items: center; gap: 32px; }
+.brand { display: flex; align-items: center; gap: 9px; font-weight: 600; font-size: 17px; letter-spacing: -0.01em; }
+.mark { width: 28px; height: 28px; border-radius: 8px; background: var(--accent); display: grid; place-items: center; flex-shrink: 0; }
+.nav-links { display: flex; gap: 26px; font-size: 14px; color: var(--fg-muted); flex: 1; }
+.nav-links a:hover { color: var(--fg); }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 40px; padding: 0 16px; border-radius: 8px; font: 600 14px Inter, sans-serif; border: 1px solid transparent; cursor: pointer; white-space: nowrap; }
+.btn-primary { background: var(--accent); color: var(--on-accent); }
+.btn-secondary { background: var(--surface); color: var(--fg); border-color: var(--line-strong); }
+.btn-lg { height: 46px; padding: 0 20px; font-size: 15px; }
+
+/* hero */
+.hero { padding: 72px 0 80px; }
+.hero .wrap { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 56px; align-items: center; }
+.pill { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 500; color: var(--fg-muted); border: 1px solid var(--line-strong); border-radius: 999px; padding: 5px 12px 5px 6px; }
+.pill b { background: var(--accent-muted); color: var(--accent); font-weight: 600; font-size: 12px; border-radius: 999px; padding: 2px 8px; }
+h1 { font-size: 56px; line-height: 1.04; letter-spacing: -0.035em; font-weight: 700; margin: 22px 0 0; }
+h1 span { color: var(--accent); }
+.lede { font-size: 18px; line-height: 1.6; color: var(--fg-muted); margin: 20px 0 0; max-width: 520px; }
+.cta-row { display: flex; gap: 10px; margin-top: 32px; flex-wrap: wrap; }
+.assurances { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 28px; font-size: 13px; color: var(--fg-subtle); }
+.assurances span { display: inline-flex; align-items: center; gap: 6px; }
+
+/* phone */
+.stage { position: relative; display: flex; justify-content: center; padding-top: 26px; }
+.phone { width: 330px; border: 1px solid var(--line-strong); border-radius: 40px; padding: 10px; background: var(--surface); }
+.screen { border-radius: 31px; border: 1px solid var(--line); overflow: hidden; background: var(--canvas); height: 600px; display: flex; flex-direction: column; }
+.status { height: 34px; display: flex; align-items: center; justify-content: space-between; padding: 0 22px; font-size: 12px; font-weight: 600; }
+.topbar { height: 48px; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; border-bottom: 1px solid var(--line); }
+.topbar h4 { margin: 0; font-size: 16px; font-weight: 600; }
+.count-badge { font-size: 11px; font-weight: 600; color: var(--accent); background: var(--accent-muted); border-radius: 999px; padding: 2px 8px; }
+.feed { padding: 14px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+.card { border: 1px solid var(--line); border-radius: 12px; padding: 12px; background: var(--surface); }
+.card-head { display: flex; align-items: center; gap: 10px; }
+.av { width: 32px; height: 32px; border-radius: 999px; display: grid; place-items: center; font-weight: 600; font-size: 13px; flex-shrink: 0; }
+.who { font-size: 13px; font-weight: 600; line-height: 1.3; }
+.meta { font-size: 12px; color: var(--fg-subtle); line-height: 1.3; }
+.time { margin-left: auto; font-size: 11px; color: var(--fg-subtle); align-self: flex-start; }
+.ask-line { font-size: 12.5px; color: var(--fg-muted); margin: 8px 0 0; line-height: 1.45; }
+.draft { background: var(--muted-bg); border-radius: 8px; padding: 9px 10px; margin-top: 9px; }
+.eyebrow { font-size: 10.5px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--accent); }
+.draft p { margin: 4px 0 0; font-size: 12.5px; line-height: 1.5; color: var(--fg); }
+.ph { background: var(--amber-tint); color: var(--amber); border-radius: 4px; padding: 0 3px; font-weight: 500; }
+.card-actions { display: flex; gap: 6px; margin-top: 10px; }
+.mini-btn { flex: 1; height: 32px; border-radius: 8px; font-size: 12px; font-weight: 600; display: grid; place-items: center; border: 1px solid var(--line-strong); color: var(--fg); }
+.mini-btn.primary { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.tabbar { height: 58px; border-top: 1px solid var(--line); display: grid; grid-template-columns: repeat(4, 1fr); font-size: 10px; color: var(--fg-subtle); }
+.tabbar div { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; }
+.tabbar .on { color: var(--accent); font-weight: 600; }
+.toast { position: absolute; top: -26px; left: 50%; transform: translateX(-50%); width: 300px; background: var(--surface); border: 1px solid var(--line-strong); border-radius: 14px; padding: 10px 12px; display: flex; gap: 10px; align-items: center; }
+.toast .mark { width: 30px; height: 30px; border-radius: 8px; }
+.toast b { display: block; font-size: 12.5px; }
+.toast span { display: block; font-size: 12px; color: var(--fg-muted); }
+.side-note { position: absolute; background: var(--surface); border: 1px solid var(--line-strong); border-radius: 12px; padding: 10px 12px; font-size: 12px; width: 190px; }
+.side-note b { display: block; font-size: 20px; letter-spacing: -0.02em; line-height: 1.2; }
+.side-note span { color: var(--fg-muted); }
+.note-left { left: -10px; bottom: 120px; }
+.note-right { right: -6px; top: 210px; }
+
+/* numbers strip */
+.flow { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.flow .wrap { display: grid; grid-template-columns: repeat(3, 1fr); }
+.flow-cell { padding: 32px 28px; border-left: 1px solid var(--line); }
+.flow-cell:first-child { border-left: 0; padding-left: 0; }
+.flow-cell .n { font-size: 40px; font-weight: 700; letter-spacing: -0.03em; line-height: 1; }
+.flow-cell .n.accent { color: var(--accent); }
+.flow-cell p { margin: 10px 0 0; color: var(--fg-muted); font-size: 14px; line-height: 1.5; }
+.flow-cell .k { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--fg-subtle); margin-bottom: 14px; }
+
+/* sections */
+section.block { padding: 104px 0; }
+.kicker { font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
+h2 { font-size: 40px; line-height: 1.1; letter-spacing: -0.03em; font-weight: 700; margin: 12px 0 0; max-width: 680px; }
+.section-lede { color: var(--fg-muted); font-size: 17px; margin: 16px 0 0; max-width: 600px; }
+
+/* steps */
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 48px; }
+.step { border: 1px solid var(--line); border-radius: 12px; padding: 24px; background: var(--surface); }
+.step-n { width: 28px; height: 28px; border-radius: 999px; border: 1px solid var(--line-strong); font-size: 13px; font-weight: 600; display: grid; place-items: center; color: var(--fg-muted); }
+.step h3 { font-size: 17px; margin: 18px 0 6px; letter-spacing: -0.01em; }
+.step p { margin: 0; color: var(--fg-muted); font-size: 14px; line-height: 1.6; }
+.step .route { margin-top: 18px; display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { font-size: 12px; font-weight: 500; border-radius: 999px; padding: 3px 10px; border: 1px solid var(--line); color: var(--fg-muted); display: inline-flex; align-items: center; gap: 6px; }
+.dot { width: 6px; height: 6px; border-radius: 999px; display: inline-block; }
+
+/* features */
+.feature { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; padding: 56px 0; border-top: 1px solid var(--line); }
+.feature:first-of-type { border-top: 0; }
+.feature.flip .copy { order: 2; }
+.feature h3 { font-size: 28px; line-height: 1.15; letter-spacing: -0.025em; margin: 10px 0 0; }
+.feature .copy p { color: var(--fg-muted); font-size: 16px; margin: 14px 0 0; }
+.ticks { list-style: none; padding: 0; margin: 22px 0 0; display: flex; flex-direction: column; gap: 10px; }
+.ticks li { display: flex; gap: 10px; font-size: 14px; color: var(--fg); align-items: flex-start; }
+.ticks svg { flex-shrink: 0; margin-top: 3px; }
+.panel { border: 1px solid var(--line); border-radius: 16px; background: var(--muted-bg); padding: 28px; }
+.panel .card { padding: 16px; }
+
+.editor-body { font-size: 14px; line-height: 1.7; margin: 10px 0 0; }
+.fill-row { display: flex; gap: 6px; margin-top: 12px; flex-wrap: wrap; }
+.fill-row .chip { border-color: var(--amber-tint); background: var(--amber-tint); color: var(--amber); }
+.send-bar { display: flex; gap: 8px; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--line); align-items: center; }
+.send-bar .hint { font-size: 12px; color: var(--fg-subtle); flex: 1; }
+.send-disabled { height: 36px; padding: 0 16px; border-radius: 8px; background: var(--accent); color: var(--on-accent); opacity: 0.4; font-size: 13px; font-weight: 600; display: grid; place-items: center; }
+
+.report-total { display: flex; align-items: baseline; gap: 10px; }
+.report-total b { font-size: 34px; letter-spacing: -0.03em; line-height: 1; }
+.report-total span { color: var(--fg-muted); font-size: 14px; }
+.bar { display: flex; height: 8px; border-radius: 999px; overflow: hidden; margin: 16px 0 14px; gap: 2px; }
+.rows { display: flex; flex-direction: column; }
+.row { display: flex; align-items: center; gap: 10px; padding: 9px 0; font-size: 14px; border-top: 1px solid var(--line); }
+.row:first-child { border-top: 0; }
+.row .c { margin-left: auto; font-weight: 600; font-variant-numeric: tabular-nums; }
+.worth { margin-top: 14px; border-radius: 8px; background: var(--amber-tint); padding: 10px 12px; font-size: 13px; }
+.worth b { color: var(--amber); font-size: 11px; letter-spacing: 0.07em; text-transform: uppercase; display: block; margin-bottom: 2px; }
+
+.q { align-self: flex-end; background: var(--accent-muted); color: var(--fg); border-radius: 14px 14px 4px 14px; padding: 9px 12px; font-size: 14px; max-width: 80%; }
+.a { font-size: 14px; line-height: 1.65; margin-top: 14px; }
+.cite { color: var(--accent); font-size: 11px; font-weight: 600; vertical-align: super; }
+.sources { margin-top: 14px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+.src { display: flex; align-items: center; gap: 10px; padding: 10px 12px; }
+.src + .src { border-top: 1px solid var(--line); }
+.src .num { width: 22px; height: 22px; border-radius: 6px; background: var(--accent-muted); color: var(--accent); font-size: 11px; font-weight: 700; display: grid; place-items: center; flex-shrink: 0; }
+.src .t { font-size: 13px; font-weight: 500; line-height: 1.3; }
+.src .s { font-size: 12px; color: var(--fg-subtle); line-height: 1.3; }
+
+.backlog-big { font-size: 15px; color: var(--fg-muted); }
+.backlog-big b { display: block; font-size: 34px; color: var(--fg); letter-spacing: -0.03em; line-height: 1.1; }
+.progress { height: 6px; border-radius: 999px; background: var(--line); margin: 16px 0 6px; overflow: hidden; }
+.progress i { display: block; height: 100%; width: 100%; background: var(--accent); }
+
+/* mini features */
+.minis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 56px; }
+.mini { border: 1px solid var(--line); border-radius: 12px; padding: 22px; }
+.icon-tile { width: 36px; height: 36px; border-radius: 999px; background: var(--accent-muted); display: grid; place-items: center; }
+.mini h4 { margin: 16px 0 4px; font-size: 15px; }
+.mini p { margin: 0; color: var(--fg-muted); font-size: 14px; line-height: 1.55; }
+
+/* principles */
+.principles { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 48px; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.principle { padding: 28px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--surface); }
+.principle:nth-child(3n) { border-right: 0; }
+.principle:nth-last-child(-n+3) { border-bottom: 0; }
+.principle .icon-tile { background: transparent; border: 1px solid var(--line-strong); }
+.principle h4 { margin: 18px 0 6px; font-size: 16px; letter-spacing: -0.01em; }
+.principle p { margin: 0; color: var(--fg-muted); font-size: 14px; line-height: 1.6; }
+.google-note { margin-top: 20px; font-size: 13px; color: var(--fg-subtle); max-width: 760px; }
+.google-note a { color: var(--fg-muted); text-decoration: underline; text-underline-offset: 2px; }
+
+/* free */
+.free { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; border: 1px solid var(--line); border-radius: 20px; padding: 48px; }
+.price { font-size: 64px; font-weight: 700; letter-spacing: -0.04em; line-height: 1; }
+.price small { font-size: 16px; font-weight: 500; color: var(--fg-muted); letter-spacing: 0; margin-left: 6px; }
+.free-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; }
+.free-list li { display: flex; gap: 10px; align-items: center; padding: 12px 0; border-top: 1px solid var(--line); font-size: 14px; }
+.free-list li:first-child { border-top: 0; }
+.coffee { margin-top: 24px; font-size: 14px; color: var(--fg-muted); }
+.coffee a { color: var(--accent); font-weight: 600; }
+
+/* faq */
+.faq { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: 64px; }
+details { border-top: 1px solid var(--line); padding: 18px 0; }
+details:last-child { border-bottom: 1px solid var(--line); }
+summary { list-style: none; cursor: pointer; font-weight: 600; font-size: 16px; display: flex; justify-content: space-between; gap: 16px; }
+summary::-webkit-details-marker { display: none; }
+summary::after { content: "+"; color: var(--fg-subtle); font-weight: 400; font-size: 20px; line-height: 1; }
+details[open] summary::after { content: "–"; }
+details p { margin: 10px 0 0; color: var(--fg-muted); font-size: 15px; max-width: 600px; }
+
+/* final cta */
+.final { text-align: center; padding: 96px 0; border-top: 1px solid var(--line); }
+.final h2 { margin: 0 auto; }
+.final .section-lede { margin: 14px auto 0; }
+.final .cta-row { justify-content: center; }
+.stores { display: flex; gap: 10px; justify-content: center; margin-top: 18px; font-size: 13px; color: var(--fg-subtle); }
+
+footer { border-top: 1px solid var(--line); padding: 40px 0 56px; }
+footer .wrap { display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; align-items: flex-start; }
+.foot-links { display: flex; gap: 40px; flex-wrap: wrap; }
+.foot-col { display: flex; flex-direction: column; gap: 8px; font-size: 14px; color: var(--fg-muted); }
+.foot-col b { color: var(--fg); font-size: 13px; margin-bottom: 4px; }
+.fine { font-size: 13px; color: var(--fg-subtle); margin-top: 12px; max-width: 320px; }
+
+@media (max-width: 900px) {
+  .nav-links { display: none; }
+  .nav .wrap { justify-content: space-between; }
+  .hero { padding: 48px 0 56px; }
+  .hero .wrap, .feature, .free, .faq { grid-template-columns: 1fr; gap: 40px; }
+  .feature.flip .copy { order: 0; }
+  h1 { font-size: 40px; }
+  h2 { font-size: 30px; }
+  .lede { font-size: 16px; }
+  .side-note { display: none; }
+  .flow .wrap, .steps, .minis, .principles { grid-template-columns: 1fr; }
+  .flow-cell { border-left: 0; border-top: 1px solid var(--line); padding: 24px 0; }
+  .flow-cell:first-child { border-top: 0; }
+  .principle { border-right: 0; border-bottom: 1px solid var(--line) !important; }
+  .principle:last-child { border-bottom: 0 !important; }
+  section.block { padding: 72px 0; }
+  .free { padding: 28px; }
+  .panel { padding: 16px; }
+  .phone { width: 300px; }
+  .toast { width: 270px; }
+  .wrap { padding: 0 16px; }
+}
+</style>
+</head>
+<body>
+
+<div class="review-bar" aria-label="Mock controls">
+  <button data-set="system" class="on">System</button>
+  <button data-set="light">Light</button>
+  <button data-set="dark">Dark</button>
+</div>
+
+<nav class="nav">
+  <div class="wrap">
+    <a class="brand" href="#"><span class="mark"><svg width="18" height="18" viewBox="0 0 1024 1024" fill="none" stroke="#FFFFFF" stroke-width="80" stroke-linecap="round" stroke-linejoin="round"><rect x="212" y="292" width="600" height="440" rx="76"/><polyline points="304,479 448,605 716,419"/></svg></span>Heed</a>
+    <div class="nav-links">
+      <a href="#how">How it works</a>
+      <a href="#features">Features</a>
+      <a href="#trust">Privacy</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <a class="btn btn-primary" href="#get">Get Heed</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div>
+      <span class="pill"><b>Free</b>An AI assistant for Gmail</span>
+      <h1>Your inbox,<br><span>read for you.</span></h1>
+      <p class="lede">Heed reads the mail that doesn't need you and drafts replies for the mail that does. The only thing it asks of you is a look at the draft and a tap on Send.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary btn-lg" href="#get">Get Heed for your phone</a>
+        <a class="btn btn-secondary btn-lg" href="#how">See how it works</a>
+      </div>
+      <div class="assurances">
+        <span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Never sends without your tap</span>
+        <span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Never deletes or archives</span>
+        <span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Up to 5 Gmail accounts</span>
+      </div>
+    </div>
+
+    <div class="stage">
+      <div class="phone">
+        <div class="screen">
+          <div class="status"><span>9:41</span><span>●●●</span></div>
+          <div class="topbar"><h4>Review</h4><span class="count-badge">2 waiting</span></div>
+          <div class="feed">
+            <div class="card">
+              <div class="card-head">
+                <div class="av" style="background: var(--accent-muted); color: var(--accent)">S</div>
+                <div><div class="who">Sam Okafor</div><div class="meta">Quick call about the redesign?</div></div>
+                <div class="time">12m</div>
+              </div>
+              <p class="ask-line">Asks if you can talk this week about the homepage scope.</p>
+              <div class="draft">
+                <div class="eyebrow">Heed's draft</div>
+                <p>Hi Sam, happy to talk it through. I'm free <span class="ph">[your availability]</span>. Does that work?</p>
+              </div>
+              <div class="card-actions"><span class="mini-btn">No reply needed</span><span class="mini-btn primary">Review</span></div>
+            </div>
+            <div class="card">
+              <div class="card-head">
+                <div class="av" style="background: color-mix(in srgb, var(--indigo) 14%, transparent); color: var(--indigo)">L</div>
+                <div><div class="who">Lena Park</div><div class="meta">Re: Invoice for October</div></div>
+                <div class="time">1h</div>
+              </div>
+              <div class="draft">
+                <div class="eyebrow">Heed's draft</div>
+                <p>Thanks Lena, received. I'll confirm once it's been processed.</p>
+              </div>
+            </div>
+          </div>
+          <div class="tabbar">
+            <div class="on"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg>Review</div>
+            <div><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 7 17l-5-5"/><path d="m22 10-7.5 7.5L13 16"/></svg>Handled</div>
+            <div><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9.94 14.06 4 20M12 3l1.9 5.8L20 10l-6.1 1.2L12 17l-1.9-5.8L4 10l6.1-1.2z"/></svg>Ask</div>
+            <div><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>Profile</div>
+          </div>
+        </div>
+      </div>
+      <div class="toast"><span class="mark"><svg width="18" height="18" viewBox="0 0 1024 1024" fill="none" stroke="#FFFFFF" stroke-width="80" stroke-linecap="round" stroke-linejoin="round"><rect x="212" y="292" width="600" height="440" rx="76"/><polyline points="304,479 448,605 716,419"/></svg></span><div><b>2 replies ready</b><span>Sam and Lena are waiting on you</span></div></div>
+    </div>
+  </div>
+</header>
+
+<div class="flow">
+  <div class="wrap">
+    <div class="flow-cell"><div class="k">Arrives</div><div class="n">47</div><p>emails on an ordinary day: receipts, updates, newsletters, promotions, and a few people.</p></div>
+    <div class="flow-cell"><div class="k">Heed reads</div><div class="n">44</div><p>are marked read and labelled in Gmail, each with a one-line summary in your daily report.</p></div>
+    <div class="flow-cell"><div class="k">You reply</div><div class="n accent">2</div><p>drafts wait for you. The one email Heed wasn't sure about stays unread, for you to decide.</p></div>
+  </div>
+</div>
+
+<section class="block" id="how">
+  <div class="wrap">
+    <div class="kicker">How it works</div>
+    <h2>Connect once. Heed handles every email after that.</h2>
+    <p class="section-lede">New mail is checked every minute. Each email goes one of three ways, and you can see why.</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-n">1</div>
+        <h3>Connect your Gmail</h3>
+        <p>Sign in with Google and choose the inboxes Heed works on, up to five. Your mail stays in Gmail.</p>
+        <div class="route"><span class="chip">Gmail only, for now</span></div>
+      </div>
+      <div class="step">
+        <div class="step-n">2</div>
+        <h3>Heed sorts what arrives</h3>
+        <p>Your own rules first, then AI. Mail that needs no reply is marked read and labelled <b>Heed/Handled</b>. It never leaves your inbox.</p>
+        <div class="route">
+          <span class="chip"><i class="dot" style="background: var(--amber)"></i>Worth a look</span>
+          <span class="chip"><i class="dot" style="background: var(--slate)"></i>Updates</span>
+          <span class="chip"><i class="dot" style="background: var(--indigo)"></i>Newsletters</span>
+          <span class="chip"><i class="dot" style="background: var(--rose)"></i>Promotions</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">3</div>
+        <h3>You only reply</h3>
+        <p>When someone is waiting on you, Heed drafts the reply and lets you know. Read it, change what you like, and tap Send.</p>
+        <div class="route"><span class="chip"><i class="dot" style="background: var(--accent)"></i>Needs a reply</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block hairline" id="features">
+  <div class="wrap">
+    <div class="kicker">What you get</div>
+    <h2>Everything an inbox asks of you, done before you open it.</h2>
+
+    <div class="feature">
+      <div class="copy">
+        <div class="kicker">Drafts</div>
+        <h3>Replies that sound like you, and never make things up.</h3>
+        <p>Heed learns your greeting, sign-off and tone from your sent mail. Where a reply needs something only you know, it leaves a blank instead of guessing.</p>
+        <ul class="ticks">
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Send stays locked until every blank is filled</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Rewrite in a tap: shorter, warmer, more formal, or a polite no</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Five seconds to undo after you tap Send</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <div class="card">
+          <div class="card-head">
+            <div class="av" style="background: var(--accent-muted); color: var(--accent)">S</div>
+            <div><div class="who">Reply to Sam Okafor</div><div class="meta">To sam@studio-north.co</div></div>
+          </div>
+          <p class="editor-body">Hi Sam,<br><br>Happy to talk through the homepage scope. I'm free <span class="ph">[your availability]</span>, and I can send the revised estimate by <span class="ph">[date]</span>.<br><br>Best,<br>Abdul</p>
+          <div class="fill-row"><span class="chip">Fill in: your availability</span><span class="chip">Fill in: date</span></div>
+          <div class="send-bar"><span class="hint">Fill in 2 blanks to send</span><span class="send-disabled">Send</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="feature flip">
+      <div class="copy">
+        <div class="kicker">Daily report</div>
+        <h3>One short report a day, instead of a full inbox.</h3>
+        <p>At a time you choose, Heed tells you what it read for you: how many emails, from which account, and anything worth a look first. Every number is counted from your mail, never estimated by AI.</p>
+        <ul class="ticks">
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>A one-line summary of every email it read</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Undo anything: mark unread, or never auto-read a sender</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <div class="card">
+          <div class="eyebrow" style="color: var(--fg-subtle)">Today · 6:00 PM</div>
+          <div class="report-total" style="margin-top: 8px"><b>44</b><span>emails read for you</span></div>
+          <div class="bar"><i style="flex: 1; background: var(--amber)"></i><i style="flex: 23; background: var(--slate)"></i><i style="flex: 12; background: var(--indigo)"></i><i style="flex: 8; background: var(--rose)"></i></div>
+          <div class="rows">
+            <div class="row"><i class="dot" style="background: var(--amber)"></i>Worth a look<span class="c">1</span></div>
+            <div class="row"><i class="dot" style="background: var(--slate)"></i>Updates<span class="c">23</span></div>
+            <div class="row"><i class="dot" style="background: var(--indigo)"></i>Newsletters<span class="c">12</span></div>
+            <div class="row"><i class="dot" style="background: var(--rose)"></i>Promotions<span class="c">8</span></div>
+          </div>
+          <div class="worth"><b>Worth a look</b>Google: new sign-in on a Windows device</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="feature">
+      <div class="copy">
+        <div class="kicker">Ask</div>
+        <h3>Ask your inbox anything, and see where the answer came from.</h3>
+        <p>"Did the landlord reply about the deposit?" Heed searches all your connected accounts and answers with the emails it used, so you can check it yourself.</p>
+        <ul class="ticks">
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Read-only: Ask can search and read, never send or change anything</li>
+        </ul>
+      </div>
+      <div class="panel" style="display: flex; flex-direction: column">
+        <div class="q">Did the landlord reply about the deposit?</div>
+        <div class="a">Yes. Martin replied on Tuesday: the full deposit will be returned by 15 November <span class="cite">1</span>. He also asked for your new address for the cheque <span class="cite">2</span>.</div>
+        <div class="sources">
+          <div class="src"><span class="num">1</span><div><div class="t">Martin Hale</div><div class="s">Re: Deposit for flat 4B · Tue</div></div></div>
+          <div class="src"><span class="num">2</span><div><div class="t">Martin Hale</div><div class="s">Forwarding address? · Tue</div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="feature flip">
+      <div class="copy">
+        <div class="kicker">Backlog</div>
+        <h3>Thousands of unread emails, cleared in one confirmed tap.</h3>
+        <p>Heed sorts the unread mail from the last 7, 30 or 90 days and shows you what it would mark as read. Nothing changes in Gmail until you say so, and anything that might still need a reply is listed for you.</p>
+      </div>
+      <div class="panel">
+        <div class="card">
+          <div class="backlog-big"><b>1,190</b>emails ready to mark as read</div>
+          <div class="progress"><i></i></div>
+          <div class="meta">Sorted 1,284 of 1,284 from the last 30 days</div>
+          <div class="rows" style="margin-top: 12px">
+            <div class="row"><i class="dot" style="background: var(--accent)"></i>Might still need a reply<span class="c">14</span></div>
+            <div class="row"><i class="dot" style="background: var(--fg-subtle)"></i>Left for you<span class="c">80</span></div>
+          </div>
+          <div class="card-actions" style="margin-top: 14px"><span class="mini-btn">Cancel</span><span class="mini-btn primary">Mark 1,190 as read</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="minis">
+      <div class="mini">
+        <div class="icon-tile"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/></svg></div>
+        <h4>Sender rules</h4>
+        <p>Always leave a sender for you, always handle them, or never draft for them. For one inbox or all of them.</p>
+      </div>
+      <div class="mini">
+        <div class="icon-tile"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.38 3.62a1 1 0 0 1 3 3L7.37 18.64a2 2 0 0 1-.86.5l-2.87.84a.5.5 0 0 1-.62-.62l.84-2.87a2 2 0 0 1 .5-.86z"/></svg></div>
+        <h4>Instructions</h4>
+        <p>Tell Heed about you, in your own words: "I'm a freelance designer. Recruiters get a polite no."</p>
+      </div>
+      <div class="mini">
+        <div class="icon-tile"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></div>
+        <h4>Five inboxes, one place</h4>
+        <p>Work and personal Gmail side by side, each with its own colour, style and rules.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block hairline" id="trust">
+  <div class="wrap">
+    <div class="kicker">Built to be trusted</div>
+    <h2>An assistant with access to your mail should have firm rules. These are Heed's.</h2>
+    <p class="section-lede">They're enforced in code, not left to the AI.</p>
+
+    <div class="principles">
+      <div class="principle">
+        <div class="icon-tile"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--fg)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14.54 21.69a.5.5 0 0 0 .94-.03l6.5-19a.5.5 0 0 0-.64-.64l-19 6.5a.5.5 0 0 0-.03.94l7.93 3.18a2 2 0 0 1 1.11 1.11z"/></svg></div>
+        <h4>Nothing is sent without your tap</h4>
+        <p>There is no auto-send setting, and there never will be. Every reply waits for you.</p>
+      </div>
+      <div class="principle">
+        <div class="icon-tile"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--fg)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="m16 11 2 2 4-4"/></svg></div>
+        <h4>The AI never picks who gets a reply</h4>
+        <p>Recipients come from the original email's headers. An email can't trick Heed into writing to someone else.</p>
+      </div>
+      <div class="principle">
+        <div class="icon-tile"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--fg)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg></div>
+        <h4>When unsure, it leaves mail alone</h4>
+        <p>If Heed isn't confident, or the AI is down, the email stays unread and untouched for you.</p>
+      </div>
+      <div class="principle">
+        <div class="icon-tile"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--fg)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="5" x="2" y="3" rx="1"/><path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8"/><path d="m9.5 13 5 0"/></svg></div>
+        <h4>Never deletes, archives or marks spam</h4>
+        <p>Handled mail is marked read and labelled. It stays exactly where it was in Gmail.</p>
+      </div>
+      <div class="principle">
+        <div class="icon-tile"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--fg)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></svg></div>
+        <h4>Summaries, not your mailbox</h4>
+        <p>Heed reads email bodies from Gmail when it needs them and doesn't keep them. Summaries expire after 30 days.</p>
+      </div>
+      <div class="principle">
+        <div class="icon-tile"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--fg)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+        <h4>Your mail doesn't train anyone's AI</h4>
+        <p>Heed only uses AI providers that don't keep or train on what they're sent.</p>
+      </div>
+    </div>
+
+    <p class="google-note">Heed's use of information received from Google APIs follows the <a href="#">Google API Services User Data Policy</a>, including the Limited Use requirements. You can disconnect an account, or delete everything, at any time from the app or the <a href="#">delete account</a> page.</p>
+  </div>
+</section>
+
+<section class="block hairline">
+  <div class="wrap">
+    <div class="free">
+      <div>
+        <div class="kicker">Pricing</div>
+        <div class="price" style="margin-top: 14px">Free<small>for everyone</small></div>
+        <p class="section-lede">No Pro tier, no trial, no paywall. Every feature is available to every user.</p>
+        <p class="coffee">If Heed saves you time, you can <a href="#">buy me a coffee</a>. It's never required.</p>
+      </div>
+      <ul class="free-list">
+        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Up to 5 Gmail accounts</li>
+        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Reading, sorting and labelling new mail</li>
+        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Reply drafts in your own style</li>
+        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>The daily report, Ask, and backlog tidying</li>
+        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Sender rules and instructions</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="block hairline" id="faq">
+  <div class="wrap faq">
+    <div>
+      <div class="kicker">FAQ</div>
+      <h2>Questions, answered plainly.</h2>
+      <p class="section-lede">Something else? Write to <a href="#" style="color: var(--accent); font-weight: 600">support@heed.reactmode.dev</a>.</p>
+    </div>
+    <div>
+      <details open><summary>Will Heed ever send an email by itself?</summary><p>No. Heed writes drafts; only you can send them, by tapping Send. Even then you have five seconds to undo.</p></details>
+      <details><summary>What happens to the emails Heed reads?</summary><p>They're marked read and labelled Heed/Handled in Gmail, and stay in your inbox. Nothing is deleted, archived or moved to spam. You can mark any of them unread again from the app.</p></details>
+      <details><summary>What does Heed store?</summary><p>A one-line summary and basic details of each email (sender, subject, time), for 30 days. Email bodies are read from Gmail when needed and aren't kept.</p></details>
+      <details><summary>Which email providers does it work with?</summary><p>Gmail, up to five accounts per person. Other providers may come later.</p></details>
+      <details><summary>What if Heed gets something wrong?</summary><p>Every handled email can be undone, and you can tell Heed to never auto-read a sender again. When Heed isn't sure about an email, it leaves it unread instead of guessing.</p></details>
+      <details><summary>How do I remove Heed's access?</summary><p>Disconnect an account in the app, or delete your Heed account. Both revoke Heed's access to Google straight away and remove what Heed stored.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="final" id="get">
+  <div class="wrap">
+    <h2>Give your inbox to Heed.<br>Keep the replies.</h2>
+    <p class="section-lede">Free, on your phone. Connect your first inbox in under a minute.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary btn-lg" href="#">Get Heed</a>
+    </div>
+    <div class="stores"><span>Store links go here at launch</span></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <a class="brand" href="#"><span class="mark"><svg width="18" height="18" viewBox="0 0 1024 1024" fill="none" stroke="#FFFFFF" stroke-width="80" stroke-linecap="round" stroke-linejoin="round"><rect x="212" y="292" width="600" height="440" rx="76"/><polyline points="304,479 448,605 716,419"/></svg></span>Heed</a>
+      <p class="fine">Heed reads the mail that doesn't need you.<br>© 2026 Heed</p>
+    </div>
+    <div class="foot-links">
+      <div class="foot-col"><b>Product</b><a href="#how">How it works</a><a href="#features">Features</a><a href="#faq">FAQ</a></div>
+      <div class="foot-col"><b>Legal</b><a href="#">Privacy policy</a><a href="#">Terms</a><a href="#">Delete your account</a></div>
+      <div class="foot-col"><b>Support</b><a href="#">support@heed.reactmode.dev</a><a href="#">Buy me a coffee</a></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const root = document.documentElement;
+  const fromHash = location.hash.slice(1);
+  if (fromHash === "light" || fromHash === "dark") {
+    root.setAttribute("data-theme", fromHash);
+    document.querySelectorAll(".review-bar button").forEach((b) => b.classList.toggle("on", b.dataset.set === fromHash));
+  }
+  document.querySelectorAll(".review-bar button").forEach((button) => {
+    button.addEventListener("click", () => {
+      const mode = button.dataset.set;
+      if (mode === "system") root.removeAttribute("data-theme");
+      else root.setAttribute("data-theme", mode);
+      document.querySelectorAll(".review-bar button").forEach((b) => b.classList.toggle("on", b === button));
+    });
+  });
+</script>
+</body>
+</html>

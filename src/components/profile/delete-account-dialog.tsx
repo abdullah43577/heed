@@ -14,9 +14,9 @@ interface Props {
 }
 
 const LOSSES = [
-  "Resumes, cover letters and your career profile",
-  "Every application, note and voice recording",
-  "Your interview answers and practice history",
+  "Heed's access to every connected Gmail account",
+  "Your drafts, reports, rules, style notes and Ask history",
+  "Your account, settings and notifications",
 ];
 
 export const DeleteAccountDialog = function ({
