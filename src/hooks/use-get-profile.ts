@@ -4,6 +4,7 @@ import { APIResponse } from "../../types/response";
 import { useGetData } from "./use-get-data";
 import { tokenStorage } from "@/provider/token-storage";
 import { useAuthStore } from "@/store/auth";
+import { useSetupStore } from "@/store/setup";
 import { clearPersistedCache } from "@/provider/query-persister";
 import { queryClient } from "@/utils/queryClient";
 
@@ -21,6 +22,7 @@ export const useGetProfile = function () {
     // The persisted cache is per-device, not per-account.
     queryClient.clear();
     await clearPersistedCache();
+    await useSetupStore.getState().resetSetup();
 
     setAuthenticated(false);
   };

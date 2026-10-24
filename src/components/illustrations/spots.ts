@@ -15,6 +15,7 @@ const badge = (fill: string, mark: string) =>
 
 const CHECK_MARK = `<path d="m110.5 40.5 4 4 7.5-8" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>`;
 const PLUS_MARK = `<path d="M116 34.5v11M110.5 40h11" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"/>`;
+const CLOCK_MARK = `<circle cx="116" cy="40" r="6.5" stroke="#FFFFFF" stroke-width="1.8"/><path d="M116 36.5V40l2.5 1.8" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>`;
 const ALERT_MARK = `<path d="M116 34v7" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"/><circle cx="116" cy="45.6" r="1.4" fill="#FFFFFF"/>`;
 
 const closedEnvelope = `<rect x="40" y="40" width="80" height="54" rx="6" fill="{{surface}}" stroke="{{fg}}" ${STROKE}/><path d="m43 44 37 26 37-26" stroke="{{fg}}" ${STROKE}/>`;
@@ -37,6 +38,12 @@ const tray = [
 const bubble = [
   `<path d="M46 32h68a6 6 0 0 1 6 6v34a6 6 0 0 1-6 6H78L64 90V78H46a6 6 0 0 1-6-6V38a6 6 0 0 1 6-6Z" fill="{{surface}}" stroke="{{fg}}" ${STROKE}/>`,
   `<path d="M54 48h40M54 58h26" stroke="{{subtle}}" ${STROKE}/>`,
+].join("");
+
+const sheet = [
+  `<rect x="50" y="28" width="60" height="72" rx="5" fill="{{surface}}" stroke="{{fg}}" ${STROKE}/>`,
+  `<path d="M60 42h24" stroke="{{fg}}" ${STROKE}/>`,
+  `<path d="M60 54h40M60 63h40M60 72h26" stroke="{{subtle}}" ${STROKE}/>`,
 ].join("");
 
 const svg = (...parts: string[]) =>
@@ -70,6 +77,14 @@ export const SPOTS = {
     '<circle cx="116" cy="40" r="12" fill="{{accent}}"/>',
     '<path d="m110.5 41 5.5-5.5 5.5 5.5M116 35.5V46" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>',
     spark(32, 84, 5),
+  ),
+  setupReport: svg(BACKDROP, sheet, `<path d="M60 81h32M60 90h20" stroke="{{subtle}}" ${STROKE}/>`, badge("{{accent}}", CLOCK_MARK), spark(34, 84, 5)),
+  setupStyle: svg(
+    BACKDROP,
+    sheet,
+    `<path d="M60 88c3-7 7-7 9 0s6 7 9 0" stroke="{{accent}}" ${STROKE}/>`,
+    `<g transform="rotate(35 112 78)"><rect x="106" y="48" width="12" height="38" rx="3" fill="{{surface}}" stroke="{{fg}}" ${STROKE}/><path d="M106 86l6 10 6-10Z" fill="{{accent}}" stroke="{{fg}}" ${STROKE}/><path d="M106 56h12" stroke="{{fg}}" ${STROKE}/></g>`,
+    star(36, 40, 6),
   ),
 } as const;
 

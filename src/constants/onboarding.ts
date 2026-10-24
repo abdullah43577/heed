@@ -9,24 +9,24 @@ export interface OnboardingSlide {
 
 export const onboardingSlides: OnboardingSlide[] = [
   {
-    id: "reads",
-    title: "An inbox that reads itself",
+    id: "noise",
+    title: "Most email doesn't need you",
     subtitle:
-      "Heed goes through new mail as it arrives and quietly handles everything that does not need you.",
+      "Receipts, updates, newsletters and promotions pile up as unread mail, and the few emails where someone is waiting on you get lost among them.",
     illustration: "onboardingNoise",
   },
   {
-    id: "replies",
-    title: "Replies, drafted for you",
+    id: "reads",
+    title: "Heed reads it for you",
     subtitle:
-      "When someone is waiting on you, Heed writes a draft. Nothing is ever sent until you tap Send.",
-    illustration: "onboardingReply",
+      "Mail that needs no reply is marked read and labelled in Gmail, never deleted or archived. One report a day tells you what it read. Anything Heed isn't sure about stays unread for you.",
+    illustration: "onboardingReads",
   },
   {
-    id: "report",
-    title: "One report at the end of the day",
+    id: "reply",
+    title: "You only reply",
     subtitle:
-      "See how many emails Heed read for you, a line on each, and anything worth a look first.",
-    illustration: "onboardingReads",
+      "When someone is waiting on you, Heed drafts the reply in your own style. You review it, and nothing is sent until you tap Send.",
+    illustration: "onboardingReply",
   },
 ];

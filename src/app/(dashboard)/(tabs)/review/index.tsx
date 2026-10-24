@@ -1,3 +1,4 @@
+import { NoAccountState } from "@/components/mail-accounts/no-account-state";
 import { ReviewCard } from "@/components/review/review-card";
 import { RuleEditorSheet } from "@/components/rules/rule-editor-sheet";
 import { Badge } from "@/components/shared/badge";
@@ -6,7 +7,10 @@ import { ScreenHeader } from "@/components/shared/screen-header";
 import { useCreateDraft } from "@/hooks/drafts/use-create-draft";
 import { useDraftActions } from "@/hooks/drafts/use-draft-actions";
 import { useGetReviewMessages } from "@/hooks/messages/use-get-review-messages";
+import { useConnectMailAccount } from "@/hooks/mail-accounts/use-connect-mail-account";
+import { useGetMailAccounts } from "@/hooks/mail-accounts/use-get-mail-accounts";
 import { useMessageActions } from "@/hooks/messages/use-message-actions";
+import { useFirstRunSetup } from "@/hooks/setup/use-first-run-setup";
 import { useSenderRuleSheet } from "@/hooks/rules/use-sender-rule-sheet";
 import { useThemeColors } from "@/hooks/use-theme-colors";
 import { useRouter } from "expo-router";
@@ -22,6 +26,9 @@ export default function Review() {
   const { dismissReply, isActing } = useMessageActions();
   const { dismissDraft, isDismissing } = useDraftActions();
   const ruleSheet = useSenderRuleSheet();
+  const { mailAccounts, hasLoadedMailAccounts } = useGetMailAccounts();
+  const { connectMailAccount, isConnectingMailAccount } = useConnectMailAccount();
+  useFirstRunSetup();
 
   const openDraft = (draftId: string) =>
     router.push({ pathname: "/(dashboard)/(tabs)/review/draft-detail", params: { draftId } });
@@ -39,6 +46,7 @@ export default function Review() {
   };
 
   const waitingCount = reviewMessages.length;
+  const hasNoAccount = hasLoadedMailAccounts && mailAccounts.length === 0;
 
   return (
     <SafeAreaView edges={["top"]} className="flex-1 bg-canvas">
@@ -63,6 +71,11 @@ export default function Review() {
           <View className="flex-1 items-center justify-center py-16">
             <ActivityIndicator color={accent} />
           </View>
+        ) : waitingCount === 0 && hasNoAccount ? (
+          <NoAccountState
+            subtitle="Heed needs an inbox to work on. Once Gmail is connected, replies Heed drafts for you wait here."
+            onConnect={() => !isConnectingMailAccount && connectMailAccount()}
+          />
         ) : waitingCount === 0 ? (
           <EmptyState
             illustration="emptyReview"

@@ -1,5 +1,6 @@
 import { BacklogResults } from "@/components/handled/backlog-results";
 import { HandledSummary } from "@/components/handled/handled-summary";
+import { NoAccountState } from "@/components/mail-accounts/no-account-state";
 import { MessageGroup } from "@/components/messages/message-group";
 import { RuleEditorSheet } from "@/components/rules/rule-editor-sheet";
 import { EmptyState } from "@/components/shared/empty-state";
@@ -7,6 +8,8 @@ import { IconButton } from "@/components/shared/icon-button";
 import { ScreenHeader } from "@/components/shared/screen-header";
 import { HANDLED_CATEGORY_ORDER } from "@/constants/categories";
 import { useGetBacklogRuns } from "@/hooks/backlog/use-get-backlog-runs";
+import { useConnectMailAccount } from "@/hooks/mail-accounts/use-connect-mail-account";
+import { useGetMailAccounts } from "@/hooks/mail-accounts/use-get-mail-accounts";
 import { useGetHandledMessages } from "@/hooks/messages/use-get-handled-messages";
 import { useSenderRuleSheet } from "@/hooks/rules/use-sender-rule-sheet";
 import { useThemeColors } from "@/hooks/use-theme-colors";
@@ -27,6 +30,9 @@ export default function Handled() {
     useGetHandledMessages();
   const { backlogRuns, refetchBacklogRuns } = useGetBacklogRuns();
   const ruleSheet = useSenderRuleSheet();
+  const { mailAccounts, hasLoadedMailAccounts } = useGetMailAccounts();
+  const { connectMailAccount, isConnectingMailAccount } = useConnectMailAccount();
+  const hasNoAccount = hasLoadedMailAccounts && mailAccounts.length === 0;
 
   const groups = HANDLED_CATEGORY_ORDER.map((category) => ({
     category,
@@ -81,6 +87,11 @@ export default function Handled() {
           <View className="flex-1 items-center justify-center py-16">
             <ActivityIndicator color={accent} />
           </View>
+        ) : groups.length === 0 && recentTidies.length === 0 && hasNoAccount ? (
+          <NoAccountState
+            subtitle="Heed needs an inbox to work on. Once Gmail is connected, the mail Heed reads for you shows up here."
+            onConnect={() => !isConnectingMailAccount && connectMailAccount()}
+          />
         ) : groups.length === 0 && recentTidies.length === 0 ? (
           <EmptyState
             illustration="emptyHandled"
